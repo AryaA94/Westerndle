@@ -8,6 +8,8 @@ and the distance and compass direction to the answer.
 - **Daily mode**: one building per day, rolling over at midnight London, ON time. It tracks
   your streaks and win %, and shows how everyone else did.
 - **Practice mode**: unlimited random buildings.
+- **Hint**: after 5 misses you can reveal the answer's first letter.
+- **Map**: the end screen maps the answer and all your guesses.
 - **Share**: a spoiler-free emoji grid, Wordle-style.
 
 *Fan-made. Not affiliated with or endorsed by Western University.*
@@ -16,7 +18,7 @@ and the distance and compass direction to the answer.
 
 | Layer | Tech |
 |---|---|
-| Frontend | React 18, TypeScript (strict), Tailwind CSS 4, Vite, Vitest |
+| Frontend | React 18, TypeScript (strict), Tailwind CSS 4, Leaflet, Vite, Vitest |
 | Backend | Python 3.13, FastAPI, SQLAlchemy 2, Pydantic |
 | Database | PostgreSQL 16 (SQLite works for quick local runs) |
 | Testing | pytest (run against both SQLite and PostgreSQL), Vitest |
@@ -72,16 +74,22 @@ cd frontend && npm test && npm run typecheck
 
 ## Editing the building list
 
-All buildings live in `backend/data/buildings.json` and are loaded into the
-database on startup.
+All buildings live in `backend/data/buildings.json`. The server rebuilds its
+buildings table from that file on every start, so editing the file is all it
+takes.
 
-> **The starter data is approximate.** It was written from memory, so check
-> the coordinates, construction years and floor counts against a campus map and
-> Western's facilities pages before you launch.
-
-To add a photo for a building, put the image in `frontend/public/photos/` and
-set `"photo": "photos/<file>.jpg"`. Only use photos you took yourself or that
-are licensed for reuse. The photo is shown on the end-of-game card.
+- **Coordinates** come from OpenStreetMap. Each building names its OSM feature
+  in `osm_name`, and `python tools/osm_sync.py --fetch` (run from `backend/`)
+  re-downloads and updates them. **Zones** (Core / North / South) are worked
+  out from position by the same script.
+- **Floor counts** marked `"floors"` in a building's `verified` list are from
+  OpenStreetMap too.
+- **Years built**, and any floor count not marked verified, were written from
+  memory. Check them against Western's facilities pages before launch.
+- **Photos**: put the image in `frontend/public/photos/` and set `"photo"` and
+  `"photo_credit"`. Use photos you took or ones with a free licence (e.g.
+  Wikimedia Commons), and credit the photographer as the licence requires.
+  A test fails if a photo is missing its credit.
 
 ## API
 
@@ -91,6 +99,7 @@ are licensed for reuse. The photo is shown on the end-of-game card.
 | GET | `/api/daily` | Today's puzzle number and the guess limit |
 | POST | `/api/practice` | Start a practice game (returns a token) |
 | POST | `/api/guess` | Score a guess |
+| POST | `/api/hint` | First letter of the answer, after 5 guesses |
 | POST | `/api/reveal` | Get the answer once all guesses are used |
 | POST | `/api/results` | Record a finished daily game |
 | GET | `/api/stats/{puzzle}` | Global results for one puzzle |

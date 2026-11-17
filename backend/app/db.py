@@ -61,20 +61,32 @@ def make_engine(url: str | None = None):
 
 
 def init_db(engine, data_file: Path = DATA_FILE) -> None:
-    """Create tables and upsert the building list from the JSON file."""
-    Base.metadata.create_all(engine)
+    """Create tables and load the building list from the JSON file.
+
+    The buildings table is only a copy of the file, so it is dropped and rebuilt
+    on every start: schema changes and removed buildings need no migration.
+    The plays table holds real player results and is never dropped.
+    """
     buildings = json.loads(data_file.read_text())["buildings"]
+    BuildingRow.__table__.drop(engine, checkfirst=True)
+    Base.metadata.create_all(engine)
     with Session(engine) as s, s.begin():
-        for b in buildings:
-            row = s.get(BuildingRow, b["id"]) or BuildingRow(id=b["id"])
-            row.name = b["name"]
-            row.aliases = b.get("aliases", [])
-            row.lat, row.lon = b["lat"], b["lon"]
-            row.zone, row.category = b["zone"], b["category"]
-            row.year_built, row.floors = b["year_built"], b["floors"]
-            row.photo = b.get("photo")
-            row.photo_credit = b.get("photo_credit")
-            s.merge(row)
+        s.add_all(
+            BuildingRow(
+                id=b["id"],
+                name=b["name"],
+                aliases=b.get("aliases", []),
+                lat=b["lat"],
+                lon=b["lon"],
+                zone=b["zone"],
+                category=b["category"],
+                year_built=b["year_built"],
+                floors=b["floors"],
+                photo=b.get("photo"),
+                photo_credit=b.get("photo_credit"),
+            )
+            for b in buildings
+        )
 
 
 def session_factory(engine):

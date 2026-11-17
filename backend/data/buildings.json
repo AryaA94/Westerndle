@@ -1,45 +1,755 @@
 {
-  "_note": "Starter data written from memory. Coordinates, years, and floor counts are APPROXIMATE -- check each against a campus map and Western's facilities pages before launch. 'photo' is optional: put an image in frontend/public/photos/ and set e.g. \"photos/ucc.jpg\".",
+  "_note": "Coordinates come from OpenStreetMap (run tools/osm_sync.py to refresh). Floor counts marked 'floors' in 'verified' are from OpenStreetMap too. year_built, and any floor count not marked verified, were written from memory and should be checked against Western's facilities pages. Zones are computed from position by tools/osm_sync.py. 'photo' is a path under frontend/public/ and needs a matching 'photo_credit'.",
   "buildings": [
-    {"id": "uc",    "name": "University College", "aliases": ["UC"], "lat": 43.00905, "lon": -81.27305, "zone": "Core", "category": "Academic", "year_built": 1924, "floors": 4},
-    {"id": "mc",    "name": "Middlesex College", "aliases": ["MC"], "lat": 43.00960, "lon": -81.27250, "zone": "Core", "category": "Academic", "year_built": 1959, "floors": 4},
-    {"id": "pab",   "name": "Physics and Astronomy Building", "aliases": ["PAB", "Physics"], "lat": 43.00865, "lon": -81.27385, "zone": "Core", "category": "Science", "year_built": 1966, "floors": 3},
-    {"id": "nsc",   "name": "Natural Sciences Centre", "aliases": ["NSC", "Taylor Library"], "lat": 43.00935, "lon": -81.27410, "zone": "Core", "category": "Science", "year_built": 1969, "floors": 3},
-    {"id": "bgs",   "name": "Biological and Geological Sciences Building", "aliases": ["BGS"], "lat": 43.00985, "lon": -81.27525, "zone": "Core", "category": "Science", "year_built": 1971, "floors": 4},
-    {"id": "chb",   "name": "Chemistry Building", "aliases": ["ChB", "Chem"], "lat": 43.01080, "lon": -81.27545, "zone": "North", "category": "Science", "year_built": 1969, "floors": 3},
-    {"id": "th",    "name": "Thames Hall", "aliases": ["TH"], "lat": 43.00800, "lon": -81.27215, "zone": "Core", "category": "Services", "year_built": 1950, "floors": 3},
-    {"id": "stvh",  "name": "Stevenson Hall", "aliases": ["StvH"], "lat": 43.00995, "lon": -81.27190, "zone": "Core", "category": "Academic", "year_built": 1985, "floors": 4},
-    {"id": "lwh",   "name": "Lawson Hall", "aliases": ["LwH"], "lat": 43.00965, "lon": -81.27150, "zone": "Core", "category": "Academic", "year_built": 1985, "floors": 3},
-    {"id": "tc",    "name": "Talbot College", "aliases": ["TC"], "lat": 43.00775, "lon": -81.27330, "zone": "Core", "category": "Arts", "year_built": 1967, "floors": 3},
-    {"id": "mb",    "name": "Music Building", "aliases": ["MB", "Don Wright Faculty of Music"], "lat": 43.00720, "lon": -81.27290, "zone": "Core", "category": "Arts", "year_built": 1976, "floors": 3},
-    {"id": "ucc",   "name": "University Community Centre", "aliases": ["UCC", "The Spoke", "The Wave"], "lat": 43.00815, "lon": -81.27525, "zone": "Core", "category": "Student Life", "year_built": 1969, "floors": 3},
-    {"id": "wl",    "name": "D.B. Weldon Library", "aliases": ["Weldon", "WL"], "lat": 43.00780, "lon": -81.27420, "zone": "Core", "category": "Library", "year_built": 1972, "floors": 5},
-    {"id": "ssc",   "name": "Social Science Centre", "aliases": ["SSC"], "lat": 43.00680, "lon": -81.27565, "zone": "Core", "category": "Academic", "year_built": 1974, "floors": 9},
-    {"id": "sh",    "name": "Somerville House", "aliases": ["SH"], "lat": 43.00860, "lon": -81.27455, "zone": "Core", "category": "Student Life", "year_built": 1929, "floors": 3},
-    {"id": "ahb",   "name": "Arthur and Sonia Labatt Health Sciences Building", "aliases": ["HSB", "Labatt Health Sciences"], "lat": 43.00470, "lon": -81.27280, "zone": "South", "category": "Health", "year_built": 2004, "floors": 4},
-    {"id": "fnb",   "name": "FIMS and Nursing Building", "aliases": ["FNB"], "lat": 43.00590, "lon": -81.27625, "zone": "South", "category": "Academic", "year_built": 2005, "floors": 4},
-    {"id": "wsrc",  "name": "Western Student Recreation Centre", "aliases": ["WSRC", "Rec Centre"], "lat": 43.00395, "lon": -81.27455, "zone": "South", "category": "Athletics", "year_built": 2009, "floors": 3},
-    {"id": "ah",    "name": "Alumni Hall", "aliases": ["AH"], "lat": 43.00460, "lon": -81.27420, "zone": "South", "category": "Athletics", "year_built": 1972, "floors": 2},
-    {"id": "vac",   "name": "John Labatt Visual Arts Centre", "aliases": ["VAC", "Visual Arts Centre"], "lat": 43.00410, "lon": -81.27255, "zone": "South", "category": "Arts", "year_built": 1994, "floors": 2},
-    {"id": "seb",   "name": "Spencer Engineering Building", "aliases": ["SEB", "Engineering"], "lat": 43.00460, "lon": -81.27610, "zone": "South", "category": "Engineering", "year_built": 1958, "floors": 4},
-    {"id": "teb",   "name": "Thompson Engineering Building", "aliases": ["TEB"], "lat": 43.00505, "lon": -81.27670, "zone": "South", "category": "Engineering", "year_built": 1990, "floors": 4},
-    {"id": "aceb",  "name": "Amit Chakma Engineering Building", "aliases": ["ACEB"], "lat": 43.00425, "lon": -81.27690, "zone": "South", "category": "Engineering", "year_built": 2016, "floors": 4},
-    {"id": "cmlp",  "name": "Claudette MacKay-Lassonde Pavilion", "aliases": ["CMLP"], "lat": 43.00540, "lon": -81.27720, "zone": "South", "category": "Engineering", "year_built": 2005, "floors": 3},
-    {"id": "msb",   "name": "Medical Sciences Building", "aliases": ["MSB", "Med Sci"], "lat": 43.00930, "lon": -81.27645, "zone": "Core", "category": "Health", "year_built": 1966, "floors": 5},
-    {"id": "dsb",   "name": "Dental Sciences Building", "aliases": ["DSB", "Dental"], "lat": 43.00985, "lon": -81.27690, "zone": "Core", "category": "Health", "year_built": 1973, "floors": 5},
-    {"id": "wirb",  "name": "Western Interdisciplinary Research Building", "aliases": ["WIRB"], "lat": 43.01025, "lon": -81.27380, "zone": "North", "category": "Research", "year_built": 2011, "floors": 4},
-    {"id": "ivey",  "name": "Richard Ivey Building", "aliases": ["Ivey", "Ivey Business School"], "lat": 43.01195, "lon": -81.27715, "zone": "North", "category": "Academic", "year_built": 2013, "floors": 4},
-    {"id": "robarts","name": "Robarts Research Institute", "aliases": ["Robarts"], "lat": 43.01265, "lon": -81.27570, "zone": "North", "category": "Research", "year_built": 1986, "floors": 5},
-    {"id": "ta",    "name": "Thompson Arena", "aliases": ["Thompson Rec", "Arena"], "lat": 43.01310, "lon": -81.27480, "zone": "North", "category": "Athletics", "year_built": 1975, "floors": 2},
-    {"id": "tds",   "name": "TD Stadium", "aliases": ["Stadium", "Alumni Field"], "lat": 43.01460, "lon": -81.27720, "zone": "North", "category": "Athletics", "year_built": 2000, "floors": 2},
-    {"id": "ssb",   "name": "Support Services Building", "aliases": ["SSB"], "lat": 43.01360, "lon": -81.27390, "zone": "North", "category": "Services", "year_built": 2003, "floors": 4},
-    {"id": "smh",   "name": "Saugeen-Maitland Hall", "aliases": ["Saugeen", "SMH"], "lat": 43.00990, "lon": -81.28090, "zone": "Residence", "category": "Residence", "year_built": 1969, "floors": 11},
-    {"id": "dh",    "name": "Delaware Hall", "aliases": ["Delaware"], "lat": 43.00420, "lon": -81.28155, "zone": "Residence", "category": "Residence", "year_built": 1960, "floors": 4},
-    {"id": "msh",   "name": "Medway-Sydenham Hall", "aliases": ["Med-Syd", "Medsyd"], "lat": 43.00330, "lon": -81.27955, "zone": "Residence", "category": "Residence", "year_built": 1966, "floors": 4},
-    {"id": "eh",    "name": "Elgin Hall", "aliases": ["Elgin"], "lat": 43.00575, "lon": -81.28110, "zone": "Residence", "category": "Residence", "year_built": 2002, "floors": 6},
-    {"id": "oh",    "name": "Ontario Hall", "aliases": ["Ontario"], "lat": 43.01110, "lon": -81.28005, "zone": "Residence", "category": "Residence", "year_built": 2004, "floors": 9},
-    {"id": "huron", "name": "Huron University College", "aliases": ["Huron", "Huron University"], "lat": 43.01270, "lon": -81.28320, "zone": "Affiliate", "category": "Academic", "year_built": 1951, "floors": 3},
-    {"id": "kings", "name": "King's University College", "aliases": ["King's", "Kings"], "lat": 43.01530, "lon": -81.26205, "zone": "Affiliate", "category": "Academic", "year_built": 1955, "floors": 3},
-    {"id": "brescia","name": "Brescia University College", "aliases": ["Brescia"], "lat": 43.00330, "lon": -81.28820, "zone": "Affiliate", "category": "Academic", "year_built": 1925, "floors": 4}
+    {
+      "id": "uc",
+      "name": "University College",
+      "aliases": [
+        "UC"
+      ],
+      "lat": 43.00862,
+      "lon": -81.27326,
+      "category": "Academic",
+      "year_built": 1924,
+      "floors": 3,
+      "osm_name": "University College",
+      "verified": [
+        "coordinates",
+        "floors"
+      ],
+      "zone": "Core"
+    },
+    {
+      "id": "mc",
+      "name": "Middlesex College",
+      "aliases": [
+        "MC"
+      ],
+      "lat": 43.00938,
+      "lon": -81.27038,
+      "category": "Academic",
+      "year_built": 1959,
+      "floors": 4,
+      "osm_name": "Middlesex College",
+      "verified": [
+        "coordinates"
+      ],
+      "zone": "Core"
+    },
+    {
+      "id": "pab",
+      "name": "Physics and Astronomy Building",
+      "aliases": [
+        "PAB",
+        "Physics"
+      ],
+      "lat": 43.00976,
+      "lon": -81.27261,
+      "category": "Science",
+      "year_built": 1966,
+      "floors": 3,
+      "osm_name": "Physics Building",
+      "verified": [
+        "coordinates"
+      ],
+      "zone": "Core"
+    },
+    {
+      "id": "nsc",
+      "name": "Natural Sciences Centre",
+      "aliases": [
+        "NSC",
+        "Taylor Library"
+      ],
+      "lat": 43.01058,
+      "lon": -81.27313,
+      "category": "Science",
+      "year_built": 1969,
+      "floors": 3,
+      "osm_name": "Natural Sciences Building",
+      "verified": [
+        "coordinates"
+      ],
+      "zone": "North"
+    },
+    {
+      "id": "bgs",
+      "name": "Biological and Geological Sciences Building",
+      "aliases": [
+        "BGS"
+      ],
+      "lat": 43.01072,
+      "lon": -81.2722,
+      "category": "Science",
+      "year_built": 1971,
+      "floors": 5,
+      "osm_name": "Biological & Geological Sciences",
+      "verified": [
+        "coordinates",
+        "floors"
+      ],
+      "zone": "North"
+    },
+    {
+      "id": "chb",
+      "name": "Chemistry Building",
+      "aliases": [
+        "ChB",
+        "Chem"
+      ],
+      "lat": 43.01142,
+      "lon": -81.27276,
+      "category": "Science",
+      "year_built": 1969,
+      "floors": 3,
+      "osm_name": "Chemistry Building",
+      "verified": [
+        "coordinates"
+      ],
+      "zone": "North"
+    },
+    {
+      "id": "th",
+      "name": "Thames Hall",
+      "aliases": [
+        "TH"
+      ],
+      "lat": 43.00688,
+      "lon": -81.27437,
+      "category": "Services",
+      "year_built": 1950,
+      "floors": 3,
+      "osm_name": "Thames Hall",
+      "verified": [
+        "coordinates"
+      ],
+      "zone": "Core"
+    },
+    {
+      "id": "stvh",
+      "name": "Stevenson Hall",
+      "aliases": [
+        "StvH"
+      ],
+      "lat": 43.00849,
+      "lon": -81.27414,
+      "category": "Academic",
+      "year_built": 1985,
+      "floors": 4,
+      "osm_name": "Stevenson Hall",
+      "verified": [
+        "coordinates"
+      ],
+      "zone": "Core"
+    },
+    {
+      "id": "lwh",
+      "name": "Lawson Hall",
+      "aliases": [
+        "LwH"
+      ],
+      "lat": 43.00897,
+      "lon": -81.27384,
+      "category": "Academic",
+      "year_built": 1985,
+      "floors": 3,
+      "osm_name": "Lawson Hall",
+      "verified": [
+        "coordinates"
+      ],
+      "zone": "Core"
+    },
+    {
+      "id": "tc",
+      "name": "Talbot College",
+      "aliases": [
+        "TC"
+      ],
+      "lat": 43.00738,
+      "lon": -81.27062,
+      "category": "Arts",
+      "year_built": 1967,
+      "floors": 5,
+      "osm_name": "Talbot College",
+      "verified": [
+        "coordinates",
+        "floors"
+      ],
+      "zone": "Core"
+    },
+    {
+      "id": "mb",
+      "name": "Music Building",
+      "aliases": [
+        "MB",
+        "Don Wright Faculty of Music"
+      ],
+      "lat": 43.00677,
+      "lon": -81.27104,
+      "category": "Arts",
+      "year_built": 1976,
+      "floors": 3,
+      "osm_name": "Music Building",
+      "verified": [
+        "coordinates"
+      ],
+      "zone": "Core"
+    },
+    {
+      "id": "ucc",
+      "name": "University Community Centre",
+      "aliases": [
+        "UCC",
+        "The Spoke",
+        "The Wave"
+      ],
+      "lat": 43.00868,
+      "lon": -81.27617,
+      "category": "Student Life",
+      "year_built": 1969,
+      "floors": 4,
+      "osm_name": "University Community Center",
+      "verified": [
+        "coordinates",
+        "floors"
+      ],
+      "zone": "Core"
+    },
+    {
+      "id": "wl",
+      "name": "D.B. Weldon Library",
+      "aliases": [
+        "Weldon",
+        "WL"
+      ],
+      "lat": 43.00773,
+      "lon": -81.27564,
+      "category": "Library",
+      "year_built": 1972,
+      "floors": 5,
+      "osm_name": "Weldon Library",
+      "verified": [
+        "coordinates"
+      ],
+      "zone": "Core"
+    },
+    {
+      "id": "ssc",
+      "name": "Social Science Centre",
+      "aliases": [
+        "SSC"
+      ],
+      "lat": 43.00932,
+      "lon": -81.27534,
+      "category": "Academic",
+      "year_built": 1974,
+      "floors": 9,
+      "osm_name": "Social Science Center",
+      "verified": [
+        "coordinates"
+      ],
+      "zone": "Core"
+    },
+    {
+      "id": "sh",
+      "name": "Somerville House",
+      "aliases": [
+        "SH"
+      ],
+      "lat": 43.00769,
+      "lon": -81.2741,
+      "category": "Student Life",
+      "year_built": 1929,
+      "floors": 3,
+      "osm_name": "Somerville House",
+      "verified": [
+        "coordinates"
+      ],
+      "zone": "Core"
+    },
+    {
+      "id": "ahb",
+      "name": "Arthur and Sonia Labatt Health Sciences Building",
+      "aliases": [
+        "HSB",
+        "Labatt Health Sciences"
+      ],
+      "lat": 43.00535,
+      "lon": -81.27286,
+      "category": "Health",
+      "year_built": 2004,
+      "floors": 8,
+      "osm_name": "Health Sciences Building",
+      "verified": [
+        "coordinates",
+        "floors"
+      ],
+      "zone": "South"
+    },
+    {
+      "id": "fnb",
+      "name": "FIMS and Nursing Building",
+      "aliases": [
+        "FNB"
+      ],
+      "lat": 43.00605,
+      "lon": -81.27256,
+      "category": "Academic",
+      "year_built": 2005,
+      "floors": 4,
+      "osm_name": "FIMS & Nursing Building",
+      "verified": [
+        "coordinates"
+      ],
+      "zone": "South"
+    },
+    {
+      "id": "wsrc",
+      "name": "Western Student Recreation Centre",
+      "aliases": [
+        "WSRC",
+        "Rec Centre"
+      ],
+      "lat": 43.00312,
+      "lon": -81.27425,
+      "category": "Athletics",
+      "year_built": 2009,
+      "floors": 3,
+      "osm_name": "Western Student Recreation Centre",
+      "verified": [
+        "coordinates"
+      ],
+      "zone": "South"
+    },
+    {
+      "id": "ah",
+      "name": "Alumni Hall",
+      "aliases": [
+        "AH"
+      ],
+      "lat": 43.00594,
+      "lon": -81.27455,
+      "category": "Athletics",
+      "year_built": 1972,
+      "floors": 2,
+      "osm_name": "Alumni Hall",
+      "verified": [
+        "coordinates"
+      ],
+      "zone": "South"
+    },
+    {
+      "id": "vac",
+      "name": "John Labatt Visual Arts Centre",
+      "aliases": [
+        "VAC",
+        "Visual Arts Centre"
+      ],
+      "lat": 43.01087,
+      "lon": -81.26992,
+      "category": "Arts",
+      "year_built": 1994,
+      "floors": 2,
+      "osm_name": "John Labatt Visual Art Centre",
+      "verified": [
+        "coordinates"
+      ],
+      "zone": "North"
+    },
+    {
+      "id": "seb",
+      "name": "Spencer Engineering Building",
+      "aliases": [
+        "SEB",
+        "Engineering"
+      ],
+      "lat": 43.00518,
+      "lon": -81.27591,
+      "category": "Engineering",
+      "year_built": 1958,
+      "floors": 4,
+      "osm_name": "Spencer Engineering Building",
+      "verified": [
+        "coordinates"
+      ],
+      "zone": "South"
+    },
+    {
+      "id": "teb",
+      "name": "Thompson Engineering Building",
+      "aliases": [
+        "TEB"
+      ],
+      "lat": 43.00425,
+      "lon": -81.27533,
+      "category": "Engineering",
+      "year_built": 1990,
+      "floors": 4,
+      "osm_name": "Thompson Engineering Building",
+      "verified": [
+        "coordinates"
+      ],
+      "zone": "South"
+    },
+    {
+      "id": "aceb",
+      "name": "Amit Chakma Engineering Building",
+      "aliases": [
+        "ACEB"
+      ],
+      "lat": 43.00423,
+      "lon": -81.27631,
+      "category": "Engineering",
+      "year_built": 2016,
+      "floors": 4,
+      "osm_name": "Amit Chakma Engineering Building",
+      "verified": [
+        "coordinates",
+        "floors"
+      ],
+      "zone": "South"
+    },
+    {
+      "id": "cmlp",
+      "name": "Claudette MacKay-Lassonde Pavilion",
+      "aliases": [
+        "CMLP"
+      ],
+      "lat": 43.00499,
+      "lon": -81.27542,
+      "category": "Engineering",
+      "year_built": 2005,
+      "floors": 3,
+      "osm_name": "Claudette Mackay-Lassonde Pavilion",
+      "verified": [
+        "coordinates"
+      ],
+      "zone": "South"
+    },
+    {
+      "id": "msb",
+      "name": "Medical Sciences Building",
+      "aliases": [
+        "MSB",
+        "Med Sci"
+      ],
+      "lat": 43.01025,
+      "lon": -81.27457,
+      "category": "Health",
+      "year_built": 1966,
+      "floors": 5,
+      "osm_name": "Medical Sciences Building",
+      "verified": [
+        "coordinates"
+      ],
+      "zone": "North"
+    },
+    {
+      "id": "dsb",
+      "name": "Dental Sciences Building",
+      "aliases": [
+        "DSB",
+        "Dental"
+      ],
+      "lat": 43.01102,
+      "lon": -81.27472,
+      "category": "Health",
+      "year_built": 1973,
+      "floors": 5,
+      "osm_name": "Dental Sciences Building",
+      "verified": [
+        "coordinates"
+      ],
+      "zone": "North"
+    },
+    {
+      "id": "wirb",
+      "name": "Western Interdisciplinary Research Building",
+      "aliases": [
+        "WIRB"
+      ],
+      "lat": 43.01175,
+      "lon": -81.271,
+      "category": "Research",
+      "year_built": 2011,
+      "floors": 7,
+      "osm_name": "Western Interdisciplinary Research Building",
+      "verified": [
+        "coordinates",
+        "floors"
+      ],
+      "zone": "North"
+    },
+    {
+      "id": "ivey",
+      "name": "Richard Ivey Building",
+      "aliases": [
+        "Ivey",
+        "Ivey Business School"
+      ],
+      "lat": 43.00443,
+      "lon": -81.27804,
+      "category": "Academic",
+      "year_built": 2013,
+      "floors": 4,
+      "osm_name": "Richard Ivey Building",
+      "verified": [
+        "coordinates"
+      ],
+      "zone": "South"
+    },
+    {
+      "id": "robarts",
+      "name": "Robarts Research Institute",
+      "aliases": [
+        "Robarts"
+      ],
+      "lat": 43.01184,
+      "lon": -81.27372,
+      "category": "Research",
+      "year_built": 1986,
+      "floors": 5,
+      "osm_name": "Robarts Research Institute",
+      "verified": [
+        "coordinates"
+      ],
+      "zone": "North"
+    },
+    {
+      "id": "ta",
+      "name": "Thompson Arena",
+      "aliases": [
+        "Thompson Rec",
+        "Arena"
+      ],
+      "lat": 43.00305,
+      "lon": -81.27543,
+      "category": "Athletics",
+      "year_built": 1975,
+      "floors": 2,
+      "osm_name": "Thompson Arena",
+      "verified": [
+        "coordinates"
+      ],
+      "zone": "South"
+    },
+    {
+      "id": "ssb",
+      "name": "Support Services Building",
+      "aliases": [
+        "SSB"
+      ],
+      "lat": 43.01055,
+      "lon": -81.27854,
+      "category": "Services",
+      "year_built": 2003,
+      "floors": 6,
+      "osm_name": "Support Services Building",
+      "verified": [
+        "coordinates",
+        "floors"
+      ],
+      "zone": "North"
+    },
+    {
+      "id": "smh",
+      "name": "Saugeen-Maitland Hall",
+      "aliases": [
+        "Saugeen",
+        "SMH"
+      ],
+      "lat": 43.01148,
+      "lon": -81.27907,
+      "category": "Residence",
+      "year_built": 1969,
+      "floors": 13,
+      "osm_name": "Saugeen Maitland Hall (Residence)",
+      "verified": [
+        "coordinates",
+        "floors"
+      ],
+      "zone": "Residence"
+    },
+    {
+      "id": "dh",
+      "name": "Delaware Hall",
+      "aliases": [
+        "Delaware"
+      ],
+      "lat": 43.00865,
+      "lon": -81.26891,
+      "category": "Residence",
+      "year_built": 1960,
+      "floors": 4,
+      "osm_name": "Delaware Hall (Residence)",
+      "verified": [
+        "coordinates"
+      ],
+      "zone": "Residence"
+    },
+    {
+      "id": "msh",
+      "name": "Medway-Sydenham Hall",
+      "aliases": [
+        "Med-Syd",
+        "Medsyd"
+      ],
+      "lat": 43.00767,
+      "lon": -81.26434,
+      "category": "Residence",
+      "year_built": 1966,
+      "floors": 4,
+      "osm_name": [
+        "Medway Hall (Residence)",
+        "Sydenham Hall (Residence)"
+      ],
+      "verified": [
+        "coordinates"
+      ],
+      "zone": "Residence"
+    },
+    {
+      "id": "eh",
+      "name": "Elgin Hall",
+      "aliases": [
+        "Elgin"
+      ],
+      "lat": 43.00831,
+      "lon": -81.26495,
+      "category": "Residence",
+      "year_built": 2002,
+      "floors": 6,
+      "osm_name": "Elgin Hall (Residence)",
+      "verified": [
+        "coordinates"
+      ],
+      "zone": "Residence"
+    },
+    {
+      "id": "oh",
+      "name": "Ontario Hall",
+      "aliases": [
+        "Ontario"
+      ],
+      "lat": 43.00043,
+      "lon": -81.27927,
+      "category": "Residence",
+      "year_built": 2004,
+      "floors": 9,
+      "osm_name": "Ontario Hall",
+      "verified": [
+        "coordinates"
+      ],
+      "zone": "Residence"
+    },
+    {
+      "id": "huron",
+      "name": "Huron University College",
+      "aliases": [
+        "Huron",
+        "Huron University"
+      ],
+      "lat": 43.00871,
+      "lon": -81.27837,
+      "category": "Academic",
+      "year_built": 1951,
+      "floors": 3,
+      "osm_name": "Huron University College",
+      "affiliate": true,
+      "verified": [
+        "coordinates"
+      ],
+      "zone": "Affiliate"
+    },
+    {
+      "id": "brescia",
+      "name": "Brescia University College",
+      "aliases": [
+        "Brescia"
+      ],
+      "lat": 43.00389,
+      "lon": -81.28333,
+      "category": "Academic",
+      "year_built": 1925,
+      "floors": 4,
+      "osm_name": "Brescia University College",
+      "affiliate": true,
+      "verified": [
+        "coordinates"
+      ],
+      "zone": "Affiliate"
+    },
+    {
+      "id": "cronyn",
+      "name": "Cronyn Observatory",
+      "aliases": [
+        "Observatory"
+      ],
+      "osm_name": "Cronyn Observatory",
+      "category": "Science",
+      "year_built": 1940,
+      "floors": 2,
+      "lat": 43.00559,
+      "lon": -81.27523,
+      "verified": [
+        "coordinates"
+      ],
+      "zone": "South"
+    },
+    {
+      "id": "wssb",
+      "name": "Western Student Services Building",
+      "aliases": [
+        "WSSB",
+        "Student Services"
+      ],
+      "osm_name": "Western Student Services Building",
+      "category": "Services",
+      "year_built": 2006,
+      "floors": 4,
+      "lat": 43.00822,
+      "lon": -81.27662,
+      "verified": [
+        "coordinates",
+        "floors"
+      ],
+      "zone": "Core"
+    },
+    {
+      "id": "essex",
+      "name": "Essex Hall",
+      "aliases": [
+        "Essex"
+      ],
+      "osm_name": "Essex Hall",
+      "category": "Residence",
+      "year_built": 2003,
+      "floors": 8,
+      "lat": 43.00134,
+      "lon": -81.27563,
+      "verified": [
+        "coordinates",
+        "floors"
+      ],
+      "zone": "Residence"
+    },
+    {
+      "id": "bayfield",
+      "name": "Bayfield Hall",
+      "aliases": [
+        "Bayfield"
+      ],
+      "osm_name": "Bayfield Hall (Residence)",
+      "category": "Residence",
+      "year_built": 1969,
+      "floors": 14,
+      "lat": 43.01266,
+      "lon": -81.27878,
+      "verified": [
+        "coordinates",
+        "floors"
+      ],
+      "zone": "Residence"
+    }
   ]
 }

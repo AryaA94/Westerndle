@@ -1,0 +1,1682 @@
+{
+  "version": 0.6,
+  "generator": "Overpass API 0.7.62.11 87bfad18",
+  "osm3s": {
+    "timestamp_osm_base": "2026-11-17T04:51:30Z",
+    "copyright": "The data included in this document is from www.openstreetmap.org. The data is made available under ODbL."
+  },
+  "elements": [
+
+{
+  "type": "way",
+  "id": 116779542,
+  "center": {
+    "lat": 43.0105771,
+    "lon": -81.2731287
+  },
+  "tags": {
+    "building": "university",
+    "name": "Natural Sciences Building",
+    "operator": "University of Western Ontario"
+  }
+},
+{
+  "type": "way",
+  "id": 116779543,
+  "center": {
+    "lat": 43.0073837,
+    "lon": -81.2706194
+  },
+  "tags": {
+    "building": "university",
+    "building:levels": "5",
+    "building:material": "stone",
+    "name": "Talbot College",
+    "operator": "University of Western Ontario"
+  }
+},
+{
+  "type": "way",
+  "id": 118764089,
+  "center": {
+    "lat": 43.0102710,
+    "lon": -81.2714620
+  },
+  "tags": {
+    "building": "university",
+    "name": "Collip Medical Research Building"
+  }
+},
+{
+  "type": "way",
+  "id": 118764090,
+  "center": {
+    "lat": 43.0040427,
+    "lon": -81.2757788
+  },
+  "tags": {
+    "building": "university",
+    "name": "Boundary Layer Wind Tunnel Laboratory"
+  }
+},
+{
+  "type": "way",
+  "id": 118764092,
+  "center": {
+    "lat": 43.0086169,
+    "lon": -81.2732649
+  },
+  "tags": {
+    "building": "university",
+    "building:levels": "3",
+    "name": "University College",
+    "wikimedia_commons": "Category:University College (Western University)"
+  }
+},
+{
+  "type": "way",
+  "id": 118764093,
+  "center": {
+    "lat": 43.0099328,
+    "lon": -81.2714649
+  },
+  "tags": {
+    "building": "university",
+    "building:levels": "4",
+    "building:levels:underground": "1",
+    "name": "Western Science Centre"
+  }
+},
+{
+  "type": "way",
+  "id": 118764094,
+  "center": {
+    "lat": 43.0030460,
+    "lon": -81.2754343
+  },
+  "tags": {
+    "building": "university",
+    "leisure": "sports_centre",
+    "name": "Thompson Arena",
+    "wikidata": "Q16632759"
+  }
+},
+{
+  "type": "way",
+  "id": 118764095,
+  "center": {
+    "lat": 43.0068794,
+    "lon": -81.2743716
+  },
+  "tags": {
+    "building": "university",
+    "name": "Thames Hall"
+  }
+},
+{
+  "type": "way",
+  "id": 118764097,
+  "center": {
+    "lat": 43.0065861,
+    "lon": -81.2761034
+  },
+  "tags": {
+    "building": "university",
+    "name": "Law School"
+  }
+},
+{
+  "type": "way",
+  "id": 118764098,
+  "center": {
+    "lat": 43.0042534,
+    "lon": -81.2753344
+  },
+  "tags": {
+    "building": "university",
+    "name": "Thompson Engineering Building"
+  }
+},
+{
+  "type": "way",
+  "id": 118764099,
+  "center": {
+    "lat": 43.0093759,
+    "lon": -81.2703795
+  },
+  "tags": {
+    "building": "university",
+    "name": "Middlesex College"
+  }
+},
+{
+  "type": "way",
+  "id": 118764108,
+  "center": {
+    "lat": 43.0077251,
+    "lon": -81.2756386
+  },
+  "tags": {
+    "amenity": "library",
+    "building": "university",
+    "name": "Weldon Library",
+    "operator": "Western University",
+    "operator:type": "university",
+    "wikidata": "Q5203502",
+    "wikipedia": "en:D. B. Weldon Library"
+  }
+},
+{
+  "type": "way",
+  "id": 118764109,
+  "center": {
+    "lat": 43.0084909,
+    "lon": -81.2741448
+  },
+  "tags": {
+    "building": "university",
+    "name": "Stevenson Hall"
+  }
+},
+{
+  "type": "way",
+  "id": 118764110,
+  "center": {
+    "lat": 43.0051817,
+    "lon": -81.2759052
+  },
+  "tags": {
+    "building": "university",
+    "name": "Spencer Engineering Building",
+    "wikidata": "Q7576041"
+  }
+},
+{
+  "type": "way",
+  "id": 119875051,
+  "center": {
+    "lat": 42.9991615,
+    "lon": -81.2789252
+  },
+  "tags": {
+    "building": "university",
+    "name": "Althouse"
+  }
+},
+{
+  "type": "way",
+  "id": 119875059,
+  "center": {
+    "lat": 43.0015473,
+    "lon": -81.2772154
+  },
+  "tags": {
+    "amenity": "fast_food",
+    "brand": "Subway",
+    "brand:wikidata": "Q244457",
+    "brand:wikipedia": "en:Subway (restaurant)",
+    "building": "yes",
+    "cuisine": "sandwich",
+    "name": "Subway",
+    "takeaway": "yes"
+  }
+},
+{
+  "type": "way",
+  "id": 119875060,
+  "center": {
+    "lat": 42.9998762,
+    "lon": -81.2756514
+  },
+  "tags": {
+    "amenity": "university",
+    "building": "dormitory",
+    "name": "London Hall"
+  }
+},
+{
+  "type": "way",
+  "id": 119875065,
+  "center": {
+    "lat": 42.9992606,
+    "lon": -81.2782265
+  },
+  "tags": {
+    "building": "university",
+    "name": "Althouse"
+  }
+},
+{
+  "type": "way",
+  "id": 119875067,
+  "center": {
+    "lat": 43.0010343,
+    "lon": -81.2769258
+  },
+  "tags": {
+    "amenity": "restaurant",
+    "brand": "Pizza Hut",
+    "brand:wikidata": "Q191615",
+    "brand:wikipedia": "en:Pizza Hut",
+    "building": "yes",
+    "cuisine": "pizza",
+    "name": "Pizza Hut"
+  }
+},
+{
+  "type": "way",
+  "id": 119875069,
+  "center": {
+    "lat": 43.0007552,
+    "lon": -81.2768475
+  },
+  "tags": {
+    "addr:city": "London",
+    "addr:housenumber": "1149",
+    "addr:postcode": "N6G 5K8",
+    "addr:street": "Western Road",
+    "amenity": "restaurant",
+    "building": "yes",
+    "cuisine": "middle_eastern",
+    "delivery": "yes",
+    "name": "Barakat",
+    "opening_hours": "Mo-Su 10:30-01:00",
+    "outdoor_seating": "no",
+    "phone": "+1-519-850-8080",
+    "smoking": "no",
+    "takeaway": "yes",
+    "website": "https://www.barakatrestaurant.com/"
+  }
+},
+{
+  "type": "way",
+  "id": 119875073,
+  "center": {
+    "lat": 43.0013419,
+    "lon": -81.2756302
+  },
+  "tags": {
+    "amenity": "university",
+    "building": "dormitory",
+    "building:levels": "8",
+    "name": "Essex Hall"
+  }
+},
+{
+  "type": "way",
+  "id": 125955590,
+  "center": {
+    "lat": 43.0143578,
+    "lon": -81.2835391
+  },
+  "tags": {
+    "building": "yes",
+    "name": "Windermere Manor Hotel & Conference Centre",
+    "tourism": "hotel"
+  }
+},
+{
+  "type": "way",
+  "id": 125955591,
+  "center": {
+    "lat": 43.0167186,
+    "lon": -81.2786102
+  },
+  "tags": {
+    "addr:city": "London",
+    "addr:housenumber": "700",
+    "addr:province": "Ontario",
+    "addr:street": "Collip Circle",
+    "building": "office",
+    "building:levels": "3",
+    "name": "The Stiller Centre"
+  }
+},
+{
+  "type": "way",
+  "id": 125955605,
+  "center": {
+    "lat": 43.0158480,
+    "lon": -81.2780243
+  },
+  "tags": {
+    "addr:city": "London",
+    "addr:housenumber": "800",
+    "addr:province": "Ontario",
+    "addr:street": "Collip Circle",
+    "building": "Federal",
+    "building:levels": "2",
+    "name": "National Research Council of Canada"
+  }
+},
+{
+  "type": "way",
+  "id": 126565077,
+  "center": {
+    "lat": 43.0163848,
+    "lon": -81.2683821
+  },
+  "tags": {
+    "amenity": "social_facility",
+    "building": "yes",
+    "name": "Windermere on the Mount",
+    "social_facility": "assisted_living",
+    "social_facility:for": "senior",
+    "source:name": "note 794987"
+  }
+},
+{
+  "type": "way",
+  "id": 126570405,
+  "center": {
+    "lat": 43.0183514,
+    "lon": -81.2631619
+  },
+  "tags": {
+    "building": "yes",
+    "name": "Scouts Canada"
+  }
+},
+{
+  "type": "way",
+  "id": 126572990,
+  "center": {
+    "lat": 43.0183539,
+    "lon": -81.2606312
+  },
+  "tags": {
+    "addr:city": "London",
+    "addr:housenumber": "551",
+    "addr:postcode": "N5X2T1",
+    "addr:province": "Ontario",
+    "addr:street": "Windermere Road",
+    "building": "yes",
+    "internet_access": "wlan",
+    "internet_access:fee": "no",
+    "name": "Spencer Hotel & Conference Centre",
+    "phone": "+1 519 679 4546",
+    "tourism": "hotel",
+    "website": "https://www.iveyspencerleadershipcentre.com"
+  }
+},
+{
+  "type": "way",
+  "id": 126668336,
+  "center": {
+    "lat": 43.0087131,
+    "lon": -81.2783697
+  },
+  "tags": {
+    "building": "university",
+    "name": "Huron University College",
+    "wikidata": "Q5946948"
+  }
+},
+{
+  "type": "way",
+  "id": 126668337,
+  "center": {
+    "lat": 43.0074800,
+    "lon": -81.2722671
+  },
+  "tags": {
+    "building": "university",
+    "name": "International & Graduate Affairs"
+  }
+},
+{
+  "type": "way",
+  "id": 126668339,
+  "center": {
+    "lat": 43.0122649,
+    "lon": -81.2797238
+  },
+  "tags": {
+    "building": "yes",
+    "name": "Beaver Hall (Residence)"
+  }
+},
+{
+  "type": "way",
+  "id": 126668340,
+  "center": {
+    "lat": 43.0120515,
+    "lon": -81.2802156
+  },
+  "tags": {
+    "building": "yes",
+    "name": "Ausable Hall (Residence)"
+  }
+},
+{
+  "type": "way",
+  "id": 126668341,
+  "center": {
+    "lat": 43.0134621,
+    "lon": -81.2776567
+  },
+  "tags": {
+    "addr:city": "London",
+    "addr:housenumber": "1421",
+    "addr:street": "Western Road",
+    "amenity": "university",
+    "building": "dormitory",
+    "building:levels": "8",
+    "name": "Lambton Hall (Residence)"
+  }
+},
+{
+  "type": "way",
+  "id": 126668347,
+  "center": {
+    "lat": 43.0114836,
+    "lon": -81.2790744
+  },
+  "tags": {
+    "addr:housenumber": "289",
+    "addr:street": "Windermere Road",
+    "amenity": "university",
+    "building": "dormitory",
+    "building:levels": "13",
+    "name": "Saugeen Maitland Hall (Residence)"
+  }
+},
+{
+  "type": "way",
+  "id": 126668348,
+  "center": {
+    "lat": 43.0151123,
+    "lon": -81.2735347
+  },
+  "tags": {
+    "building": "school",
+    "name": "Westminister Hall"
+  }
+},
+{
+  "type": "way",
+  "id": 126668520,
+  "center": {
+    "lat": 43.0126599,
+    "lon": -81.2787827
+  },
+  "tags": {
+    "addr:city": "London",
+    "addr:housenumber": "291",
+    "addr:street": "Windermere Road",
+    "amenity": "university",
+    "building": "dormitory",
+    "building:levels": "14",
+    "name": "Bayfield Hall (Residence)"
+  }
+},
+{
+  "type": "way",
+  "id": 126668525,
+  "center": {
+    "lat": 43.0113712,
+    "lon": -81.2760334
+  },
+  "tags": {
+    "building": "university",
+    "name": "West Valley Building"
+  }
+},
+{
+  "type": "way",
+  "id": 126668534,
+  "center": {
+    "lat": 43.0075372,
+    "lon": -81.2781491
+  },
+  "tags": {
+    "building": "yes",
+    "name": "Huron Dining Hall"
+  }
+},
+{
+  "type": "way",
+  "id": 126668540,
+  "center": {
+    "lat": 43.0108047,
+    "lon": -81.2760986
+  },
+  "tags": {
+    "building": "university",
+    "name": "Siebens Centre"
+  }
+},
+{
+  "type": "way",
+  "id": 126668543,
+  "center": {
+    "lat": 43.0053537,
+    "lon": -81.2728570
+  },
+  "tags": {
+    "building": "university",
+    "building:levels": "8",
+    "name": "Health Sciences Building"
+  }
+},
+{
+  "type": "way",
+  "id": 126668547,
+  "center": {
+    "lat": 43.0107908,
+    "lon": -81.2713191
+  },
+  "tags": {
+    "building": "university",
+    "landuse": "greenhouse_horticulture",
+    "name": "Greenhouses"
+  }
+},
+{
+  "type": "way",
+  "id": 126668552,
+  "center": {
+    "lat": 43.0055897,
+    "lon": -81.2752263
+  },
+  "tags": {
+    "building": "yes",
+    "name": "Cronyn Observatory",
+    "wikidata": "Q66667735"
+  }
+},
+{
+  "type": "way",
+  "id": 126668554,
+  "center": {
+    "lat": 43.0112260,
+    "lon": -81.2718634
+  },
+  "tags": {
+    "building": "university",
+    "building:levels": "5",
+    "name": "Biotron Experimental Climate Change Research Centre"
+  }
+},
+{
+  "type": "way",
+  "id": 127582179,
+  "center": {
+    "lat": 43.0120262,
+    "lon": -81.2585593
+  },
+  "tags": {
+    "building": "residential",
+    "name": "Dormitory King's college"
+  }
+},
+{
+  "type": "way",
+  "id": 127582181,
+  "center": {
+    "lat": 43.0123782,
+    "lon": -81.2588792
+  },
+  "tags": {
+    "building": "residential",
+    "name": "King's college Dormitories"
+  }
+},
+{
+  "type": "way",
+  "id": 127582189,
+  "center": {
+    "lat": 43.0118847,
+    "lon": -81.2579807
+  },
+  "tags": {
+    "building": "residential",
+    "name": "Dormitory King's College"
+  }
+},
+{
+  "type": "way",
+  "id": 127582860,
+  "center": {
+    "lat": 43.0094673,
+    "lon": -81.2621135
+  },
+  "tags": {
+    "building": "university",
+    "name": "Child & Youth Development Clinic"
+  }
+},
+{
+  "type": "way",
+  "id": 127586882,
+  "center": {
+    "lat": 43.0082735,
+    "lon": -81.2625252
+  },
+  "tags": {
+    "amenity": "university",
+    "building": "dormitory",
+    "name": "Alumni House (Residence)"
+  }
+},
+{
+  "type": "way",
+  "id": 136873225,
+  "center": {
+    "lat": 42.9997556,
+    "lon": -81.2664071
+  },
+  "tags": {
+    "amenity": "shelter",
+    "building": "yes",
+    "name": "Gibbons Park Picnic Site 2",
+    "operator": "City of London",
+    "shelter_type": "picnic_shelter"
+  }
+},
+{
+  "type": "way",
+  "id": 138202524,
+  "center": {
+    "lat": 43.0177625,
+    "lon": -81.2650537
+  },
+  "tags": {
+    "amenity": "social_facility",
+    "building": "yes",
+    "name": "St. Joseph's Hospice",
+    "social_facility": "nursing_home",
+    "source": "Bing"
+  }
+},
+{
+  "type": "way",
+  "id": 141710478,
+  "center": {
+    "lat": 43.0086515,
+    "lon": -81.2689080
+  },
+  "tags": {
+    "amenity": "university",
+    "building": "dormitory",
+    "name": "Delaware Hall (Residence)"
+  }
+},
+{
+  "type": "way",
+  "id": 141710480,
+  "center": {
+    "lat": 43.0103336,
+    "lon": -81.2738231
+  },
+  "tags": {
+    "building": "university",
+    "name": "Kresge Building"
+  }
+},
+{
+  "type": "way",
+  "id": 141710481,
+  "center": {
+    "lat": 43.0094872,
+    "lon": -81.2734327
+  },
+  "tags": {
+    "amenity": "arts_centre",
+    "building": "university",
+    "name": "McIntosh Art Gallery"
+  }
+},
+{
+  "type": "way",
+  "id": 141710482,
+  "center": {
+    "lat": 43.0102484,
+    "lon": -81.2745742
+  },
+  "tags": {
+    "building": "university",
+    "name": "Medical Sciences Building"
+  }
+},
+{
+  "type": "way",
+  "id": 141710483,
+  "center": {
+    "lat": 43.0118428,
+    "lon": -81.2737216
+  },
+  "tags": {
+    "amenity": "university",
+    "building": "yes",
+    "name": "Robarts Research Institute",
+    "website": "https://www.robarts.ca/"
+  }
+},
+{
+  "type": "way",
+  "id": 141710484,
+  "center": {
+    "lat": 43.0093173,
+    "lon": -81.2753362
+  },
+  "tags": {
+    "building": "university",
+    "name": "Social Science Center"
+  }
+},
+{
+  "type": "way",
+  "id": 141710485,
+  "center": {
+    "lat": 43.0110907,
+    "lon": -81.2733917
+  },
+  "tags": {
+    "amenity": "library",
+    "building": "yes",
+    "name": "Taylor Library",
+    "operator": "Western University",
+    "operator:type": "university",
+    "wikipedia": "en:Allyn and Betty Taylor Library"
+  }
+},
+{
+  "type": "way",
+  "id": 141710486,
+  "center": {
+    "lat": 43.0086815,
+    "lon": -81.2761665
+  },
+  "tags": {
+    "building": "university",
+    "building:levels": "4",
+    "building:levels:underground": "1",
+    "name": "University Community Center"
+  }
+},
+{
+  "type": "way",
+  "id": 142216959,
+  "center": {
+    "lat": 43.0059429,
+    "lon": -81.2745484
+  },
+  "tags": {
+    "building": "university",
+    "name": "Alumni Hall"
+  }
+},
+{
+  "type": "way",
+  "id": 142216960,
+  "center": {
+    "lat": 43.0009132,
+    "lon": -81.2735808
+  },
+  "tags": {
+    "building": "yes",
+    "name": "J W Little Memorial Building"
+  }
+},
+{
+  "type": "way",
+  "id": 142216964,
+  "center": {
+    "lat": 43.0076884,
+    "lon": -81.2741020
+  },
+  "tags": {
+    "building": "university",
+    "name": "Somerville House"
+  }
+},
+{
+  "type": "way",
+  "id": 142286099,
+  "center": {
+    "lat": 43.0083058,
+    "lon": -81.2649481
+  },
+  "tags": {
+    "amenity": "university",
+    "building": "dormitory",
+    "name": "Elgin Hall (Residence)"
+  }
+},
+{
+  "type": "way",
+  "id": 142286116,
+  "center": {
+    "lat": 43.0104084,
+    "lon": -81.2693236
+  },
+  "tags": {
+    "building": "university",
+    "name": "North Campus Building"
+  }
+},
+{
+  "type": "way",
+  "id": 142286122,
+  "center": {
+    "lat": 43.0097610,
+    "lon": -81.2726107
+  },
+  "tags": {
+    "building": "university",
+    "building:material": "stone",
+    "name": "Physics Building"
+  }
+},
+{
+  "type": "way",
+  "id": 142286130,
+  "center": {
+    "lat": 43.0096101,
+    "lon": -81.2688064
+  },
+  "tags": {
+    "building": "university",
+    "name": "Staging Building"
+  }
+},
+{
+  "type": "way",
+  "id": 144650476,
+  "center": {
+    "lat": 42.9978288,
+    "lon": -81.2589414
+  },
+  "tags": {
+    "addr:city": "London",
+    "addr:housenumber": "1",
+    "addr:street": "Grosvenor Street",
+    "building": "apartments",
+    "building:levels": "13",
+    "name": "Grosvenor Gate"
+  }
+},
+{
+  "type": "way",
+  "id": 144650502,
+  "center": {
+    "lat": 43.0044508,
+    "lon": -81.2582687
+  },
+  "tags": {
+    "addr:city": "London",
+    "addr:housenumber": "1061",
+    "addr:street": "Richmond Street",
+    "amenity": "place_of_worship",
+    "building": "church",
+    "denomination": "united",
+    "name": "Robinson Memorial United Church",
+    "religion": "christian",
+    "wikidata": "Q104390468"
+  }
+},
+{
+  "type": "way",
+  "id": 144657992,
+  "center": {
+    "lat": 43.0076102,
+    "lon": -81.2592231
+  },
+  "tags": {
+    "addr:city": "London",
+    "addr:housenumber": "1114",
+    "addr:street": "Richmond Street",
+    "amenity": "place_of_worship",
+    "building": "church",
+    "name": "Holy Trinity Church",
+    "religion": "christian"
+  }
+},
+{
+  "type": "way",
+  "id": 144833119,
+  "center": {
+    "lat": 43.0113722,
+    "lon": -81.2632346
+  },
+  "tags": {
+    "addr:city": "London",
+    "addr:housenumber": "1204",
+    "addr:street": "Richmond Street",
+    "amenity": "place_of_worship",
+    "building": "church",
+    "building:colour": "grey",
+    "denomination": "anglican",
+    "name": "Saint Luke the Evangelist Church (Broughdale)",
+    "official_name": "St. Luke the Evangelist Church (Broughdale)",
+    "religion": "christian"
+  }
+},
+{
+  "type": "way",
+  "id": 144835421,
+  "center": {
+    "lat": 43.0110157,
+    "lon": -81.2588986
+  },
+  "tags": {
+    "building": "university",
+    "max_level": "0",
+    "min_level": "-1",
+    "name": "Broughdale Hall",
+    "wikidata": "Q104390688"
+  }
+},
+{
+  "type": "way",
+  "id": 147379378,
+  "center": {
+    "lat": 43.0042543,
+    "lon": -81.2828822
+  },
+  "tags": {
+    "building": "university",
+    "name": "Brecsia University College"
+  }
+},
+{
+  "type": "way",
+  "id": 147379380,
+  "center": {
+    "lat": 43.0030893,
+    "lon": -81.2819113
+  },
+  "tags": {
+    "building": "university",
+    "name": "Brescia College"
+  }
+},
+{
+  "type": "way",
+  "id": 147379448,
+  "center": {
+    "lat": 43.0042203,
+    "lon": -81.2833977
+  },
+  "tags": {
+    "building": "university",
+    "name": "Brescia University College"
+  }
+},
+{
+  "type": "way",
+  "id": 147379460,
+  "center": {
+    "lat": 43.0027956,
+    "lon": -81.2783356
+  },
+  "tags": {
+    "addr:city": "London",
+    "addr:housenumber": "1201",
+    "addr:postcode": "N6G 1H1",
+    "addr:province": "ON",
+    "addr:street": "Western Road",
+    "building": "university",
+    "name": "Elborn College"
+  }
+},
+{
+  "type": "way",
+  "id": 147379469,
+  "center": {
+    "lat": 43.0070587,
+    "lon": -81.2834669
+  },
+  "tags": {
+    "building": "yes",
+    "name": "Brough House"
+  }
+},
+{
+  "type": "way",
+  "id": 147379473,
+  "center": {
+    "lat": 43.0069244,
+    "lon": -81.2840938
+  },
+  "tags": {
+    "building": "yes",
+    "name": "Henderson House"
+  }
+},
+{
+  "type": "way",
+  "id": 151177933,
+  "center": {
+    "lat": 43.0103128,
+    "lon": -81.2912544
+  },
+  "tags": {
+    "building": "yes",
+    "name": "Elsie Perrin Williams Estate",
+    "tourism": "attraction"
+  }
+},
+{
+  "type": "way",
+  "id": 151792712,
+  "center": {
+    "lat": 43.0187246,
+    "lon": -81.2790877
+  },
+  "tags": {
+    "addr:city": "London",
+    "addr:housenumber": "1565",
+    "addr:postcode": "N6G 1H5",
+    "addr:province": "Ontario",
+    "addr:street": "Western Road",
+    "amenity": "fire_station",
+    "building": "yes",
+    "name": "Fire Station #8",
+    "operator": "London Fire Department"
+  }
+},
+{
+  "type": "way",
+  "id": 190852608,
+  "center": {
+    "lat": 43.0072440,
+    "lon": -81.2817495
+  },
+  "tags": {
+    "building": "yes",
+    "name": "Young House"
+  }
+},
+{
+  "type": "way",
+  "id": 190852609,
+  "center": {
+    "lat": 43.0064410,
+    "lon": -81.2840815
+  },
+  "tags": {
+    "building": "yes",
+    "name": "Yellow Cottage"
+  }
+},
+{
+  "type": "way",
+  "id": 191022779,
+  "center": {
+    "lat": 43.0196025,
+    "lon": -81.2588890
+  },
+  "tags": {
+    "addr:city": "London",
+    "addr:housenumber": "605",
+    "addr:street": "Windermere Road",
+    "amenity": "place_of_worship",
+    "building": "synagogue",
+    "name": "Temple Israel of London",
+    "phone": "+1-519-858-4400",
+    "religion": "jewish",
+    "website": "https://www.templeisraellondon.ca/"
+  }
+},
+{
+  "type": "way",
+  "id": 213344476,
+  "center": {
+    "lat": 43.0059825,
+    "lon": -81.2737001
+  },
+  "tags": {
+    "building": "yes",
+    "generator:method": "combustion",
+    "generator:output:cold_water": "yes",
+    "generator:output:electricity": "yes",
+    "generator:output:hot_water": "7 GW",
+    "generator:output:steam": "yes",
+    "generator:source": "gas",
+    "generator:type": "gas_turbine",
+    "name": "Power Plant",
+    "power": "generator",
+    "start_date": "1924"
+  }
+},
+{
+  "type": "way",
+  "id": 237299189,
+  "center": {
+    "lat": 43.0105483,
+    "lon": -81.2785437
+  },
+  "tags": {
+    "addr:city": "London",
+    "addr:housenumber": "1393",
+    "addr:street": "Western Road",
+    "building": "university",
+    "building:levels": "6",
+    "name": "Support Services Building"
+  }
+},
+{
+  "type": "way",
+  "id": 237299258,
+  "center": {
+    "lat": 43.0101170,
+    "lon": -81.2778239
+  },
+  "tags": {
+    "addr:city": "London",
+    "addr:housenumber": "1379",
+    "addr:street": "Western Road",
+    "amenity": "university",
+    "building": "dormitory",
+    "building:levels": "2",
+    "name": "Apps International House"
+  }
+},
+{
+  "type": "way",
+  "id": 237300020,
+  "center": {
+    "lat": 43.0106531,
+    "lon": -81.2801846
+  },
+  "tags": {
+    "building": "university",
+    "name": "Graphic Services"
+  }
+},
+{
+  "type": "way",
+  "id": 237300096,
+  "center": {
+    "lat": 43.0103629,
+    "lon": -81.2800414
+  },
+  "tags": {
+    "building": "university",
+    "name": "Advanced Facility for Avian Research"
+  }
+},
+{
+  "type": "way",
+  "id": 237302165,
+  "center": {
+    "lat": 43.0089737,
+    "lon": -81.2738361
+  },
+  "tags": {
+    "building": "university",
+    "name": "Lawson Hall"
+  }
+},
+{
+  "type": "way",
+  "id": 255852502,
+  "center": {
+    "lat": 43.0146158,
+    "lon": -81.2703968
+  },
+  "tags": {
+    "building": "university",
+    "name": "Western Centre for Public Health and Family Medicine",
+    "source": "Bing"
+  }
+},
+{
+  "type": "way",
+  "id": 310130110,
+  "center": {
+    "lat": 43.0035561,
+    "lon": -81.2832714
+  },
+  "tags": {
+    "building": "university",
+    "name": "Brescia University College"
+  }
+},
+{
+  "type": "way",
+  "id": 310131574,
+  "center": {
+    "lat": 43.0082163,
+    "lon": -81.2766215
+  },
+  "tags": {
+    "building": "university",
+    "building:levels": "4",
+    "name": "Western Student Services Building"
+  }
+},
+{
+  "type": "way",
+  "id": 310131575,
+  "center": {
+    "lat": 43.0079073,
+    "lon": -81.2797585
+  },
+  "tags": {
+    "amenity": "university",
+    "building": "dormitory",
+    "name": "South Hall"
+  }
+},
+{
+  "type": "way",
+  "id": 310131577,
+  "center": {
+    "lat": 43.0082751,
+    "lon": -81.2795918
+  },
+  "tags": {
+    "amenity": "university",
+    "building": "dormitory",
+    "name": "Hellmuth Hall"
+  }
+},
+{
+  "type": "way",
+  "id": 310132539,
+  "center": {
+    "lat": 43.0031232,
+    "lon": -81.2742467
+  },
+  "tags": {
+    "building": "university",
+    "leisure": "fitness_centre",
+    "name": "Western Student Recreation Centre"
+  }
+},
+{
+  "type": "way",
+  "id": 310134768,
+  "center": {
+    "lat": 43.0004330,
+    "lon": -81.2792693
+  },
+  "tags": {
+    "building": "university",
+    "name": "Ontario Hall"
+  }
+},
+{
+  "type": "way",
+  "id": 310135962,
+  "center": {
+    "lat": 42.9998228,
+    "lon": -81.2770682
+  },
+  "tags": {
+    "building": "university",
+    "name": "Perth Hall"
+  }
+},
+{
+  "type": "way",
+  "id": 481134503,
+  "center": {
+    "lat": 43.0127462,
+    "lon": -81.2656983
+  },
+  "tags": {
+    "addr:city": "London",
+    "addr:housenumber": "1235",
+    "addr:postcode": "N6A 0C1",
+    "addr:province": "Ontario",
+    "addr:street": "Richmond Street",
+    "building": "apartments",
+    "building:colour": "#AA4A44",
+    "building:levels": "19",
+    "description": "London Student Housing",
+    "image": "https://luxelondon.ca/img/Luxe_Exterior_Aerial_View.jpg",
+    "name": "Luxe London",
+    "website": "https://luxelondon.ca/"
+  }
+},
+{
+  "type": "way",
+  "id": 512954245,
+  "center": {
+    "lat": 43.0153465,
+    "lon": -81.2802651
+  },
+  "tags": {
+    "addr:city": "London",
+    "addr:housenumber": "999",
+    "addr:province": "Ontario",
+    "addr:street": "Collip Circle",
+    "building": "office",
+    "building:levels": "2",
+    "name": "Convergence Centre",
+    "smoking": "no"
+  }
+},
+{
+  "type": "way",
+  "id": 526910752,
+  "center": {
+    "lat": 43.0013953,
+    "lon": -81.2769775
+  },
+  "tags": {
+    "amenity": "fuel",
+    "brand": "7-Eleven",
+    "brand:wikidata": "Q259340",
+    "brand:wikipedia": "en:7-Eleven",
+    "building": "yes",
+    "name": "7-Eleven"
+  }
+},
+{
+  "type": "way",
+  "id": 527547917,
+  "center": {
+    "lat": 43.0117474,
+    "lon": -81.2710002
+  },
+  "tags": {
+    "building": "yes",
+    "building:levels": "7",
+    "name": "Western Interdisciplinary Research Building"
+  }
+},
+{
+  "type": "way",
+  "id": 555604064,
+  "center": {
+    "lat": 43.0111529,
+    "lon": -81.2724721
+  },
+  "tags": {
+    "building": "university",
+    "name": "Material Sciences Addition"
+  }
+},
+{
+  "type": "way",
+  "id": 558927474,
+  "center": {
+    "lat": 43.0060544,
+    "lon": -81.2725582
+  },
+  "tags": {
+    "building": "university",
+    "name": "FIMS & Nursing Building"
+  }
+},
+{
+  "type": "way",
+  "id": 562894113,
+  "center": {
+    "lat": 43.0100320,
+    "lon": -81.2749330
+  },
+  "tags": {
+    "building": "university",
+    "name": "Dr. Don Rix Clinical Skills Learning Building"
+  }
+},
+{
+  "type": "way",
+  "id": 626520018,
+  "center": {
+    "lat": 43.0042310,
+    "lon": -81.2763062
+  },
+  "tags": {
+    "building": "university",
+    "building:levels": "4",
+    "name": "Amit Chakma Engineering Building"
+  }
+},
+{
+  "type": "way",
+  "id": 631167535,
+  "center": {
+    "lat": 43.0098564,
+    "lon": -81.2777763
+  },
+  "tags": {
+    "addr:city": "London",
+    "addr:housenumber": "1373",
+    "addr:street": "Western Road",
+    "building": "university",
+    "building:levels": "2",
+    "name": "Benson House"
+  }
+},
+{
+  "type": "way",
+  "id": 682172580,
+  "center": {
+    "lat": 43.0110236,
+    "lon": -81.2747153
+  },
+  "tags": {
+    "building": "university",
+    "name": "Dental Sciences Building"
+  }
+},
+{
+  "type": "way",
+  "id": 682172581,
+  "center": {
+    "lat": 43.0108860,
+    "lon": -81.2739250
+  },
+  "tags": {
+    "building": "university",
+    "name": "Health Sciences Addition"
+  }
+},
+{
+  "type": "way",
+  "id": 746518952,
+  "center": {
+    "lat": 43.0007456,
+    "lon": -81.2919960
+  },
+  "tags": {
+    "addr:city": "London",
+    "addr:housenumber": "50",
+    "addr:postcode": "N6G 1R6",
+    "addr:province": "Ontario",
+    "addr:street": "Wychwood Park",
+    "building": "school",
+    "name": "Orchard Park Public School"
+  }
+},
+{
+  "type": "way",
+  "id": 1203774692,
+  "center": {
+    "lat": 43.0073987,
+    "lon": -81.2728822
+  },
+  "tags": {
+    "building": "university",
+    "name": "Arts & Humanities"
+  }
+},
+{
+  "type": "way",
+  "id": 1203774693,
+  "center": {
+    "lat": 43.0071830,
+    "lon": -81.2740301
+  },
+  "tags": {
+    "building": "university",
+    "name": "3M Centre"
+  }
+},
+{
+  "type": "way",
+  "id": 1203780928,
+  "center": {
+    "lat": 43.0049889,
+    "lon": -81.2754233
+  },
+  "tags": {
+    "building": "university",
+    "name": "Claudette Mackay-Lassonde Pavilion"
+  }
+},
+{
+  "type": "way",
+  "id": 1264685790,
+  "center": {
+    "lat": 43.0067676,
+    "lon": -81.2710359
+  },
+  "tags": {
+    "building": "university",
+    "layer": "1",
+    "name": "Music Building"
+  }
+},
+{
+  "type": "way",
+  "id": 1300081894,
+  "center": {
+    "lat": 43.0074030,
+    "lon": -81.2762851
+  },
+  "tags": {
+    "building": "university",
+    "building:levels": "4",
+    "name": "Ronald D. Schmeichel Building for Entrepreneurship and Innovation"
+  }
+},
+{
+  "type": "way",
+  "id": 1346111803,
+  "center": {
+    "lat": 43.0074733,
+    "lon": -81.2792019
+  },
+  "tags": {
+    "amenity": "university",
+    "building": "Dormitory",
+    "name": "Burnlea Hall"
+  }
+},
+{
+  "type": "way",
+  "id": 1346111804,
+  "center": {
+    "lat": 43.0078723,
+    "lon": -81.2778148
+  },
+  "tags": {
+    "building": "university",
+    "layer": "1",
+    "name": "The Frank Holmes Centre for Leadership, Ethics & Entrepreneurship",
+    "operator": "Huron University College"
+  }
+},
+{
+  "type": "relation",
+  "id": 7379137,
+  "center": {
+    "lat": 43.0044251,
+    "lon": -81.2780397
+  },
+  "tags": {
+    "building": "university",
+    "name": "Richard Ivey Building",
+    "type": "multipolygon"
+  }
+},
+{
+  "type": "relation",
+  "id": 7379171,
+  "center": {
+    "lat": 43.0074609,
+    "lon": -81.2649385
+  },
+  "tags": {
+    "amenity": "university",
+    "building": "dormitory",
+    "name": "Sydenham Hall (Residence)",
+    "operator": "Western University",
+    "type": "multipolygon"
+  }
+},
+{
+  "type": "relation",
+  "id": 7380709,
+  "center": {
+    "lat": 43.0108658,
+    "lon": -81.2699156
+  },
+  "tags": {
+    "building": "university",
+    "name": "John Labatt Visual Art Centre",
+    "type": "multipolygon"
+  }
+},
+{
+  "type": "relation",
+  "id": 7932251,
+  "center": {
+    "lat": 43.0107173,
+    "lon": -81.2721998
+  },
+  "tags": {
+    "building": "university",
+    "building:levels": "5",
+    "name": "Biological & Geological Sciences",
+    "type": "multipolygon"
+  }
+},
+{
+  "type": "relation",
+  "id": 7932252,
+  "center": {
+    "lat": 43.0114246,
+    "lon": -81.2727612
+  },
+  "tags": {
+    "building": "university",
+    "name": "Chemistry Building",
+    "type": "multipolygon"
+  }
+},
+{
+  "type": "relation",
+  "id": 8025213,
+  "center": {
+    "lat": 43.0078809,
+    "lon": -81.2637487
+  },
+  "tags": {
+    "amenity": "university",
+    "building": "dormitory",
+    "name": "Medway Hall (Residence)",
+    "operator": "Western University",
+    "type": "multipolygon"
+  }
+},
+{
+  "type": "relation",
+  "id": 21469585,
+  "center": {
+    "lat": 43.0142065,
+    "lon": -81.2809373
+  },
+  "tags": {
+    "addr:city": "London",
+    "addr:housenumber": "100",
+    "addr:province": "Ontario",
+    "addr:street": "Collip Circle",
+    "building": "office",
+    "building:levels": "2",
+    "name": "Mogenson Centre",
+    "smoking": "no",
+    "type": "multipolygon"
+  }
+}
+
+  ]
+}
