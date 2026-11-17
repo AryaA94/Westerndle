@@ -22,6 +22,9 @@ describe("shareText", () => {
     expect(text).toBe("Westerndle #77 2/8\n⬜🟪🟨⬜ ↗️ 420 m\n🟪🟪🟪🟪 🎓\nhttps://example.com");
     expect(text).not.toContain("X");
   });
+  it("labels photo puzzles", () => {
+    expect(shareText({ puzzle: 9, photo: true, guesses: [fb({})], won: false, maxGuesses: 8, url: "u" })).toMatch(/^Westerndle 📷 #9 X\/8/);
+  });
   it("marks a loss with X", () => {
     expect(shareText({ guesses: [fb({})], won: false, maxGuesses: 8, url: "u" })).toMatch(/^Westerndle \(practice\) X\/8/);
   });

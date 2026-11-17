@@ -61,3 +61,17 @@ def test_restart_keeps_player_results(tmp_path):
     init_db(engine)  # what happens on every server start
     with Session(engine) as s:
         assert s.scalar(select(PlayRow.guesses)) == 3
+
+
+def test_old_plays_table_gets_a_mode_column(tmp_path):
+    """A database from before photo mode: plays has no mode column yet."""
+    from sqlalchemy import inspect, text
+
+    engine = make_engine(f"sqlite:///{tmp_path}/old.db")
+    with engine.begin() as conn:
+        conn.execute(text("CREATE TABLE plays (id INTEGER PRIMARY KEY, puzzle INTEGER, won BOOLEAN, guesses INTEGER, created_at TIMESTAMP)"))
+        conn.execute(text("INSERT INTO plays (puzzle, won, guesses) VALUES (5, 1, 3)"))
+    init_db(engine)
+    assert "mode" in {c["name"] for c in inspect(engine).get_columns("plays")}
+    with engine.connect() as conn:
+        assert conn.execute(text("SELECT mode, guesses FROM plays")).one() == ("daily", 3)

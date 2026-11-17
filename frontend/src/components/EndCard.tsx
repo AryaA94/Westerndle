@@ -36,12 +36,13 @@ export function EndCard({ game, onNewPractice }: { game: GameState; onNewPractic
   const countdown = useCountdown();
 
   useEffect(() => {
-    if (game.mode === "daily" && game.puzzle) api.stats(game.puzzle).then(setGlobal).catch(() => {});
+    if (game.mode !== "practice" && game.puzzle) api.stats(game.puzzle, game.mode).then(setGlobal).catch(() => {});
   }, [game.mode, game.puzzle]);
 
   const share = async () => {
     const text = shareText({
-      puzzle: game.mode === "daily" ? game.puzzle : undefined,
+      puzzle: game.mode === "practice" ? undefined : game.puzzle,
+      photo: game.mode === "photo",
       guesses: game.guesses,
       won,
       maxGuesses: game.maxGuesses,
@@ -65,7 +66,7 @@ export function EndCard({ game, onNewPractice }: { game: GameState; onNewPractic
       <h2 className="mt-1 text-2xl font-bold">{answerName}</h2>
       {answer?.photo && (
         <figure className="mt-3">
-          <img src={`/${answer.photo}`} alt={answerName} className="max-h-72 w-full rounded-lg object-cover" />
+          <img src={answer.photo} alt={answerName} className="max-h-72 w-full rounded-lg object-cover" />
           {answer.photoCredit && (
             <figcaption className="mt-1 text-[11px] text-purple-200">
               Photo:{" "}

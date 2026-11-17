@@ -1,6 +1,8 @@
 export type Match = "correct" | "close" | "wrong";
 export type Hint = "higher" | "lower" | null;
-export type Mode = "daily" | "practice";
+/** "daily" is the classic daily puzzle, "photo" the daily photo puzzle. */
+export type Mode = "daily" | "photo" | "practice";
+export type DailyMode = Exclude<Mode, "practice">;
 
 export interface BuildingName {
   id: string;
@@ -39,6 +41,8 @@ export interface DailyMeta {
   date: string;
   maxGuesses: number;
   hintAfter: number;
+  /** Whether the server has building photos, so photo mode can be offered. */
+  photoMode: boolean;
 }
 
 export interface GlobalStats {

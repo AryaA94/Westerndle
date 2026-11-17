@@ -5,12 +5,13 @@ import { GuessInput } from "./components/GuessInput";
 import { GuessRow } from "./components/GuessRow";
 import { Header } from "./components/Header";
 import { MysteryCard } from "./components/MysteryCard";
+import { PhotoCard } from "./components/PhotoCard";
 import { HelpModal } from "./components/HelpModal";
 import { StatsModal } from "./components/StatsModal";
 import { applyResult } from "./logic";
 import { celebrate } from "./confetti";
 import { storage } from "./storage";
-import type { BuildingName, DailyMeta, GameState, Mode } from "./types";
+import type { BuildingName, DailyMeta, DailyMode, GameState, Mode } from "./types";
 
 export default function App() {
   const [buildings, setBuildings] = useState<BuildingName[]>([]);
@@ -20,7 +21,6 @@ export default function App() {
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState<string>();
   const [modal, setModal] = useState<"help" | "stats" | null>(storage.seenHelp() ? null : "help");
-  const [stats, setStats] = useState(() => storage.stats(8));
 
   useEffect(() => {
     Promise.all([api.buildings(), api.daily()])
@@ -41,10 +41,10 @@ export default function App() {
   // Load (or start) the game for the selected mode.
   useEffect(() => {
     if (!daily) return;
-    if (mode === "daily") {
+    if (mode !== "practice") {
       setGame(
-        storage.dailyGame(daily.puzzle) ?? {
-          mode: "daily", puzzle: daily.puzzle, maxGuesses: daily.maxGuesses, hintAfter: daily.hintAfter, guesses: [], status: "playing",
+        storage.dailyGame(mode, daily.puzzle) ?? {
+          mode, puzzle: daily.puzzle, maxGuesses: daily.maxGuesses, hintAfter: daily.hintAfter, guesses: [], status: "playing",
         },
       );
     } else {
@@ -58,7 +58,7 @@ export default function App() {
 
   const save = (g: GameState) => {
     setGame(g);
-    if (g.mode === "daily") storage.saveDailyGame(g);
+    if (g.mode !== "practice") storage.saveDailyGame(g);
     else storage.savePracticeGame(g);
   };
 
@@ -80,12 +80,10 @@ export default function App() {
       if (next.status === "won") next.answer = await api.reveal(ref, game.maxGuesses).catch(() => undefined);
       save(next);
       if (next.status === "won") celebrate();
-      if (next.status !== "playing" && next.mode === "daily" && next.puzzle) {
+      if (next.status !== "playing" && next.mode !== "practice" && next.puzzle) {
         const won = next.status === "won";
-        api.recordResult(next.puzzle, won, guesses.length).catch(() => {});
-        const s = applyResult(stats, next.puzzle, won, guesses.length);
-        storage.saveStats(s);
-        setStats(s);
+        api.recordResult(next.mode, next.puzzle, won, guesses.length).catch(() => {});
+        storage.saveStats(next.mode, applyResult(storage.stats(next.mode, game.maxGuesses), next.puzzle, won, guesses.length));
       }
     } catch (e) {
       setError(e instanceof Error ? e.message : "Something went wrong.");
@@ -113,6 +111,8 @@ export default function App() {
   };
 
   const left = game ? game.maxGuesses - game.guesses.length : 0;
+  // Practice has no stats of its own; show the classic ones there.
+  const statsMode: DailyMode = mode === "photo" ? "photo" : "daily";
 
   return (
     <div className="min-h-screen">
@@ -120,7 +120,7 @@ export default function App() {
 
       <main className="mx-auto max-w-2xl space-y-4 px-4 py-6">
         <div className="flex rounded-full bg-white p-1 shadow-sm ring-1 ring-purple-western/10 dark:bg-white/10 dark:ring-white/10" role="tablist">
-          {(["daily", "practice"] as const).map((m) => (
+          {(daily?.photoMode ? (["daily", "photo", "practice"] as const) : (["daily", "practice"] as const)).map((m) => (
             <button
               key={m}
               role="tab"
@@ -130,14 +130,19 @@ export default function App() {
                 mode === m ? "bg-purple-western text-white shadow-md" : "text-purple-western hover:bg-purple-mist dark:text-purple-200 dark:hover:bg-white/10"
               }`}
             >
-              {m === "daily" ? `Daily${daily ? ` #${daily.puzzle}` : ""}` : "Practice"}
+              {m === "daily" ? `Daily${daily ? ` #${daily.puzzle}` : ""}` : m === "photo" ? "📷 Photo" : "Practice"}
             </button>
           ))}
         </div>
 
         {game && (
           <>
-            {game.status === "playing" && game.guesses.length === 0 && <MysteryCard mode={game.mode} puzzle={game.puzzle} />}
+            {game.mode === "photo" && game.puzzle && game.status === "playing" && (
+              <PhotoCard puzzle={game.puzzle} level={game.guesses.length} levels={game.maxGuesses} />
+            )}
+            {game.mode !== "photo" && game.status === "playing" && game.guesses.length === 0 && (
+              <MysteryCard mode={game.mode} puzzle={game.puzzle} />
+            )}
             {game.status === "playing" ? (
               <>
                 <GuessInput buildings={buildings} guessed={guessed} disabled={busy} onGuess={onGuess} />
@@ -168,7 +173,9 @@ export default function App() {
       <footer className="pb-8 text-center text-xs text-silver">Fan-made · not affiliated with Western University</footer>
 
       {modal === "help" && <HelpModal maxGuesses={daily?.maxGuesses ?? 8} onClose={closeModal} />}
-      {modal === "stats" && <StatsModal stats={stats} onClose={closeModal} />}
+      {modal === "stats" && (
+        <StatsModal title={statsMode === "photo" ? "Photo stats" : "Your stats"} stats={storage.stats(statsMode, daily?.maxGuesses ?? 8)} onClose={closeModal} />
+      )}
     </div>
   );
 }

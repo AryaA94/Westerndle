@@ -7,6 +7,8 @@ and the distance and compass direction to the answer.
 
 - **Daily mode**: one building per day, rolling over at midnight London, ON time. It tracks
   your streaks and win %, and shows how everyone else did.
+- **📷 Photo mode**: a second daily puzzle that starts on a blurry close-up of
+  a building and zooms out with every wrong guess.
 - **Practice mode**: unlimited random buildings.
 - **Hint**: after 5 misses you can reveal the answer's first letter.
 - **Map**: the end screen maps the answer and all your guesses.
@@ -19,7 +21,7 @@ and the distance and compass direction to the answer.
 | Layer | Tech |
 |---|---|
 | Frontend | React 18, TypeScript (strict), Tailwind CSS 4, Leaflet, Vite, Vitest |
-| Backend | Python 3.13, FastAPI, SQLAlchemy 2, Pydantic |
+| Backend | Python 3.13, FastAPI, SQLAlchemy 2, Pydantic, Pillow |
 | Database | PostgreSQL 16 (SQLite works for quick local runs) |
 | Testing | pytest (run against both SQLite and PostgreSQL), Vitest |
 | Ops | Docker, Docker Compose, GitHub Actions CI |
@@ -38,6 +40,10 @@ and the distance and compass direction to the answer.
   token that has been tampered with is rejected.
 - **Geometry.** Distance uses the haversine great-circle formula. Direction is
   the initial bearing, snapped to 8 compass points.
+- **Photo crops are made on the server.** Pillow cuts each zoom level out of
+  the photo (`backend/app/photo.py`), so the full picture never reaches the
+  browser before the game ends. Photos live in `backend/data/photos`, not the
+  public web folder, because their file names would give the answer away.
 - **Global stats.** Finished daily games are stored in PostgreSQL and
   aggregated into a per-puzzle guess distribution.
 
@@ -105,11 +111,12 @@ takes.
   OpenStreetMap too.
 - **Years built**, and any floor count not marked verified, were written from
   memory. Check them against Western's facilities pages before launch.
-- **Photos**: 17 freely licensed photos from Wikimedia Commons are listed in
-  `tools/photos.json`. Run `python tools/fetch_photos.py` (from `backend/`) once
-  to download them and fill in the credits. To add your own, put the image in
-  `frontend/public/photos/` and set `"photo"`, `"photo_credit"` and
-  `"photo_source"`. Use photos you took or ones with a free licence (e.g.
+- **Photos** are freely licensed, from Wikimedia Commons, and listed with
+  their credits in `tools/photos.json`. `python tools/fetch_photos.py` (from
+  `backend/`) downloads any that are missing into `backend/data/photos`. To add
+  your own, put the image there and set `"photo"` (the file name),
+  `"photo_credit"` and `"photo_source"`. Photo mode only uses buildings that
+  have a photo. Use photos you took or ones with a free licence (e.g.
   Wikimedia Commons), and credit the photographer as the licence requires.
   A test fails if a photo is missing its credit.
 
@@ -123,5 +130,7 @@ takes.
 | POST | `/api/guess` | Score a guess |
 | POST | `/api/hint` | First letter of the answer, after 5 guesses |
 | POST | `/api/reveal` | Get the answer once all guesses are used |
+| GET | `/api/photo/{puzzle}/{level}` | Photo-mode picture at a zoom level |
+| GET | `/api/photos/{id}` | A building's full photo (end screen) |
 | POST | `/api/results` | Record a finished daily game |
 | GET | `/api/stats/{puzzle}` | Global results for one puzzle |

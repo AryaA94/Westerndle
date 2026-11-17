@@ -1,4 +1,4 @@
-import type { Answer, BuildingName, DailyMeta, Feedback, GlobalStats, Mode } from "./types";
+import type { Answer, BuildingName, DailyMeta, DailyMode, Feedback, GlobalStats, Mode } from "./types";
 
 async function call<T>(path: string, init?: RequestInit): Promise<T> {
   const res = await fetch(`/api${path}`, {
@@ -28,7 +28,9 @@ export const api = {
   guess: (ref: GameRef, buildingId: string) => post<Feedback>("/guess", { ...ref, buildingId }),
   hint: (ref: GameRef, guesses: number) => post<{ firstLetter: string }>("/hint", { ...ref, guesses }),
   reveal: (ref: GameRef, guesses: number) => post<Answer>("/reveal", { ...ref, guesses }),
-  recordResult: (puzzle: number, won: boolean, guesses: number) =>
-    post<{ ok: boolean }>("/results", { puzzle, won, guesses }),
-  stats: (puzzle: number) => call<GlobalStats>(`/stats/${puzzle}`),
+  recordResult: (mode: DailyMode, puzzle: number, won: boolean, guesses: number) =>
+    post<{ ok: boolean }>("/results", { mode, puzzle, won, guesses }),
+  stats: (puzzle: number, mode: DailyMode = "daily") => call<GlobalStats>(`/stats/${puzzle}?mode=${mode}`),
+  /** Photo-mode picture for a zoom level (0 = tightest). Plain URL so the browser can cache it. */
+  photoUrl: (puzzle: number, level: number) => `/api/photo/${puzzle}/${level}`,
 };

@@ -7,10 +7,11 @@ import os
 from datetime import datetime, timezone
 from pathlib import Path
 
-from sqlalchemy import JSON, DateTime, Float, Integer, String, Boolean, create_engine, select, func, Index
+from sqlalchemy import JSON, DateTime, Float, Integer, String, Boolean, create_engine, select, func, Index, inspect, text
 from sqlalchemy.orm import DeclarativeBase, Mapped, Session, mapped_column, sessionmaker
 
 DATA_FILE = Path(__file__).resolve().parent.parent / "data" / "buildings.json"
+PHOTO_DIR = DATA_FILE.parent / "photos"
 
 
 class Base(DeclarativeBase):
@@ -36,13 +37,14 @@ class BuildingRow(Base):
 
 
 class PlayRow(Base):
-    """One finished daily game. Powers the 'how did everyone else do' stats."""
+    """One finished daily game (classic or photo). Powers the 'how did everyone else do' stats."""
 
     __tablename__ = "plays"
     __table_args__ = (Index("ix_plays_puzzle", "puzzle"),)
 
     id: Mapped[int] = mapped_column(Integer, primary_key=True, autoincrement=True)
     puzzle: Mapped[int] = mapped_column(Integer)
+    mode: Mapped[str] = mapped_column(String(16), default="daily", server_default="daily")
     won: Mapped[bool] = mapped_column(Boolean)
     guesses: Mapped[int] = mapped_column(Integer)
     created_at: Mapped[datetime] = mapped_column(
@@ -71,6 +73,7 @@ def init_db(engine, data_file: Path = DATA_FILE) -> None:
     buildings = json.loads(data_file.read_text())["buildings"]
     BuildingRow.__table__.drop(engine, checkfirst=True)
     Base.metadata.create_all(engine)
+    _add_missing_columns(engine)
     with Session(engine) as s, s.begin():
         s.add_all(
             BuildingRow(
@@ -91,13 +94,21 @@ def init_db(engine, data_file: Path = DATA_FILE) -> None:
         )
 
 
+def _add_missing_columns(engine) -> None:
+    """Bring an older plays table up to date. create_all() makes new tables but never adds columns."""
+    columns = {c["name"] for c in inspect(engine).get_columns("plays")}
+    if "mode" not in columns:
+        with engine.begin() as conn:
+            conn.execute(text("ALTER TABLE plays ADD COLUMN mode VARCHAR(16) NOT NULL DEFAULT 'daily'"))
+
+
 def session_factory(engine):
     return sessionmaker(engine, expire_on_commit=False)
 
 
-def play_stats(s: Session, puzzle: int, max_guesses: int) -> dict:
+def play_stats(s: Session, puzzle: int, max_guesses: int, mode: str = "daily") -> dict:
     rows = s.execute(
-        select(PlayRow.won, PlayRow.guesses, func.count()).where(PlayRow.puzzle == puzzle).group_by(PlayRow.won, PlayRow.guesses)
+        select(PlayRow.won, PlayRow.guesses, func.count()).where(PlayRow.puzzle == puzzle, PlayRow.mode == mode).group_by(PlayRow.won, PlayRow.guesses)
     ).all()
     distribution = [0] * max_guesses
     plays = wins = 0
@@ -107,4 +118,4 @@ def play_stats(s: Session, puzzle: int, max_guesses: int) -> dict:
             wins += count
             if 1 <= guesses <= max_guesses:
                 distribution[guesses - 1] += count
-    return {"puzzle": puzzle, "plays": plays, "wins": wins, "distribution": distribution}
+    return {"puzzle": puzzle, "mode": mode, "plays": plays, "wins": wins, "distribution": distribution}

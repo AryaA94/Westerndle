@@ -1,4 +1,4 @@
-import type { GameState } from "./types";
+import type { DailyMode, GameState } from "./types";
 import { emptyStats, type LocalStats } from "./logic";
 
 // Browsers can block storage (private mode etc.); the game still works, it just forgets.
@@ -20,12 +20,17 @@ function write(key: string, value: unknown) {
 }
 
 export const storage = {
-  dailyGame: (puzzle: number) => read<GameState>(`westerndle:daily:${puzzle}`),
-  saveDailyGame: (g: GameState) => write(`westerndle:daily:${g.puzzle}`, g),
+  dailyGame: (mode: DailyMode, puzzle: number) => read<GameState>(`westerndle:${mode}:${puzzle}`),
+  saveDailyGame: (g: GameState) => write(`westerndle:${g.mode}:${g.puzzle}`, g),
   practiceGame: () => read<GameState>("westerndle:practice"),
   savePracticeGame: (g: GameState) => write("westerndle:practice", g),
-  stats: (maxGuesses: number) => read<LocalStats>("westerndle:stats") ?? emptyStats(maxGuesses),
-  saveStats: (s: LocalStats) => write("westerndle:stats", s),
+  // Classic stats keep their original key so existing streaks carry over.
+  stats: (mode: DailyMode, maxGuesses: number) => read<LocalStats>(statsKey(mode)) ?? emptyStats(maxGuesses),
+  saveStats: (mode: DailyMode, s: LocalStats) => write(statsKey(mode), s),
   seenHelp: () => read<boolean>("westerndle:seen-help") ?? false,
   markHelpSeen: () => write("westerndle:seen-help", true),
 };
+
+function statsKey(mode: DailyMode) {
+  return mode === "daily" ? "westerndle:stats" : `westerndle:stats:${mode}`;
+}

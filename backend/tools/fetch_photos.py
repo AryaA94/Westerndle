@@ -2,7 +2,7 @@
 
     python tools/fetch_photos.py
 
-Saves each photo to frontend/public/photos/<building>.jpg and fills in the
+Saves each photo to data/photos/<building>.jpg and fills in the
 building's "photo", "photo_credit" and "photo_source" in data/buildings.json.
 Every photo is freely licensed; the credit line on the end screen is what the
 licence asks for, so keep it if you change anything.
@@ -18,7 +18,9 @@ from pathlib import Path
 
 HERE = Path(__file__).resolve().parent
 DATA = HERE.parent / "data" / "buildings.json"
-PHOTO_DIR = HERE.parents[1] / "frontend" / "public" / "photos"
+# Kept with the backend, not in the public web folder, so the file names
+# (which are building ids) can't give a photo-mode answer away.
+PHOTO_DIR = HERE.parent / "data" / "photos"
 # Wikimedia serves thumbnails at fixed widths; 960 is one of them.
 WIDTH = 960
 UA = {"User-Agent": "westerndle-photo-script/1.0"}
@@ -56,7 +58,7 @@ def main() -> None:
             print("downloaded", target.name)
             time.sleep(2)
         b = by_id[p["building"]]
-        b["photo"] = f"photos/{target.name}"
+        b["photo"] = target.name
         b["photo_credit"] = credit(p)
         b["photo_source"] = p["source"]
 

@@ -13,13 +13,14 @@ export const DIRECTION_DEGREES: Record<string, number> = {
 /** Spoiler-free text for sharing a result, Wordle-style. */
 export function shareText(opts: {
   puzzle?: number;
+  photo?: boolean;
   guesses: Feedback[];
   won: boolean;
   maxGuesses: number;
   url: string;
 }): string {
-  const { puzzle, guesses, won, maxGuesses, url } = opts;
-  const title = puzzle === undefined ? "Westerndle (practice)" : `Westerndle #${puzzle}`;
+  const { puzzle, guesses, won, maxGuesses, url, photo } = opts;
+  const title = puzzle === undefined ? "Westerndle (practice)" : `Westerndle ${photo ? "📷 " : ""}#${puzzle}`;
   const score = won ? `${guesses.length}/${maxGuesses}` : `X/${maxGuesses}`;
   const rows = guesses.map((g) => {
     const tiles = [g.zone.match, g.category.match, g.yearBuilt.match, g.floors.match].map((m) => EMOJI[m]).join("");

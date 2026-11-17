@@ -1,11 +1,12 @@
 import type { LocalStats } from "../logic";
 import { Modal } from "./Modal";
 
-export function StatsModal({ stats, highlight, onClose }: { stats: LocalStats; highlight?: number; onClose: () => void }) {
+export function StatsModal(props: { title?: string; stats: LocalStats; highlight?: number; onClose: () => void }) {
+  const { title = "Your stats", stats, highlight, onClose } = props;
   const max = Math.max(1, ...stats.distribution);
   const winPct = stats.played ? Math.round((stats.wins / stats.played) * 100) : 0;
   return (
-    <Modal title="Your stats" onClose={onClose}>
+    <Modal title={title} onClose={onClose}>
       <div className="mb-5 grid grid-cols-4 gap-2 text-center">
         {[
           ["Played", stats.played],

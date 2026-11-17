@@ -20,7 +20,10 @@ export function HelpModal({ maxGuesses, onClose }: { maxGuesses: number; onClose
           <li><b>▲ / ▼</b>: the answer is higher or lower.</li>
           <li>The distance and arrow point from your guess to the answer. <b>Near</b> is how close you are across campus.</li>
         </ul>
-        <p>A new building every day at midnight (London, ON time). Practice mode gives unlimited random buildings.</p>
+        <p>
+          <b>📷 Photo</b> mode starts on a blurry close-up of a building. Every miss zooms out a little more.
+        </p>
+        <p>New Daily and Photo buildings every day at midnight (London, ON time). Practice gives unlimited random buildings.</p>
         <p className="text-xs text-silver">Fan-made. Not affiliated with or endorsed by Western University.</p>
       </div>
     </Modal>
