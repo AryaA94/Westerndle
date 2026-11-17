@@ -1,0 +1,17 @@
+# Render Blueprint: New -> Blueprint in the Render dashboard, then pick this repo.
+# The database is hosted separately (e.g. Neon's free Postgres); Render asks
+# for its connection string as DATABASE_URL when the Blueprint is created.
+services:
+  - type: web
+    name: westerndle
+    runtime: docker
+    plan: free
+    dockerfilePath: ./Dockerfile
+    healthCheckPath: /api/health
+    autoDeploy: true
+    envVars:
+      - key: DATABASE_URL
+        sync: false
+      # Decides the daily building order. Render generates a random value once.
+      - key: WESTERNDLE_SECRET
+        generateValue: true

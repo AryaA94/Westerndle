@@ -49,6 +49,17 @@ With Docker (PostgreSQL + app on http://localhost:8000):
 docker compose up --build
 ```
 
+Free hosting: the app runs on Render's free tier and the database on Neon's
+free Postgres.
+
+1. Create a project at [neon.com](https://neon.com) and copy its connection string.
+2. In [Render](https://render.com), choose **New → Blueprint** and pick this repo
+   (it reads `render.yaml`).
+3. Paste the Neon connection string when Render asks for `DATABASE_URL`.
+
+Render's free instance sleeps after 15 minutes without visitors, so the first
+visit after that takes about a minute.
+
 Local development (two terminals):
 
 ```bash
