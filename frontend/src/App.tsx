@@ -3,9 +3,12 @@ import { api } from "./api";
 import { EndCard } from "./components/EndCard";
 import { GuessInput } from "./components/GuessInput";
 import { GuessRow } from "./components/GuessRow";
+import { Header } from "./components/Header";
+import { MysteryCard } from "./components/MysteryCard";
 import { HelpModal } from "./components/HelpModal";
 import { StatsModal } from "./components/StatsModal";
 import { applyResult } from "./logic";
+import { celebrate } from "./confetti";
 import { storage } from "./storage";
 import type { BuildingName, DailyMeta, GameState, Mode } from "./types";
 
@@ -76,6 +79,7 @@ export default function App() {
       // A win needs the answer's coordinates for the map link too.
       if (next.status === "won") next.answer = await api.reveal(ref, game.maxGuesses).catch(() => undefined);
       save(next);
+      if (next.status === "won") celebrate();
       if (next.status !== "playing" && next.mode === "daily" && next.puzzle) {
         const won = next.status === "won";
         api.recordResult(next.puzzle, won, guesses.length).catch(() => {});
@@ -112,34 +116,18 @@ export default function App() {
 
   return (
     <div className="min-h-screen">
-      <header className="bg-purple-western text-white shadow-md">
-        <div className="mx-auto flex max-w-2xl items-center justify-between px-4 py-3">
-          <button onClick={() => setModal("help")} aria-label="How to play" className="grid h-9 w-9 place-items-center rounded-full border border-white/40 font-bold hover:bg-white/10">
-            ?
-          </button>
-          <h1 className="text-2xl font-extrabold tracking-tight">
-            Western<span className="text-purple-200">dle</span>
-          </h1>
-          <button onClick={() => setModal("stats")} aria-label="Statistics" className="grid h-9 w-9 place-items-center rounded-full border border-white/40 hover:bg-white/10">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-              <rect x="3" y="12" width="4" height="9" rx="1" />
-              <rect x="10" y="7" width="4" height="14" rx="1" />
-              <rect x="17" y="3" width="4" height="18" rx="1" />
-            </svg>
-          </button>
-        </div>
-      </header>
+      <Header onHelp={() => setModal("help")} onStats={() => setModal("stats")} />
 
-      <main className="mx-auto max-w-2xl space-y-4 px-4 py-5">
-        <div className="flex rounded-full bg-purple-mist p-1 dark:bg-white/10" role="tablist">
+      <main className="mx-auto max-w-2xl space-y-4 px-4 py-6">
+        <div className="flex rounded-full bg-white p-1 shadow-sm ring-1 ring-purple-western/10 dark:bg-white/10 dark:ring-white/10" role="tablist">
           {(["daily", "practice"] as const).map((m) => (
             <button
               key={m}
               role="tab"
               aria-selected={mode === m}
               onClick={() => setMode(m)}
-              className={`flex-1 rounded-full py-2 text-sm font-bold transition ${
-                mode === m ? "bg-purple-western text-white shadow" : "text-purple-western dark:text-purple-200"
+              className={`flex-1 rounded-full py-2.5 text-sm font-bold transition ${
+                mode === m ? "bg-purple-western text-white shadow-md" : "text-purple-western hover:bg-purple-mist dark:text-purple-200 dark:hover:bg-white/10"
               }`}
             >
               {m === "daily" ? `Daily${daily ? ` #${daily.puzzle}` : ""}` : "Practice"}
@@ -147,12 +135,9 @@ export default function App() {
           ))}
         </div>
 
-        <p className="text-center text-sm text-silver">
-          {mode === "daily" ? "Which Western building is today's mystery?" : "Unlimited random buildings. Doesn't count toward your streak."}
-        </p>
-
         {game && (
           <>
+            {game.status === "playing" && game.guesses.length === 0 && <MysteryCard mode={game.mode} puzzle={game.puzzle} />}
             {game.status === "playing" ? (
               <>
                 <GuessInput buildings={buildings} guessed={guessed} disabled={busy} onGuess={onGuess} />
@@ -176,7 +161,7 @@ export default function App() {
             </ol>
           </>
         )}
-        {!game && !error && <p className="py-10 text-center text-silver">Loading…</p>}
+        {!game && !error && <p className="animate-pulse py-10 text-center font-display text-lg font-bold text-purple-western/60">Loading today\u2019s building…</p>}
         {!game && error && <p role="alert" className="rounded-lg bg-red-100 px-4 py-2 text-sm text-red-800">{error}</p>}
       </main>
 
