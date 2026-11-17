@@ -20,6 +20,13 @@ OUT_WIDTH = 720
 ZOOM_START = 5.0  # level 0 shows 1/5 of the photo's width
 BLUR_START = 6.0  # Gaussian blur radius at level 0, in output pixels
 BLUR_LEVELS = 3  # blur fades out over the first few levels
+# Narrower photos turn to mush at ZOOM_START, so photo mode skips them.
+MIN_WIDTH = 800
+
+
+def width(path: Path) -> int:
+    with Image.open(path) as img:
+        return img.width
 
 
 def zoom_for(level: int, levels: int) -> float:

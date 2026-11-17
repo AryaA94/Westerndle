@@ -1,12 +1,16 @@
 {
-  "_note": "Freely licensed photos from Wikimedia Commons. Run tools/fetch_photos.py to download them.",
+  "_note": "Freely licensed photos from Wikimedia Commons. Run tools/fetch_photos.py to download them. 'focus' (optional) is where photo mode's first close-up is centred, as fractions of the photo's width and height; use it to keep a name sign out of the opening views.",
   "photos": [
     {
       "building": "uc",
       "file": "University College Building University of Western Ontario 1.jpg",
       "author": "Balcer",
       "licence": "CC BY 2.5",
-      "source": "https://commons.wikimedia.org/wiki/File:University_College_Building_University_of_Western_Ontario_1.jpg"
+      "source": "https://commons.wikimedia.org/wiki/File:University_College_Building_University_of_Western_Ontario_1.jpg",
+      "focus": [
+        0.76,
+        0.4
+      ]
     },
     {
       "building": "mc",
@@ -27,14 +31,22 @@
       "file": "Natural Sciences Building University of Western Ontario 1.jpg",
       "author": "Balcer",
       "licence": "CC BY 2.5",
-      "source": "https://commons.wikimedia.org/wiki/File:Natural_Sciences_Building_University_of_Western_Ontario_1.jpg"
+      "source": "https://commons.wikimedia.org/wiki/File:Natural_Sciences_Building_University_of_Western_Ontario_1.jpg",
+      "focus": [
+        0.6,
+        0.55
+      ]
     },
     {
       "building": "th",
       "file": "Thames Hall at the University of Western Ontario.jpg",
       "author": "Flibirigit",
       "licence": "CC BY-SA 4.0",
-      "source": "https://commons.wikimedia.org/wiki/File:Thames_Hall_at_the_University_of_Western_Ontario.jpg"
+      "source": "https://commons.wikimedia.org/wiki/File:Thames_Hall_at_the_University_of_Western_Ontario.jpg",
+      "focus": [
+        0.8,
+        0.62
+      ]
     },
     {
       "building": "ucc",
@@ -62,21 +74,33 @@
       "file": "AlumniHallWestern.jpg",
       "author": "Mikerussell",
       "licence": "CC BY-SA 3.0",
-      "source": "https://commons.wikimedia.org/wiki/File:AlumniHallWestern.jpg"
+      "source": "https://commons.wikimedia.org/wiki/File:AlumniHallWestern.jpg",
+      "focus": [
+        0.22,
+        0.45
+      ]
     },
     {
       "building": "seb",
-      "file": "Spencer Engineering Building, University of Western Ontario.jpg",
-      "author": "Mikerussell",
-      "licence": "CC BY-SA 3.0",
-      "source": "https://commons.wikimedia.org/wiki/File:Spencer_Engineering_Building,_University_of_Western_Ontario.jpg"
+      "file": "SEB Front Tower.jpg",
+      "author": "R.schneider101",
+      "licence": "CC BY-SA 4.0",
+      "source": "https://commons.wikimedia.org/wiki/File:SEB_Front_Tower.jpg",
+      "focus": [
+        0.22,
+        0.4
+      ]
     },
     {
       "building": "fnb",
       "file": "Western's FIMS & Nursing Building.jpg",
       "author": "Shifre",
       "licence": "CC BY-SA 4.0",
-      "source": "https://commons.wikimedia.org/wiki/File:Western%27s_FIMS_%26_Nursing_Building.jpg"
+      "source": "https://commons.wikimedia.org/wiki/File:Western%27s_FIMS_%26_Nursing_Building.jpg",
+      "focus": [
+        0.45,
+        0.3
+      ]
     },
     {
       "building": "ivey",
@@ -101,10 +125,14 @@
     },
     {
       "building": "msh",
-      "file": "Med-Syd Pan.jpg",
-      "author": "DocterYas",
+      "file": "Medway Quad.JPG",
+      "author": "Philip Rees",
       "licence": "CC BY-SA 3.0",
-      "source": "https://commons.wikimedia.org/wiki/File:Med-Syd_Pan.jpg"
+      "source": "https://commons.wikimedia.org/wiki/File:Medway_Quad.JPG",
+      "focus": [
+        0.55,
+        0.32
+      ]
     },
     {
       "building": "brescia",
@@ -118,7 +146,11 @@
       "file": "Cronyn observatory building and Gibbs heliochronometer (sundial).jpg",
       "author": "Avocet7",
       "licence": "CC BY-SA 4.0",
-      "source": "https://commons.wikimedia.org/wiki/File:Cronyn_observatory_building_and_Gibbs_heliochronometer_(sundial).jpg"
+      "source": "https://commons.wikimedia.org/wiki/File:Cronyn_observatory_building_and_Gibbs_heliochronometer_(sundial).jpg",
+      "focus": [
+        0.55,
+        0.45
+      ]
     }
   ]
 }

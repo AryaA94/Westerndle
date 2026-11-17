@@ -75,10 +75,12 @@ def create_app(
         init_db(engine, data_file)
         with session_factory(engine)() as s:
             app.state.buildings = {r.id: r for r in s.scalars(select(BuildingRow))}
-        # Photo mode only uses buildings whose photo file is actually there.
+        # Photos whose file is actually there; the end screen can show any of them.
         app.state.photo_ids = sorted(
             r.id for r in app.state.buildings.values() if r.photo and (photo_dir / r.photo).is_file()
         )
+        # Photo mode needs enough pixels for its 5x close-ups to stay sharp.
+        app.state.photo_mode_ids = [i for i in app.state.photo_ids if ph.width(photo_dir / app.state.buildings[i].photo) >= ph.MIN_WIDTH]
         yield
         engine.dispose()
 
@@ -104,7 +106,7 @@ def create_app(
         return puzzle
 
     def photo_answer_id(request: Request, puzzle: int) -> str:
-        ids = request.app.state.photo_ids
+        ids = request.app.state.photo_mode_ids
         if not ids:
             raise HTTPException(404, "photo mode isn't available: no building photos are installed")
         # Its own schedule (a different seed), so it doesn't follow the classic puzzle's order.
@@ -145,7 +147,7 @@ def create_app(
             "date": day.isoformat(),
             "maxGuesses": MAX_GUESSES,
             "hintAfter": HINT_AFTER,
-            "photoMode": bool(request.app.state.photo_ids),
+            "photoMode": bool(request.app.state.photo_mode_ids),
         }
 
     @app.post("/api/practice")
@@ -187,7 +189,8 @@ def create_app(
         if not 0 <= level < MAX_GUESSES:
             raise HTTPException(422, f"level must be 0-{MAX_GUESSES - 1}")
         b = building_or_404(request, photo_answer_id(request, check_active(puzzle)))
-        jpeg = ph.render(photo_dir / b.photo, level, MAX_GUESSES)
+        focus = tuple(b.photo_focus) if b.photo_focus else (0.5, 0.5)
+        jpeg = ph.render(photo_dir / b.photo, level, MAX_GUESSES, focus)
         return Response(jpeg, media_type="image/jpeg", headers={"Cache-Control": "private, max-age=86400"})
 
     @app.get("/api/photos/{building_id}")

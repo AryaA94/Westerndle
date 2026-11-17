@@ -34,6 +34,8 @@ class BuildingRow(Base):
     # Photographer and licence, shown under the photo (required by CC licences).
     photo_credit: Mapped[str | None] = mapped_column(String(255), nullable=True)
     photo_source: Mapped[str | None] = mapped_column(String(255), nullable=True)
+    # Where photo mode's first close-up is centred, as [x, y] fractions of the photo.
+    photo_focus: Mapped[list[float] | None] = mapped_column(JSON, nullable=True)
 
 
 class PlayRow(Base):
@@ -89,6 +91,7 @@ def init_db(engine, data_file: Path = DATA_FILE) -> None:
                 photo=b.get("photo"),
                 photo_credit=b.get("photo_credit"),
                 photo_source=b.get("photo_source"),
+                photo_focus=b.get("photo_focus"),
             )
             for b in buildings
         )

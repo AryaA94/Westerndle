@@ -17,7 +17,14 @@
         "coordinates",
         "floors"
       ],
-      "zone": "Core"
+      "zone": "Core",
+      "photo": "uc.jpg",
+      "photo_credit": "Balcer, CC BY 2.5, via Wikimedia Commons",
+      "photo_source": "https://commons.wikimedia.org/wiki/File:University_College_Building_University_of_Western_Ontario_1.jpg",
+      "photo_focus": [
+        0.76,
+        0.4
+      ]
     },
     {
       "id": "mc",
@@ -34,7 +41,10 @@
       "verified": [
         "coordinates"
       ],
-      "zone": "Core"
+      "zone": "Core",
+      "photo": "mc.jpg",
+      "photo_credit": "Better Than Bacon, CC BY 2.0, via Wikimedia Commons",
+      "photo_source": "https://commons.wikimedia.org/wiki/File:Middlesex_College,_University_of_Western_Ontario.jpg"
     },
     {
       "id": "pab",
@@ -52,7 +62,10 @@
       "verified": [
         "coordinates"
       ],
-      "zone": "Core"
+      "zone": "Core",
+      "photo": "pab.jpg",
+      "photo_credit": "R.schneider101, CC BY-SA 4.0, via Wikimedia Commons",
+      "photo_source": "https://commons.wikimedia.org/wiki/File:UWO_Physics_and_Astronomy_building.jpg"
     },
     {
       "id": "nsc",
@@ -70,7 +83,14 @@
       "verified": [
         "coordinates"
       ],
-      "zone": "North"
+      "zone": "North",
+      "photo": "nsc.jpg",
+      "photo_credit": "Balcer, CC BY 2.5, via Wikimedia Commons",
+      "photo_source": "https://commons.wikimedia.org/wiki/File:Natural_Sciences_Building_University_of_Western_Ontario_1.jpg",
+      "photo_focus": [
+        0.6,
+        0.55
+      ]
     },
     {
       "id": "bgs",
@@ -123,7 +143,14 @@
       "verified": [
         "coordinates"
       ],
-      "zone": "Core"
+      "zone": "Core",
+      "photo": "th.jpg",
+      "photo_credit": "Flibirigit, CC BY-SA 4.0, via Wikimedia Commons",
+      "photo_source": "https://commons.wikimedia.org/wiki/File:Thames_Hall_at_the_University_of_Western_Ontario.jpg",
+      "photo_focus": [
+        0.8,
+        0.62
+      ]
     },
     {
       "id": "stvh",
@@ -213,7 +240,10 @@
         "coordinates",
         "floors"
       ],
-      "zone": "Core"
+      "zone": "Core",
+      "photo": "ucc.jpg",
+      "photo_credit": "Adam Bishop, CC BY-SA 4.0, via Wikimedia Commons",
+      "photo_source": "https://commons.wikimedia.org/wiki/File:University_Community_Centre,_UWO.jpg"
     },
     {
       "id": "wl",
@@ -231,7 +261,10 @@
       "verified": [
         "coordinates"
       ],
-      "zone": "Core"
+      "zone": "Core",
+      "photo": "wl.jpg",
+      "photo_credit": "Balcer, CC BY 2.5, via Wikimedia Commons",
+      "photo_source": "https://commons.wikimedia.org/wiki/File:D_B_Weldon_Library_University_of_Western_Ontario_1.jpg"
     },
     {
       "id": "ssc",
@@ -248,7 +281,10 @@
       "verified": [
         "coordinates"
       ],
-      "zone": "Core"
+      "zone": "Core",
+      "photo": "ssc.jpg",
+      "photo_credit": "Tarekmech, CC BY-SA 3.0, via Wikimedia Commons",
+      "photo_source": "https://commons.wikimedia.org/wiki/File:Socialscienceuwo.jpg"
     },
     {
       "id": "sh",
@@ -301,7 +337,14 @@
       "verified": [
         "coordinates"
       ],
-      "zone": "South"
+      "zone": "South",
+      "photo": "fnb.jpg",
+      "photo_credit": "Shifre, CC BY-SA 4.0, via Wikimedia Commons",
+      "photo_source": "https://commons.wikimedia.org/wiki/File:Western%27s_FIMS_%26_Nursing_Building.jpg",
+      "photo_focus": [
+        0.45,
+        0.3
+      ]
     },
     {
       "id": "wsrc",
@@ -336,7 +379,14 @@
       "verified": [
         "coordinates"
       ],
-      "zone": "South"
+      "zone": "South",
+      "photo": "ah.jpg",
+      "photo_credit": "Mikerussell, CC BY-SA 3.0, via Wikimedia Commons",
+      "photo_source": "https://commons.wikimedia.org/wiki/File:AlumniHallWestern.jpg",
+      "photo_focus": [
+        0.22,
+        0.45
+      ]
     },
     {
       "id": "vac",
@@ -372,7 +422,14 @@
       "verified": [
         "coordinates"
       ],
-      "zone": "South"
+      "zone": "South",
+      "photo": "seb.jpg",
+      "photo_credit": "R.schneider101, CC BY-SA 4.0, via Wikimedia Commons",
+      "photo_source": "https://commons.wikimedia.org/wiki/File:SEB_Front_Tower.jpg",
+      "photo_focus": [
+        0.22,
+        0.4
+      ]
     },
     {
       "id": "teb",
@@ -513,7 +570,10 @@
       "verified": [
         "coordinates"
       ],
-      "zone": "North"
+      "zone": "North",
+      "photo": "robarts.jpg",
+      "photo_credit": "JE_at_UWO, public domain, via Wikimedia Commons",
+      "photo_source": "https://commons.wikimedia.org/wiki/File:Robartsri.jpg"
     },
     {
       "id": "ta",
@@ -568,7 +628,10 @@
         "coordinates",
         "floors"
       ],
-      "zone": "Residence"
+      "zone": "Residence",
+      "photo": "smh.jpg",
+      "photo_credit": "Rawr, CC BY-SA 3.0, via Wikimedia Commons",
+      "photo_source": "https://commons.wikimedia.org/wiki/File:Saugeen-Maitland_Hall.jpg"
     },
     {
       "id": "dh",
@@ -606,7 +669,14 @@
       "verified": [
         "coordinates"
       ],
-      "zone": "Residence"
+      "zone": "Residence",
+      "photo": "msh.jpg",
+      "photo_credit": "Philip Rees, CC BY-SA 3.0, via Wikimedia Commons",
+      "photo_source": "https://commons.wikimedia.org/wiki/File:Medway_Quad.JPG",
+      "photo_focus": [
+        0.55,
+        0.32
+      ]
     },
     {
       "id": "eh",
@@ -677,7 +747,10 @@
       "verified": [
         "coordinates"
       ],
-      "zone": "Affiliate"
+      "zone": "Affiliate",
+      "photo": "brescia.jpg",
+      "photo_credit": "Ken Eckert, CC BY-SA 4.0, via Wikimedia Commons",
+      "photo_source": "https://commons.wikimedia.org/wiki/File:Brescia_Campus_at_University_of_Western_Ontario.jpg"
     },
     {
       "id": "cronyn",
@@ -694,7 +767,14 @@
       "verified": [
         "coordinates"
       ],
-      "zone": "South"
+      "zone": "South",
+      "photo": "cronyn.jpg",
+      "photo_credit": "Avocet7, CC BY-SA 4.0, via Wikimedia Commons",
+      "photo_source": "https://commons.wikimedia.org/wiki/File:Cronyn_observatory_building_and_Gibbs_heliochronometer_(sundial).jpg",
+      "photo_focus": [
+        0.55,
+        0.45
+      ]
     },
     {
       "id": "wssb",

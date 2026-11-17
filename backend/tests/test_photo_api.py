@@ -12,6 +12,7 @@ from app.db import DATA_FILE
 from app.main import MAX_GUESSES, create_app
 
 WITH_PHOTOS = {"uc", "mc", "wl"}
+TOO_SMALL = "ssc"  # has a photo, but too narrow for photo mode
 
 
 def today():
@@ -26,6 +27,9 @@ def photo_client(tmp_path):
         if b["id"] in WITH_PHOTOS:
             b["photo"] = f"{b['id']}.jpg"
             Image.new("RGB", (1200, 900), "purple").save(tmp_path / b["photo"])
+        if b["id"] == TOO_SMALL:
+            b["photo"] = "small.jpg"
+            Image.new("RGB", (400, 300), "grey").save(tmp_path / "small.jpg")
     doc["buildings"].append({**doc["buildings"][0], "id": "nofile", "name": "Photo Missing", "photo": "nofile.jpg"})
     data = tmp_path / "buildings.json"
     data.write_text(json.dumps(doc))
@@ -52,6 +56,11 @@ def test_photo_answer_only_uses_buildings_with_a_photo_file(photo_client):
     assert photo_answer(photo_client) in WITH_PHOTOS
 
 
+def test_small_photo_shows_on_end_screen_but_not_in_photo_mode(photo_client):
+    assert photo_client.get(f"/api/photos/{TOO_SMALL}").status_code == 200
+    assert TOO_SMALL not in photo_client.app.state.photo_mode_ids
+
+
 def test_photo_views_are_jpegs_for_every_level(photo_client):
     for level in (0, MAX_GUESSES - 1):
         r = photo_client.get(f"/api/photo/{today()}/{level}")
@@ -76,7 +85,7 @@ def test_reveal_gives_the_full_photo_url(photo_client):
 
 
 def test_full_photo_404_for_building_without_one(photo_client):
-    assert photo_client.get("/api/photos/ssc").status_code == 404
+    assert photo_client.get("/api/photos/smh").status_code == 404
     assert photo_client.get("/api/photos/nofile").status_code == 404
 
 

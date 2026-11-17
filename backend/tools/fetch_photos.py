@@ -28,14 +28,14 @@ UA = {"User-Agent": "westerndle-photo-script/1.0"}
 
 def download(file_name: str) -> bytes:
     url = f"https://commons.wikimedia.org/wiki/Special:FilePath/{urllib.parse.quote(file_name)}?width={WIDTH}"
-    for attempt in range(5):
+    for attempt in range(3):
         try:
             with urllib.request.urlopen(urllib.request.Request(url, headers=UA), timeout=60) as r:
                 return r.read()
         except urllib.error.HTTPError as e:
             if e.code != 429:
                 raise
-            time.sleep(20 * (attempt + 1))  # rate limited: back off and retry
+            time.sleep(10 * (attempt + 1))  # rate limited: back off and retry
     raise RuntimeError(f"gave up on {file_name}")
 
 
@@ -51,19 +51,29 @@ def main() -> None:
     doc = json.loads(DATA.read_text())
     by_id = {b["id"]: b for b in doc["buildings"]}
 
+    missing = []
     for p in photos:
         target = PHOTO_DIR / f"{p['building']}.jpg"
         if not target.exists():
-            target.write_bytes(download(p["file"]))
+            try:
+                target.write_bytes(download(p["file"]))
+            except Exception as e:  # one bad download shouldn't stop the rest
+                print(f"FAILED {p['building']}: {e}")
+                missing.append(p["building"])
+                continue
             print("downloaded", target.name)
             time.sleep(2)
         b = by_id[p["building"]]
         b["photo"] = target.name
         b["photo_credit"] = credit(p)
         b["photo_source"] = p["source"]
+        if "focus" in p:
+            b["photo_focus"] = p["focus"]
 
     DATA.write_text(json.dumps(doc, indent=2, ensure_ascii=False) + "\n")
-    print(f"{len(photos)} photos ready")
+    print(f"{len(photos) - len(missing)} of {len(photos)} photos ready")
+    if missing:
+        print("Run this script again later to fetch:", ", ".join(missing))
 
 
 if __name__ == "__main__":

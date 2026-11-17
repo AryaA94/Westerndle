@@ -3,7 +3,7 @@
 import json
 from pathlib import Path
 
-from app.db import DATA_FILE, BuildingRow, init_db, make_engine
+from app.db import DATA_FILE, PHOTO_DIR, BuildingRow, init_db, make_engine
 from sqlalchemy import select
 from sqlalchemy.orm import Session
 
@@ -25,10 +25,9 @@ def test_fields_are_sane():
 
 
 def test_photos_exist_and_are_credited():
-    public = Path(__file__).resolve().parents[2] / "frontend" / "public"
     for b in BUILDINGS:
         if b.get("photo"):
-            assert (public / b["photo"]).is_file(), f"{b['id']}: missing {b['photo']}"
+            assert (PHOTO_DIR / b["photo"]).is_file(), f"{b['id']}: missing {b['photo']}"
             assert b.get("photo_credit"), f"{b['id']}: photo needs a photo_credit"
             assert b.get("photo_source", "").startswith("https://"), f"{b['id']}: photo needs a photo_source link"
 
