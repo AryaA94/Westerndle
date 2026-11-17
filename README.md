@@ -41,26 +41,32 @@ and the distance and compass direction to the answer.
 - **Global stats.** Finished daily games are stored in PostgreSQL and
   aggregated into a per-puzzle guess distribution.
 
-## Run it
+## Put it online (free)
 
-With Docker (PostgreSQL + app on http://localhost:8000):
+The app runs on [Render](https://render.com)'s free tier and the database on
+[Neon](https://neon.com)'s free Postgres. Neither needs a credit card.
+
+1. **Neon:** create a project and copy its connection string (it starts with
+   `postgresql://`). Keep it private: it's the database password.
+2. **Render:** choose **New → Blueprint** and pick this repo. Render reads
+   `render.yaml` and sets everything up.
+3. When Render asks for `DATABASE_URL`, paste the Neon connection string, then
+   deploy.
+
+Render's free instance sleeps after 15 minutes without visitors, so the first
+visit after that takes about a minute to load.
+
+## Run it on your computer
+
+**With Docker** (starts PostgreSQL and the app together):
 
 ```bash
 docker compose up --build
 ```
 
-Free hosting: the app runs on Render's free tier and the database on Neon's
-free Postgres.
+Then open http://localhost:8000.
 
-1. Create a project at [neon.com](https://neon.com) and copy its connection string.
-2. In [Render](https://render.com), choose **New → Blueprint** and pick this repo
-   (it reads `render.yaml`).
-3. Paste the Neon connection string when Render asks for `DATABASE_URL`.
-
-Render's free instance sleeps after 15 minutes without visitors, so the first
-visit after that takes about a minute.
-
-Local development (two terminals):
+**Without Docker**, run the backend and frontend in two terminals:
 
 ```bash
 cd backend && pip install -r requirements-dev.txt && uvicorn app.main:app --reload
@@ -70,10 +76,12 @@ cd backend && pip install -r requirements-dev.txt && uvicorn app.main:app --relo
 cd frontend && npm install && npm run dev
 ```
 
-Without `DATABASE_URL` the backend uses a local SQLite file. Point it at
-Postgres with `DATABASE_URL=postgresql://user:pass@host/db`.
+Then open the address the frontend prints (usually http://localhost:5173).
+This uses a local SQLite file instead of PostgreSQL, so you don't need to
+install a database. To use PostgreSQL, set
+`DATABASE_URL=postgresql://user:pass@host/db` before starting the backend.
 
-Tests:
+## Run the tests
 
 ```bash
 cd backend && pytest
