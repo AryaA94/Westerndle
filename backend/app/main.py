@@ -131,7 +131,7 @@ def create_app(database_url: str | None = None, static_dir: Path | None = None) 
         if body.guesses < MAX_GUESSES:
             raise HTTPException(403, "keep guessing")
         a = answer_for(request, body.mode, body.puzzle, body.token)
-        return {"id": a.id, "name": a.name, "lat": a.lat, "lon": a.lon, "photo": a.photo, "photoCredit": a.photo_credit}
+        return {"id": a.id, "name": a.name, "lat": a.lat, "lon": a.lon, "photo": a.photo, "photoCredit": a.photo_credit, "photoSource": a.photo_source}
 
     @app.post("/api/hint")
     def hint(body: RevealIn, request: Request):

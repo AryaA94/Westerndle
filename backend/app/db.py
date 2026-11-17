@@ -32,6 +32,7 @@ class BuildingRow(Base):
     photo: Mapped[str | None] = mapped_column(String(255), nullable=True)
     # Photographer and licence, shown under the photo (required by CC licences).
     photo_credit: Mapped[str | None] = mapped_column(String(255), nullable=True)
+    photo_source: Mapped[str | None] = mapped_column(String(255), nullable=True)
 
 
 class PlayRow(Base):
@@ -84,6 +85,7 @@ def init_db(engine, data_file: Path = DATA_FILE) -> None:
                 floors=b["floors"],
                 photo=b.get("photo"),
                 photo_credit=b.get("photo_credit"),
+                photo_source=b.get("photo_source"),
             )
             for b in buildings
         )

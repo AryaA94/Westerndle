@@ -30,6 +30,15 @@ def test_photos_exist_and_are_credited():
         if b.get("photo"):
             assert (public / b["photo"]).is_file(), f"{b['id']}: missing {b['photo']}"
             assert b.get("photo_credit"), f"{b['id']}: photo needs a photo_credit"
+            assert b.get("photo_source", "").startswith("https://"), f"{b['id']}: photo needs a photo_source link"
+
+
+def test_photo_manifest_matches_buildings():
+    manifest = json.loads((DATA_FILE.parent.parent / "tools" / "photos.json").read_text())["photos"]
+    ids = {b["id"] for b in BUILDINGS}
+    for p in manifest:
+        assert p["building"] in ids, p["building"]
+        assert p["author"] and p["licence"] and p["source"].startswith("https://commons.wikimedia.org/"), p
 
 
 def test_removed_buildings_leave_the_database(tmp_path):

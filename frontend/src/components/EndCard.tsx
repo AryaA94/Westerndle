@@ -66,7 +66,18 @@ export function EndCard({ game, onNewPractice }: { game: GameState; onNewPractic
       {answer?.photo && (
         <figure className="mt-3">
           <img src={`/${answer.photo}`} alt={answerName} className="max-h-72 w-full rounded-lg object-cover" />
-          {answer.photoCredit && <figcaption className="mt-1 text-[11px] text-purple-200">Photo: {answer.photoCredit}</figcaption>}
+          {answer.photoCredit && (
+            <figcaption className="mt-1 text-[11px] text-purple-200">
+              Photo:{" "}
+              {answer.photoSource ? (
+                <a href={answer.photoSource} target="_blank" rel="noreferrer" className="underline hover:text-white">
+                  {answer.photoCredit}
+                </a>
+              ) : (
+                answer.photoCredit
+              )}
+            </figcaption>
+          )}
         </figure>
       )}
       {answer && (

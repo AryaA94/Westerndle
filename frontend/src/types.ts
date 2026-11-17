@@ -31,6 +31,7 @@ export interface Answer {
   lon: number;
   photo: string | null;
   photoCredit: string | null;
+  photoSource: string | null;
 }
 
 export interface DailyMeta {

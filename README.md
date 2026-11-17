@@ -86,8 +86,11 @@ takes.
   OpenStreetMap too.
 - **Years built**, and any floor count not marked verified, were written from
   memory. Check them against Western's facilities pages before launch.
-- **Photos**: put the image in `frontend/public/photos/` and set `"photo"` and
-  `"photo_credit"`. Use photos you took or ones with a free licence (e.g.
+- **Photos**: 17 freely licensed photos from Wikimedia Commons are listed in
+  `tools/photos.json`. Run `python tools/fetch_photos.py` (from `backend/`) once
+  to download them and fill in the credits. To add your own, put the image in
+  `frontend/public/photos/` and set `"photo"`, `"photo_credit"` and
+  `"photo_source"`. Use photos you took or ones with a free licence (e.g.
   Wikimedia Commons), and credit the photographer as the licence requires.
   A test fails if a photo is missing its credit.
 

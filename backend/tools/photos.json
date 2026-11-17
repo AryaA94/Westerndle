@@ -1,0 +1,124 @@
+{
+  "_note": "Freely licensed photos from Wikimedia Commons. Run tools/fetch_photos.py to download them.",
+  "photos": [
+    {
+      "building": "uc",
+      "file": "University College Building University of Western Ontario 1.jpg",
+      "author": "Balcer",
+      "licence": "CC BY 2.5",
+      "source": "https://commons.wikimedia.org/wiki/File:University_College_Building_University_of_Western_Ontario_1.jpg"
+    },
+    {
+      "building": "mc",
+      "file": "Middlesex College, University of Western Ontario.jpg",
+      "author": "Better Than Bacon",
+      "licence": "CC BY 2.0",
+      "source": "https://commons.wikimedia.org/wiki/File:Middlesex_College,_University_of_Western_Ontario.jpg"
+    },
+    {
+      "building": "pab",
+      "file": "UWO Physics and Astronomy building.jpg",
+      "author": "R.schneider101",
+      "licence": "CC BY-SA 4.0",
+      "source": "https://commons.wikimedia.org/wiki/File:UWO_Physics_and_Astronomy_building.jpg"
+    },
+    {
+      "building": "nsc",
+      "file": "Natural Sciences Building University of Western Ontario 1.jpg",
+      "author": "Balcer",
+      "licence": "CC BY 2.5",
+      "source": "https://commons.wikimedia.org/wiki/File:Natural_Sciences_Building_University_of_Western_Ontario_1.jpg"
+    },
+    {
+      "building": "th",
+      "file": "Thames Hall at the University of Western Ontario.jpg",
+      "author": "Flibirigit",
+      "licence": "CC BY-SA 4.0",
+      "source": "https://commons.wikimedia.org/wiki/File:Thames_Hall_at_the_University_of_Western_Ontario.jpg"
+    },
+    {
+      "building": "ucc",
+      "file": "University Community Centre, UWO.jpg",
+      "author": "Adam Bishop",
+      "licence": "CC BY-SA 4.0",
+      "source": "https://commons.wikimedia.org/wiki/File:University_Community_Centre,_UWO.jpg"
+    },
+    {
+      "building": "wl",
+      "file": "D B Weldon Library University of Western Ontario 1.jpg",
+      "author": "Balcer",
+      "licence": "CC BY 2.5",
+      "source": "https://commons.wikimedia.org/wiki/File:D_B_Weldon_Library_University_of_Western_Ontario_1.jpg"
+    },
+    {
+      "building": "ssc",
+      "file": "Socialscienceuwo.jpg",
+      "author": "Tarekmech",
+      "licence": "CC BY-SA 3.0",
+      "source": "https://commons.wikimedia.org/wiki/File:Socialscienceuwo.jpg"
+    },
+    {
+      "building": "ah",
+      "file": "AlumniHallWestern.jpg",
+      "author": "Mikerussell",
+      "licence": "CC BY-SA 3.0",
+      "source": "https://commons.wikimedia.org/wiki/File:AlumniHallWestern.jpg"
+    },
+    {
+      "building": "seb",
+      "file": "Spencer Engineering Building, University of Western Ontario.jpg",
+      "author": "Mikerussell",
+      "licence": "CC BY-SA 3.0",
+      "source": "https://commons.wikimedia.org/wiki/File:Spencer_Engineering_Building,_University_of_Western_Ontario.jpg"
+    },
+    {
+      "building": "fnb",
+      "file": "Western's FIMS & Nursing Building.jpg",
+      "author": "Shifre",
+      "licence": "CC BY-SA 4.0",
+      "source": "https://commons.wikimedia.org/wiki/File:Western%27s_FIMS_%26_Nursing_Building.jpg"
+    },
+    {
+      "building": "ivey",
+      "file": "Ivey Business School .jpg",
+      "author": "Chad0119",
+      "licence": "CC BY-SA 4.0",
+      "source": "https://commons.wikimedia.org/wiki/File:Ivey_Business_School_.jpg"
+    },
+    {
+      "building": "robarts",
+      "file": "Robartsri.jpg",
+      "author": "JE_at_UWO",
+      "licence": "Public domain",
+      "source": "https://commons.wikimedia.org/wiki/File:Robartsri.jpg"
+    },
+    {
+      "building": "smh",
+      "file": "Saugeen-Maitland Hall.jpg",
+      "author": "Rawr",
+      "licence": "CC BY-SA 3.0",
+      "source": "https://commons.wikimedia.org/wiki/File:Saugeen-Maitland_Hall.jpg"
+    },
+    {
+      "building": "msh",
+      "file": "Med-Syd Pan.jpg",
+      "author": "DocterYas",
+      "licence": "CC BY-SA 3.0",
+      "source": "https://commons.wikimedia.org/wiki/File:Med-Syd_Pan.jpg"
+    },
+    {
+      "building": "brescia",
+      "file": "Brescia Campus at University of Western Ontario.jpg",
+      "author": "Ken Eckert",
+      "licence": "CC BY-SA 4.0",
+      "source": "https://commons.wikimedia.org/wiki/File:Brescia_Campus_at_University_of_Western_Ontario.jpg"
+    },
+    {
+      "building": "cronyn",
+      "file": "Cronyn observatory building and Gibbs heliochronometer (sundial).jpg",
+      "author": "Avocet7",
+      "licence": "CC BY-SA 4.0",
+      "source": "https://commons.wikimedia.org/wiki/File:Cronyn_observatory_building_and_Gibbs_heliochronometer_(sundial).jpg"
+    }
+  ]
+}
