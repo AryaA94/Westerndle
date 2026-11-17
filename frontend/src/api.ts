@@ -24,8 +24,9 @@ export interface GameRef {
 export const api = {
   buildings: () => call<BuildingName[]>("/buildings"),
   daily: () => call<DailyMeta>("/daily"),
-  newPractice: () => post<{ token: string; maxGuesses: number }>("/practice"),
+  newPractice: () => post<{ token: string; maxGuesses: number; hintAfter: number }>("/practice"),
   guess: (ref: GameRef, buildingId: string) => post<Feedback>("/guess", { ...ref, buildingId }),
+  hint: (ref: GameRef, guesses: number) => post<{ firstLetter: string }>("/hint", { ...ref, guesses }),
   reveal: (ref: GameRef, guesses: number) => post<Answer>("/reveal", { ...ref, guesses }),
   recordResult: (puzzle: number, won: boolean, guesses: number) =>
     post<{ ok: boolean }>("/results", { puzzle, won, guesses }),

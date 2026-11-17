@@ -1,8 +1,11 @@
-import { useEffect, useState } from "react";
+import { lazy, Suspense, useEffect, useState } from "react";
 import { api } from "../api";
 import { shareText } from "../logic";
 import type { GameState, GlobalStats } from "../types";
 import { Distribution } from "./StatsModal";
+
+// Leaflet is only needed once a game ends, so keep it out of the first page load.
+const CampusMap = lazy(() => import("./CampusMap"));
 
 function useCountdown() {
   const [left, setLeft] = useState("");
@@ -60,16 +63,18 @@ export function EndCard({ game, onNewPractice }: { game: GameState; onNewPractic
         {won ? `Solved in ${game.guesses.length}/${game.maxGuesses}` : "Out of guesses"}
       </p>
       <h2 className="mt-1 text-2xl font-bold">{answerName}</h2>
-      {answer?.photo && <img src={`/${answer.photo}`} alt={answerName} className="mt-3 w-full rounded-lg object-cover" />}
+      {answer?.photo && (
+        <figure className="mt-3">
+          <img src={`/${answer.photo}`} alt={answerName} className="max-h-72 w-full rounded-lg object-cover" />
+          {answer.photoCredit && <figcaption className="mt-1 text-[11px] text-purple-200">Photo: {answer.photoCredit}</figcaption>}
+        </figure>
+      )}
       {answer && (
-        <a
-          href={`https://www.google.com/maps/search/?api=1&query=${answer.lat},${answer.lon}`}
-          target="_blank"
-          rel="noreferrer"
-          className="mt-1 inline-block text-sm text-purple-200 underline hover:text-white"
-        >
-          See it on a map
-        </a>
+        <div className="mt-3 bg-white/10 text-neutral-900 rounded-lg">
+          <Suspense fallback={<div className="h-64" />}>
+            <CampusMap answer={answer} guesses={game.guesses} />
+          </Suspense>
+        </div>
       )}
 
       {global && global.plays > 0 && (

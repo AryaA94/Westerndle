@@ -8,7 +8,7 @@ const fb = (over: Partial<Feedback>): Feedback => ({
   category: { value: "Academic", match: "correct" },
   yearBuilt: { value: 1960, match: "close", hint: "higher" },
   floors: { value: 4, match: "wrong", hint: "lower" },
-  distanceM: 420, direction: "NE", proximity: 83, photo: null,
+  distanceM: 420, direction: "NE", proximity: 83, photo: null, lat: 43, lon: -81,
   ...over,
 });
 

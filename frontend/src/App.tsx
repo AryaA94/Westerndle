@@ -29,8 +29,8 @@ export default function App() {
   }, []);
 
   const newPractice = useCallback(async () => {
-    const { token, maxGuesses } = await api.newPractice();
-    const g: GameState = { mode: "practice", token, maxGuesses, guesses: [], status: "playing" };
+    const { token, maxGuesses, hintAfter } = await api.newPractice();
+    const g: GameState = { mode: "practice", token, maxGuesses, hintAfter, guesses: [], status: "playing" };
     storage.savePracticeGame(g);
     setGame(g);
   }, []);
@@ -41,7 +41,7 @@ export default function App() {
     if (mode === "daily") {
       setGame(
         storage.dailyGame(daily.puzzle) ?? {
-          mode: "daily", puzzle: daily.puzzle, maxGuesses: daily.maxGuesses, guesses: [], status: "playing",
+          mode: "daily", puzzle: daily.puzzle, maxGuesses: daily.maxGuesses, hintAfter: daily.hintAfter, guesses: [], status: "playing",
         },
       );
     } else {
@@ -85,6 +85,19 @@ export default function App() {
       }
     } catch (e) {
       setError(e instanceof Error ? e.message : "Something went wrong.");
+    } finally {
+      setBusy(false);
+    }
+  };
+
+  const onHint = async () => {
+    if (!game || busy) return;
+    setBusy(true);
+    try {
+      const { firstLetter } = await api.hint({ mode: game.mode, puzzle: game.puzzle, token: game.token }, game.guesses.length);
+      save({ ...game, hint: firstLetter });
+    } catch (e) {
+      setError(e instanceof Error ? e.message : "Couldn't get a hint.");
     } finally {
       setBusy(false);
     }
@@ -143,9 +156,12 @@ export default function App() {
             {game.status === "playing" ? (
               <>
                 <GuessInput buildings={buildings} guessed={guessed} disabled={busy} onGuess={onGuess} />
-                <p className="text-center text-xs font-semibold uppercase tracking-widest text-silver">
-                  {left} {left === 1 ? "guess" : "guesses"} left
-                </p>
+                <div className="flex flex-wrap items-center justify-center gap-3">
+                  <p className="text-xs font-semibold uppercase tracking-widest text-silver">
+                    {left} {left === 1 ? "guess" : "guesses"} left
+                  </p>
+                  <HintBadge game={game} busy={busy} onHint={onHint} />
+                </div>
               </>
             ) : (
               <EndCard game={game} onNewPractice={() => newPractice().catch(() => setError("Couldn't start a practice game."))} />
@@ -169,5 +185,24 @@ export default function App() {
       {modal === "help" && <HelpModal maxGuesses={daily?.maxGuesses ?? 8} onClose={closeModal} />}
       {modal === "stats" && <StatsModal stats={stats} onClose={closeModal} />}
     </div>
+  );
+}
+
+/** Locked until hintAfter misses, then a button, then the letter itself. */
+function HintBadge({ game, busy, onHint }: { game: GameState; busy: boolean; onHint: () => void }) {
+  const base = "rounded-full px-3 py-1 text-xs font-bold";
+  if (game.hint)
+    return <span className={`${base} bg-close text-purple-deep`}>Hint: starts with “{game.hint}”</span>;
+  const needed = (game.hintAfter ?? 5) - game.guesses.length;
+  if (needed > 0)
+    return (
+      <span className={`${base} bg-purple-mist text-purple-western/70 dark:bg-white/10 dark:text-purple-200/70`}>
+        🔒 Hint in {needed} {needed === 1 ? "guess" : "guesses"}
+      </span>
+    );
+  return (
+    <button onClick={onHint} disabled={busy} className={`${base} bg-purple-western text-white hover:bg-purple-deep disabled:opacity-60`}>
+      💡 Show first letter
+    </button>
   );
 }

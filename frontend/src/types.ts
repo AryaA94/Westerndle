@@ -20,6 +20,8 @@ export interface Feedback {
   direction: string | null;
   proximity: number;
   photo: string | null;
+  lat: number;
+  lon: number;
 }
 
 export interface Answer {
@@ -28,12 +30,14 @@ export interface Answer {
   lat: number;
   lon: number;
   photo: string | null;
+  photoCredit: string | null;
 }
 
 export interface DailyMeta {
   puzzle: number;
   date: string;
   maxGuesses: number;
+  hintAfter: number;
 }
 
 export interface GlobalStats {
@@ -49,6 +53,9 @@ export interface GameState {
   puzzle?: number;
   token?: string;
   maxGuesses: number;
+  hintAfter: number;
+  /** First letter of the answer, once the player has asked for it. */
+  hint?: string;
   guesses: Feedback[];
   answer?: Answer;
   status: "playing" | "won" | "lost";

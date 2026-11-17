@@ -30,6 +30,8 @@ class BuildingRow(Base):
     year_built: Mapped[int] = mapped_column(Integer)
     floors: Mapped[int] = mapped_column(Integer)
     photo: Mapped[str | None] = mapped_column(String(255), nullable=True)
+    # Photographer and licence, shown under the photo (required by CC licences).
+    photo_credit: Mapped[str | None] = mapped_column(String(255), nullable=True)
 
 
 class PlayRow(Base):
@@ -71,6 +73,7 @@ def init_db(engine, data_file: Path = DATA_FILE) -> None:
             row.zone, row.category = b["zone"], b["category"]
             row.year_built, row.floors = b["year_built"], b["floors"]
             row.photo = b.get("photo")
+            row.photo_credit = b.get("photo_credit")
             s.merge(row)
 
 

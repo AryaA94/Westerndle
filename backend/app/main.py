@@ -24,6 +24,8 @@ from .db import BuildingRow, PlayRow, init_db, make_engine, play_stats, session_
 from .game import Building, score_guess
 
 MAX_GUESSES = 8
+# The first-letter hint unlocks once this many guesses have missed.
+HINT_AFTER = 5
 
 
 # --- request bodies ---
@@ -107,19 +109,20 @@ def create_app(database_url: str | None = None, static_dir: Path | None = None) 
     @app.get("/api/daily")
     def daily():
         day = pz.today_on_campus()
-        return {"puzzle": pz.puzzle_number(day), "date": day.isoformat(), "maxGuesses": MAX_GUESSES}
+        return {"puzzle": pz.puzzle_number(day), "date": day.isoformat(), "maxGuesses": MAX_GUESSES, "hintAfter": HINT_AFTER}
 
     @app.post("/api/practice")
     def new_practice(request: Request):
         answer = random.choice(list(buildings(request)))
-        return {"token": pz.make_practice_token(answer, _secret()), "maxGuesses": MAX_GUESSES}
+        return {"token": pz.make_practice_token(answer, _secret()), "maxGuesses": MAX_GUESSES, "hintAfter": HINT_AFTER}
 
     @app.post("/api/guess")
     def guess(body: GuessIn, request: Request):
         g = building_or_404(request, body.buildingId)
         answer = answer_for(request, body.mode, body.puzzle, body.token)
         result = score_guess(_to_building(g), _to_building(answer))
-        result["photo"] = g.photo
+        # The guess's own position is public; the map on the end screen plots it.
+        result.update(photo=g.photo, lat=g.lat, lon=g.lon)
         return result
 
     @app.post("/api/reveal")
@@ -128,7 +131,15 @@ def create_app(database_url: str | None = None, static_dir: Path | None = None) 
         if body.guesses < MAX_GUESSES:
             raise HTTPException(403, "keep guessing")
         a = answer_for(request, body.mode, body.puzzle, body.token)
-        return {"id": a.id, "name": a.name, "lat": a.lat, "lon": a.lon, "photo": a.photo}
+        return {"id": a.id, "name": a.name, "lat": a.lat, "lon": a.lon, "photo": a.photo, "photoCredit": a.photo_credit}
+
+    @app.post("/api/hint")
+    def hint(body: RevealIn, request: Request):
+        """First letter of the answer, after HINT_AFTER misses."""
+        if body.guesses < HINT_AFTER:
+            raise HTTPException(403, f"the hint unlocks after {HINT_AFTER} guesses")
+        a = answer_for(request, body.mode, body.puzzle, body.token)
+        return {"firstLetter": a.name[0].upper()}
 
     @app.post("/api/results", status_code=201)
     def record_result(body: ResultIn):

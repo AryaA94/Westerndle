@@ -86,3 +86,19 @@ def test_results_and_stats(client):
 def test_results_validation(client):
     assert client.post("/api/results", json={"puzzle": today(), "won": True, "guesses": 0}).status_code == 422
     assert client.post("/api/results", json={"puzzle": today(), "won": True, "guesses": MAX_GUESSES + 1}).status_code == 422
+
+
+def test_hint_unlocks_after_enough_guesses(client):
+    from app.main import HINT_AFTER
+
+    body = {"mode": "daily", "puzzle": today(), "guesses": HINT_AFTER - 1}
+    assert client.post("/api/hint", json=body).status_code == 403
+    body["guesses"] = HINT_AFTER
+    letter = client.post("/api/hint", json=body).json()["firstLetter"]
+    names = {b["id"]: b["name"] for b in client.get("/api/buildings").json()}
+    assert names[find_daily_answer(client)][0].upper() == letter
+
+
+def test_guess_includes_guess_position(client):
+    r = client.post("/api/guess", json={"mode": "daily", "puzzle": today(), "buildingId": "uc"}).json()
+    assert isinstance(r["lat"], float) and isinstance(r["lon"], float)
