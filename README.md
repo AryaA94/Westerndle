@@ -10,7 +10,8 @@ and the distance and compass direction to the answer.
 - **📷 Photo mode**: a second daily puzzle that starts on a blurry close-up of
   a building and zooms out with every wrong guess.
 - **Practice mode**: unlimited random buildings.
-- **Hint**: after 5 misses you can reveal the answer's first letter.
+- **Clues**: the building's type is shown from the start; its zone unlocks
+  after 2 misses, the decade it was built after 4, and its first letter after 5.
 - **Map**: the end screen maps the answer and all your guesses.
 - **Share**: a spoiler-free emoji grid, Wordle-style.
 
@@ -128,6 +129,7 @@ takes.
 | GET | `/api/daily` | Today's puzzle number and the guess limit |
 | POST | `/api/practice` | Start a practice game (returns a token) |
 | POST | `/api/guess` | Score a guess |
+| POST | `/api/clues` | Free clues unlocked so far |
 | POST | `/api/hint` | First letter of the answer, after 5 guesses |
 | POST | `/api/reveal` | Get the answer once all guesses are used |
 | GET | `/api/photo/{puzzle}/{level}` | Photo-mode picture at a zoom level |

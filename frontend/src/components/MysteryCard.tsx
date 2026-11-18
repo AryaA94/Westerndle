@@ -24,7 +24,7 @@ export function MysteryCard({ mode, puzzle }: { mode: Mode; puzzle?: number }) {
             {mode === "daily"
               ? stats && stats.plays > 0
                 ? `${stats.plays} ${stats.plays === 1 ? "player has" : "players have"} played today · ${Math.round((stats.wins / stats.plays) * 100)}% got it`
-                : "Be the first to solve today's building."
+                : "Be the first to solve today's building. Start with the clue below."
               : "Unlimited rounds. Doesn't affect your streak."}
           </p>
         </div>

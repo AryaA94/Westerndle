@@ -9,6 +9,10 @@ export function HelpModal({ maxGuesses, onClose }: { maxGuesses: number; onClose
           Guess today's mystery <b>Western University</b> building in {maxGuesses} tries. Every guess tells you how
           close you are.
         </p>
+        <p>
+          You start with a free <b>clue</b>: the building's type. Missing unlocks more: its zone after 2 guesses, the
+          decade it was built after 4, and its first letter after 5.
+        </p>
         <div className="grid grid-cols-3 gap-1.5">
           <Tile label="Zone" value="Core" match="correct" />
           <Tile label="Built" value={1969} match="close" hint="higher" />

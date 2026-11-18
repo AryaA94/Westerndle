@@ -36,6 +36,14 @@ export interface Answer {
   photoSource: string | null;
 }
 
+/** A free clue about the answer; value is null until enough guesses are made. */
+export interface Clue {
+  key: string;
+  label: string;
+  after: number;
+  value: string | null;
+}
+
 export interface DailyMeta {
   puzzle: number;
   date: string;

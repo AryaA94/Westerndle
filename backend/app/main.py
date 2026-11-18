@@ -28,6 +28,19 @@ MAX_GUESSES = 8
 # The first-letter hint unlocks once this many guesses have missed.
 HINT_AFTER = 5
 
+# Free clues for the classic game, so the first guess isn't a blind shot.
+# (guesses needed, key, label); each unlocks once that many guesses are made.
+CLUES = [(0, "category", "Type"), (2, "zone", "Zone"), (4, "decade", "Built")]
+ZONE_NAMES = {"Core": "Core campus", "North": "North campus", "South": "South campus", "Residence": "Residence", "Affiliate": "Affiliated college"}
+
+
+def clue_value(b: BuildingRow, key: str) -> str:
+    if key == "category":
+        return b.category
+    if key == "zone":
+        return ZONE_NAMES.get(b.zone, b.zone)
+    return f"{b.year_built // 10 * 10}s"
+
 
 # --- request bodies ---
 
@@ -171,6 +184,15 @@ def create_app(
             raise HTTPException(403, "keep guessing")
         a = answer_for(request, body.mode, body.puzzle, body.token)
         return {"id": a.id, "name": a.name, "lat": a.lat, "lon": a.lon, "photo": photo_url(a), "photoCredit": a.photo_credit, "photoSource": a.photo_source}
+
+    @app.post("/api/clues")
+    def clues(body: RevealIn, request: Request):
+        """The free clues unlocked so far, plus the ones still locked (without their values)."""
+        a = answer_for(request, body.mode, body.puzzle, body.token)
+        return [
+            {"key": key, "label": label, "after": after, "value": clue_value(a, key) if body.guesses >= after else None}
+            for after, key, label in CLUES
+        ]
 
     @app.post("/api/hint")
     def hint(body: RevealIn, request: Request):

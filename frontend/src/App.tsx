@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { api } from "./api";
+import { ClueBar } from "./components/ClueBar";
 import { EndCard } from "./components/EndCard";
 import { GuessInput } from "./components/GuessInput";
 import { GuessRow } from "./components/GuessRow";
@@ -11,7 +12,7 @@ import { StatsModal } from "./components/StatsModal";
 import { applyResult } from "./logic";
 import { celebrate } from "./confetti";
 import { storage } from "./storage";
-import type { BuildingName, DailyMeta, DailyMode, GameState, Mode } from "./types";
+import type { BuildingName, Clue, DailyMeta, DailyMode, GameState, Mode } from "./types";
 
 export default function App() {
   const [buildings, setBuildings] = useState<BuildingName[]>([]);
@@ -20,6 +21,7 @@ export default function App() {
   const [game, setGame] = useState<GameState>();
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState<string>();
+  const [clues, setClues] = useState<Clue[]>([]);
   const [modal, setModal] = useState<"help" | "stats" | null>(storage.seenHelp() ? null : "help");
 
   useEffect(() => {
@@ -53,6 +55,20 @@ export default function App() {
       else newPractice().catch(() => setError("Couldn't start a practice game."));
     }
   }, [mode, daily, newPractice]);
+
+  // Refresh the free clues whenever the guess count changes (classic modes only).
+  const made = game?.guesses.length ?? 0;
+  useEffect(() => {
+    if (!game || game.mode === "photo" || game.status !== "playing") return setClues([]);
+    let cancelled = false;
+    api
+      .clues({ mode: game.mode, puzzle: game.puzzle, token: game.token }, made)
+      .then((c) => !cancelled && setClues(c))
+      .catch(() => {});
+    return () => {
+      cancelled = true;
+    };
+  }, [game?.mode, game?.puzzle, game?.token, game?.status, made]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const guessed = useMemo(() => new Set(game?.guesses.map((g) => g.buildingId)), [game]);
 
@@ -145,12 +161,13 @@ export default function App() {
             )}
             {game.status === "playing" ? (
               <>
+                {game.mode !== "photo" && clues.length > 0 && <ClueBar game={game} clues={clues} busy={busy} onHint={onHint} />}
                 <GuessInput buildings={buildings} guessed={guessed} disabled={busy} onGuess={onGuess} />
                 <div className="flex flex-wrap items-center justify-center gap-3">
                   <p className="text-xs font-semibold uppercase tracking-widest text-silver">
                     {left} {left === 1 ? "guess" : "guesses"} left
                   </p>
-                  <HintBadge game={game} busy={busy} onHint={onHint} />
+                  {game.mode === "photo" && <HintBadge game={game} busy={busy} onHint={onHint} />}
                 </div>
               </>
             ) : (

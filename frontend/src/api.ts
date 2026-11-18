@@ -1,4 +1,4 @@
-import type { Answer, BuildingName, DailyMeta, DailyMode, Feedback, GlobalStats, Mode } from "./types";
+import type { Answer, BuildingName, Clue, DailyMeta, DailyMode, Feedback, GlobalStats, Mode } from "./types";
 
 async function call<T>(path: string, init?: RequestInit): Promise<T> {
   const res = await fetch(`/api${path}`, {
@@ -26,6 +26,7 @@ export const api = {
   daily: () => call<DailyMeta>("/daily"),
   newPractice: () => post<{ token: string; maxGuesses: number; hintAfter: number }>("/practice"),
   guess: (ref: GameRef, buildingId: string) => post<Feedback>("/guess", { ...ref, buildingId }),
+  clues: (ref: GameRef, guesses: number) => post<Clue[]>("/clues", { ...ref, guesses }),
   hint: (ref: GameRef, guesses: number) => post<{ firstLetter: string }>("/hint", { ...ref, guesses }),
   reveal: (ref: GameRef, guesses: number) => post<Answer>("/reveal", { ...ref, guesses }),
   recordResult: (mode: DailyMode, puzzle: number, won: boolean, guesses: number) =>

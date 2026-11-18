@@ -102,3 +102,26 @@ def test_hint_unlocks_after_enough_guesses(client):
 def test_guess_includes_guess_position(client):
     r = client.post("/api/guess", json={"mode": "daily", "puzzle": today(), "buildingId": "uc"}).json()
     assert isinstance(r["lat"], float) and isinstance(r["lon"], float)
+
+
+def test_clues_unlock_with_guesses(client):
+    from app.main import CLUES
+
+    answer = find_daily_answer(client)
+    body = {"mode": "daily", "puzzle": today(), "guesses": 0}
+    first = client.post("/api/clues", json=body).json()
+    assert [c["key"] for c in first] == [k for _, k, _ in CLUES]
+    assert first[0]["value"] is not None  # the starting clue is free
+    assert all(c["value"] is None for c in first[1:])  # later ones stay hidden
+
+    body["guesses"] = 4
+    unlocked = {c["key"]: c["value"] for c in client.post("/api/clues", json=body).json()}
+    b = next(x for x in client.app.state.buildings.values() if x.id == answer)
+    assert unlocked == {"category": b.category, "zone": unlocked["zone"], "decade": f"{b.year_built // 10 * 10}s"}
+    assert unlocked["zone"]
+
+
+def test_clues_work_in_practice(client):
+    token = client.post("/api/practice").json()["token"]
+    r = client.post("/api/clues", json={"mode": "practice", "token": token, "guesses": 0})
+    assert r.status_code == 200 and r.json()[0]["value"]
