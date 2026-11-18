@@ -74,3 +74,21 @@ def test_old_plays_table_gets_a_mode_column(tmp_path):
     assert "mode" in {c["name"] for c in inspect(engine).get_columns("plays")}
     with engine.connect() as conn:
         assert conn.execute(text("SELECT mode, guesses FROM plays")).one() == ("daily", 3)
+
+
+def test_no_name_or_alias_points_at_two_buildings():
+    """A shared alias (like 'Taylor Library' once was) makes one guess match two buildings."""
+    owner = {}
+    for b in BUILDINGS:
+        for label in {b["name"], *b.get("aliases", [])}:
+            key = label.casefold()
+            assert owner.setdefault(key, b["id"]) == b["id"], f"'{label}' is used by {owner[key]} and {b['id']}"
+
+
+def test_buildings_are_not_stacked_on_top_of_each_other():
+    """Two entries at almost the same spot usually means one building was added twice."""
+    from app.game import haversine_m
+
+    for i, a in enumerate(BUILDINGS):
+        for b in BUILDINGS[i + 1 :]:
+            assert haversine_m(a["lat"], a["lon"], b["lat"], b["lon"]) > 15, f"{a['id']} and {b['id']} are within 15 m"

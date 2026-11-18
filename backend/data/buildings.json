@@ -71,8 +71,7 @@
       "id": "nsc",
       "name": "Natural Sciences Centre",
       "aliases": [
-        "NSC",
-        "Taylor Library"
+        "NSC"
       ],
       "lat": 43.01058,
       "lon": -81.27313,
@@ -828,6 +827,345 @@
       "verified": [
         "coordinates",
         "floors"
+      ],
+      "zone": "Residence"
+    },
+    {
+      "id": "arts",
+      "name": "Arts and Humanities Building",
+      "aliases": [
+        "AHB",
+        "Arts & Humanities"
+      ],
+      "osm_name": "Arts & Humanities",
+      "category": "Academic",
+      "year_built": 1966,
+      "floors": 4,
+      "lat": 43.0074,
+      "lon": -81.27288,
+      "verified": [
+        "coordinates"
+      ],
+      "zone": "Core"
+    },
+    {
+      "id": "law",
+      "name": "Law Building",
+      "aliases": [
+        "Law School",
+        "Josephine Spencer Niblett",
+        "Law"
+      ],
+      "osm_name": "Law School",
+      "category": "Academic",
+      "year_built": 1973,
+      "floors": 3,
+      "lat": 43.00659,
+      "lon": -81.2761,
+      "verified": [
+        "coordinates"
+      ],
+      "zone": "Core"
+    },
+    {
+      "id": "mcintosh",
+      "name": "McIntosh Gallery",
+      "aliases": [
+        "McIntosh",
+        "Art Gallery"
+      ],
+      "osm_name": "McIntosh Art Gallery",
+      "category": "Arts",
+      "year_built": 1942,
+      "floors": 2,
+      "lat": 43.00949,
+      "lon": -81.27343,
+      "verified": [
+        "coordinates"
+      ],
+      "zone": "Core"
+    },
+    {
+      "id": "taylor",
+      "name": "Taylor Library",
+      "aliases": [
+        "Allyn and Betty Taylor Library",
+        "Taylor"
+      ],
+      "osm_name": "Taylor Library",
+      "category": "Library",
+      "year_built": 1991,
+      "floors": 4,
+      "lat": 43.01109,
+      "lon": -81.27339,
+      "verified": [
+        "coordinates"
+      ],
+      "zone": "North"
+    },
+    {
+      "id": "wsc",
+      "name": "Western Science Centre",
+      "aliases": [
+        "WSC",
+        "Science Centre"
+      ],
+      "osm_name": "Western Science Centre",
+      "category": "Science",
+      "year_built": 2003,
+      "floors": 4,
+      "lat": 43.00993,
+      "lon": -81.27146,
+      "verified": [
+        "coordinates",
+        "floors"
+      ],
+      "zone": "Core"
+    },
+    {
+      "id": "elborn",
+      "name": "Elborn College",
+      "aliases": [
+        "EC",
+        "Elborn"
+      ],
+      "osm_name": "Elborn College",
+      "category": "Health",
+      "year_built": 1983,
+      "floors": 3,
+      "lat": 43.0028,
+      "lon": -81.27834,
+      "verified": [
+        "coordinates"
+      ],
+      "zone": "South"
+    },
+    {
+      "id": "kresge",
+      "name": "Kresge Building",
+      "aliases": [
+        "KB",
+        "Kresge"
+      ],
+      "osm_name": "Kresge Building",
+      "category": "Health",
+      "year_built": 1975,
+      "floors": 4,
+      "lat": 43.01033,
+      "lon": -81.27382,
+      "verified": [
+        "coordinates"
+      ],
+      "zone": "North"
+    },
+    {
+      "id": "schmeichel",
+      "name": "Ronald D. Schmeichel Building",
+      "aliases": [
+        "Schmeichel",
+        "Schmeichel Building for Entrepreneurship and Innovation"
+      ],
+      "osm_name": "Ronald D. Schmeichel Building for Entrepreneurship and Innovation",
+      "category": "Academic",
+      "year_built": 2023,
+      "floors": 4,
+      "lat": 43.0074,
+      "lon": -81.27629,
+      "verified": [
+        "coordinates",
+        "floors"
+      ],
+      "zone": "Core"
+    },
+    {
+      "id": "hsa",
+      "name": "Health Sciences Addition",
+      "aliases": [
+        "HSA"
+      ],
+      "osm_name": "Health Sciences Addition",
+      "category": "Health",
+      "year_built": 1990,
+      "floors": 4,
+      "lat": 43.01089,
+      "lon": -81.27393,
+      "verified": [
+        "coordinates"
+      ],
+      "zone": "North"
+    },
+    {
+      "id": "collip",
+      "name": "Collip Medical Research Building",
+      "aliases": [
+        "Collip",
+        "Collip Building"
+      ],
+      "osm_name": "Collip Medical Research Building",
+      "category": "Research",
+      "year_built": 1960,
+      "floors": 3,
+      "lat": 43.01027,
+      "lon": -81.27146,
+      "verified": [
+        "coordinates"
+      ],
+      "zone": "North"
+    },
+    {
+      "id": "siebens",
+      "name": "Siebens-Drake Research Institute",
+      "aliases": [
+        "Siebens Centre",
+        "SDRI",
+        "Siebens"
+      ],
+      "osm_name": "Siebens Centre",
+      "category": "Research",
+      "year_built": 1992,
+      "floors": 4,
+      "lat": 43.0108,
+      "lon": -81.2761,
+      "verified": [
+        "coordinates"
+      ],
+      "zone": "North"
+    },
+    {
+      "id": "perth",
+      "name": "Perth Hall",
+      "aliases": [
+        "Perth"
+      ],
+      "osm_name": "Perth Hall",
+      "category": "Residence",
+      "year_built": 2003,
+      "floors": 5,
+      "lat": 42.99982,
+      "lon": -81.27707,
+      "verified": [
+        "coordinates"
+      ],
+      "zone": "Residence"
+    },
+    {
+      "id": "london",
+      "name": "London Hall",
+      "aliases": [
+        "London"
+      ],
+      "osm_name": "London Hall",
+      "category": "Residence",
+      "year_built": 2005,
+      "floors": 6,
+      "lat": 42.99988,
+      "lon": -81.27565,
+      "verified": [
+        "coordinates"
+      ],
+      "zone": "Residence"
+    },
+    {
+      "id": "lambton",
+      "name": "Lambton Hall",
+      "aliases": [
+        "Lambton"
+      ],
+      "osm_name": "Lambton Hall (Residence)",
+      "category": "Residence",
+      "year_built": 1999,
+      "floors": 8,
+      "lat": 43.01346,
+      "lon": -81.27766,
+      "verified": [
+        "coordinates",
+        "floors"
+      ],
+      "zone": "Residence"
+    },
+    {
+      "id": "ausable",
+      "name": "Ausable Hall",
+      "aliases": [
+        "Ausable"
+      ],
+      "osm_name": "Ausable Hall (Residence)",
+      "category": "Residence",
+      "year_built": 2017,
+      "floors": 8,
+      "lat": 43.01205,
+      "lon": -81.28022,
+      "verified": [
+        "coordinates"
+      ],
+      "zone": "Residence"
+    },
+    {
+      "id": "beaver",
+      "name": "Beaver Hall",
+      "aliases": [
+        "Beaver"
+      ],
+      "osm_name": "Beaver Hall (Residence)",
+      "category": "Residence",
+      "year_built": 1999,
+      "floors": 6,
+      "lat": 43.01226,
+      "lon": -81.27972,
+      "verified": [
+        "coordinates"
+      ],
+      "zone": "Residence"
+    },
+    {
+      "id": "burnlea",
+      "name": "Burnlea Hall",
+      "aliases": [
+        "Burnlea"
+      ],
+      "osm_name": "Burnlea Hall",
+      "category": "Residence",
+      "year_built": 1965,
+      "floors": 3,
+      "lat": 43.00747,
+      "lon": -81.2792,
+      "verified": [
+        "coordinates"
+      ],
+      "zone": "Residence"
+    },
+    {
+      "id": "hellmuth",
+      "name": "Hellmuth Hall",
+      "aliases": [
+        "Hellmuth"
+      ],
+      "osm_name": "Hellmuth Hall",
+      "category": "Residence",
+      "year_built": 1961,
+      "floors": 4,
+      "lat": 43.00828,
+      "lon": -81.27959,
+      "verified": [
+        "coordinates"
+      ],
+      "zone": "Residence"
+    },
+    {
+      "id": "southhall",
+      "name": "South Hall (Huron)",
+      "aliases": [
+        "South Hall",
+        "Huron South Hall"
+      ],
+      "osm_name": "South Hall",
+      "category": "Residence",
+      "year_built": 1965,
+      "floors": 3,
+      "lat": 43.00791,
+      "lon": -81.27976,
+      "verified": [
+        "coordinates"
       ],
       "zone": "Residence"
     }
