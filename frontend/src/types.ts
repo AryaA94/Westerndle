@@ -84,7 +84,8 @@ export interface GameState {
   puzzle?: number;
   token?: string;
   maxGuesses: number;
-  hintAfter: number;
+  /** Guesses before the first-letter hint unlocks; null when the mode has none (endless). */
+  hintAfter: number | null;
   /** First letter of the answer, once the player has asked for it. */
   hint?: string;
   guesses: Feedback[];

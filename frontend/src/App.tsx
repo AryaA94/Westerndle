@@ -255,7 +255,7 @@ function HintBadge({ game, busy, onHint }: { game: GameState; busy: boolean; onH
   const base = "rounded-full px-3 py-1 text-xs font-bold";
   if (game.hint)
     return <span className={`${base} bg-close text-purple-deep`}>Hint: starts with “{game.hint}”</span>;
-  const needed = (game.hintAfter ?? 5) - game.guesses.length;
+  const needed = (game.hintAfter ?? 5) - game.guesses.length; // photo mode always has a hint
   if (needed > 0)
     return (
       <span className={`${base} bg-purple-mist text-purple-western/70 dark:bg-white/10 dark:text-purple-200/70`}>

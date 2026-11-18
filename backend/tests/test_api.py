@@ -164,3 +164,17 @@ def test_yesterday_reveals_the_previous_answer(client):
     ids = [b["id"] for b in client.get("/api/buildings").json()]
     assert y["id"] == pz.daily_answer_id(pz.date_for_puzzle(today() - 1), ids, _secret())
     assert y["name"]
+
+
+def test_endless_clues_come_one_per_miss(client):
+    token = client.post("/api/practice", json={"mode": "streak"}).json()["token"]
+    for made, unlocked in [(0, 1), (1, 2), (2, 3)]:
+        clues = client.post("/api/clues", json={"mode": "streak", "token": token, "guesses": made}).json()
+        assert sum(c["value"] is not None for c in clues) == unlocked
+
+
+def test_endless_has_no_first_letter_hint(client):
+    r = client.post("/api/practice", json={"mode": "streak"}).json()
+    assert r["hintAfter"] is None
+    body = {"mode": "streak", "token": r["token"], "guesses": 10}
+    assert client.post("/api/hint", json=body).status_code == 403

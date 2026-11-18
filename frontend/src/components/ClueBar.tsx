@@ -7,14 +7,15 @@ import type { Clue, GameState } from "../types";
 export function ClueBar(props: { game: GameState; clues: Clue[]; busy: boolean; onHint: () => void }) {
   const { game, clues, busy, onHint } = props;
   const made = game.guesses.length;
-  const hintIn = (game.hintAfter ?? 5) - made;
+  const hasHint = game.hintAfter !== null;
+  const hintIn = (game.hintAfter ?? 0) - made;
 
   return (
     <section aria-label="Clues" className="rounded-2xl bg-white p-3 shadow-sm ring-1 ring-purple-western/10 dark:bg-white/5 dark:ring-white/10">
       <p className="mb-2 px-1 text-[11px] font-bold uppercase tracking-widest text-purple-western/70 dark:text-purple-200/70">
         Clues
       </p>
-      <div className="grid grid-cols-2 gap-2 sm:grid-cols-4">
+      <div className={`grid gap-2 ${hasHint ? "grid-cols-2 sm:grid-cols-4" : "grid-cols-3"}`}>
         {clues.map((c) =>
           c.value ? (
             <ClueChip key={c.key} label={c.label} value={c.value} fresh={c.after === made && made > 0} />
@@ -22,7 +23,7 @@ export function ClueBar(props: { game: GameState; clues: Clue[]; busy: boolean; 
             <Locked key={c.key} label={c.label} guesses={c.after - made} />
           ),
         )}
-        {game.hint ? (
+        {!hasHint ? null : game.hint ? (
           <ClueChip label="Starts with" value={`“${game.hint}”`} gold />
         ) : hintIn > 0 ? (
           <Locked label="First letter" guesses={hintIn} />

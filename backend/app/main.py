@@ -28,11 +28,13 @@ MAX_GUESSES = 8
 # The first-letter hint unlocks once this many guesses have missed.
 HINT_AFTER = 5
 # Endless mode: buildings back to back, fewer guesses each; a miss ends the run.
-STREAK_GUESSES = 6
+STREAK_GUESSES = 3
 
 # Free clues for the classic game, so the first guess isn't a blind shot.
 # (guesses needed, key, label); each unlocks once that many guesses are made.
 CLUES = [(0, "category", "Type"), (2, "zone", "Zone"), (4, "decade", "Built")]
+# Endless has only STREAK_GUESSES tries, so its clues come one per miss.
+STREAK_CLUES = [(0, "category", "Type"), (1, "zone", "Zone"), (2, "decade", "Built")]
 ZONE_NAMES = {"Core": "Core campus", "North": "North campus", "South": "South campus", "Residence": "Residence", "Affiliate": "Affiliated college"}
 
 
@@ -186,7 +188,8 @@ def create_app(
         return {
             "token": pz.make_practice_token(answer, _secret()),
             "maxGuesses": max_guesses(body.mode),
-            "hintAfter": HINT_AFTER,
+            # No first-letter hint in endless: it would unlock after the last guess.
+            "hintAfter": HINT_AFTER if body.mode == "practice" else None,
         }
 
     @app.get("/api/yesterday")
@@ -221,12 +224,14 @@ def create_app(
         a = answer_for(request, body.mode, body.puzzle, body.token)
         return [
             {"key": key, "label": label, "after": after, "value": clue_value(a, key) if body.guesses >= after else None}
-            for after, key, label in CLUES
+            for after, key, label in (STREAK_CLUES if body.mode == "streak" else CLUES)
         ]
 
     @app.post("/api/hint")
     def hint(body: RevealIn, request: Request):
         """First letter of the answer, after HINT_AFTER misses."""
+        if body.mode == "streak":
+            raise HTTPException(403, "endless mode has no first-letter hint")
         if body.guesses < HINT_AFTER:
             raise HTTPException(403, f"the hint unlocks after {HINT_AFTER} guesses")
         a = answer_for(request, body.mode, body.puzzle, body.token)

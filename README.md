@@ -9,8 +9,9 @@ and the distance and compass direction to the answer.
   your streaks and win %, and shows how everyone else did.
 - **📷 Photo mode**: a second daily puzzle that starts on a blurry close-up of
   a building and zooms out with every wrong guess.
-- **🔥 Endless mode**: buildings back to back with 6 guesses each, no repeats
-  within a run. One miss ends the run; your best streak is saved.
+- **🔥 Endless mode**: buildings back to back with 3 guesses each and a new
+  clue after every miss, no repeats within a run. One miss ends the run; your
+  best streak is saved.
 - **Clues**: the building's type is shown from the start; its zone unlocks
   after 2 misses, the decade it was built after 4, and its first letter after 5.
 - **Map**: the end screen maps the answer and all your guesses.

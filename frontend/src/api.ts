@@ -25,7 +25,7 @@ export const api = {
   buildings: () => call<BuildingName[]>("/buildings"),
   daily: () => call<DailyMeta>("/daily"),
   newStreakRound: (exclude: string[]) =>
-    post<{ token: string; maxGuesses: number; hintAfter: number }>("/practice", { mode: "streak", exclude }),
+    post<{ token: string; maxGuesses: number; hintAfter: number | null }>("/practice", { mode: "streak", exclude }),
   yesterday: () => call<Yesterday | null>("/yesterday"),
   guess: (ref: GameRef, buildingId: string) => post<Feedback>("/guess", { ...ref, buildingId }),
   clues: (ref: GameRef, guesses: number) => post<Clue[]>("/clues", { ...ref, guesses }),
