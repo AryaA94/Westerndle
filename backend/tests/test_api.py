@@ -125,3 +125,32 @@ def test_clues_work_in_practice(client):
     token = client.post("/api/practice").json()["token"]
     r = client.post("/api/clues", json={"mode": "practice", "token": token, "guesses": 0})
     assert r.status_code == 200 and r.json()[0]["value"]
+
+
+def test_streak_rounds_have_fewer_guesses(client):
+    from app.main import STREAK_GUESSES
+
+    r = client.post("/api/practice", json={"mode": "streak"}).json()
+    assert r["maxGuesses"] == STREAK_GUESSES
+    body = {"mode": "streak", "token": r["token"], "guesses": STREAK_GUESSES - 1}
+    assert client.post("/api/reveal", json=body).status_code == 403
+    body["guesses"] = STREAK_GUESSES
+    assert client.post("/api/reveal", json=body).status_code == 200
+
+
+def test_streak_skips_excluded_buildings(client):
+    ids = [b["id"] for b in client.get("/api/buildings").json()]
+    keep = ids[0]
+    for _ in range(5):
+        token = client.post("/api/practice", json={"mode": "streak", "exclude": ids[1:]}).json()["token"]
+        answer = client.post("/api/reveal", json={"mode": "streak", "token": token, "guesses": 6}).json()["id"]
+        assert answer == keep
+
+
+def test_streak_starts_over_when_everything_is_excluded(client):
+    ids = [b["id"] for b in client.get("/api/buildings").json()]
+    assert client.post("/api/practice", json={"mode": "streak", "exclude": ids}).status_code == 200
+
+
+def test_practice_still_works_without_a_body(client):
+    assert client.post("/api/practice").json()["maxGuesses"] == 8

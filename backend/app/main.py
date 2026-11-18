@@ -27,6 +27,8 @@ from .game import Building, score_guess
 MAX_GUESSES = 8
 # The first-letter hint unlocks once this many guesses have missed.
 HINT_AFTER = 5
+# Endless mode: buildings back to back, fewer guesses each; a miss ends the run.
+STREAK_GUESSES = 6
 
 # Free clues for the classic game, so the first guess isn't a blind shot.
 # (guesses needed, key, label); each unlocks once that many guesses are made.
@@ -44,8 +46,19 @@ def clue_value(b: BuildingRow, key: str) -> str:
 
 # --- request bodies ---
 
-# "daily" is the classic daily puzzle, "photo" the daily photo puzzle.
-Mode = Literal["daily", "photo", "practice"]
+# "daily" is the classic daily puzzle, "photo" the daily photo puzzle, "streak" one
+# round of endless mode. "practice" is the old name for an untimed random round.
+Mode = Literal["daily", "photo", "streak", "practice"]
+
+
+def max_guesses(mode: str) -> int:
+    return STREAK_GUESSES if mode == "streak" else MAX_GUESSES
+
+
+class PracticeIn(BaseModel):
+    mode: Literal["practice", "streak"] = "practice"
+    # Buildings already used in this endless run, so a run doesn't repeat until it has to.
+    exclude: list[str] = Field(default_factory=list, max_length=200)
 
 
 class GuessIn(BaseModel):
@@ -164,9 +177,28 @@ def create_app(
         }
 
     @app.post("/api/practice")
-    def new_practice(request: Request):
-        answer = random.choice(list(buildings(request)))
-        return {"token": pz.make_practice_token(answer, _secret()), "maxGuesses": MAX_GUESSES, "hintAfter": HINT_AFTER}
+    def new_practice(request: Request, body: PracticeIn | None = None):
+        """Start a random round (practice or endless). The answer travels in a signed token."""
+        body = body or PracticeIn()
+        ids = list(buildings(request))
+        fresh = [i for i in ids if i not in set(body.exclude)] or ids  # start over once all are used
+        answer = random.choice(fresh)
+        return {
+            "token": pz.make_practice_token(answer, _secret()),
+            "maxGuesses": max_guesses(body.mode),
+            "hintAfter": HINT_AFTER,
+        }
+
+    @app.get("/api/showcase")
+    def showcase(request: Request, count: int = 6):
+        """Random building photos for the menu, never today's daily or photo answer."""
+        day = pz.today_on_campus()
+        today_answers = {pz.daily_answer_id(day, list(buildings(request)), _secret())}
+        if request.app.state.photo_mode_ids:
+            today_answers.add(photo_answer_id(request, pz.puzzle_number(day)))
+        pool = [i for i in request.app.state.photo_ids if i not in today_answers]
+        picks = random.sample(pool, min(count, len(pool), 12))
+        return [{"id": i, "name": buildings(request)[i].name, "photo": f"/api/photos/{i}"} for i in picks]
 
     @app.post("/api/guess")
     def guess(body: GuessIn, request: Request):
@@ -180,7 +212,7 @@ def create_app(
     @app.post("/api/reveal")
     def reveal(body: RevealIn, request: Request):
         """The answer, once a player has used all their guesses."""
-        if body.guesses < MAX_GUESSES:
+        if body.guesses < max_guesses(body.mode):
             raise HTTPException(403, "keep guessing")
         a = answer_for(request, body.mode, body.puzzle, body.token)
         return {"id": a.id, "name": a.name, "lat": a.lat, "lon": a.lon, "photo": photo_url(a), "photoCredit": a.photo_credit, "photoSource": a.photo_source}

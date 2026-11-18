@@ -1,7 +1,7 @@
 import { lazy, Suspense, useEffect, useState } from "react";
 import { api } from "../api";
-import { shareText } from "../logic";
-import type { GameState, GlobalStats } from "../types";
+import { shareText, streakShareText } from "../logic";
+import type { GameState, GlobalStats, StreakRun } from "../types";
 import { Distribution } from "./StatsModal";
 
 // Leaflet is only needed once a game ends, so keep it out of the first page load.
@@ -27,7 +27,8 @@ function useCountdown() {
   return left;
 }
 
-export function EndCard({ game, onNewPractice }: { game: GameState; onNewPractice: () => void }) {
+export function EndCard(props: { game: GameState; run?: StreakRun; onNext?: () => void }) {
+  const { game, run, onNext } = props;
   const won = game.status === "won";
   const answerName = won ? game.guesses[game.guesses.length - 1].name : game.answer?.name;
   const answer = game.answer;
@@ -36,12 +37,14 @@ export function EndCard({ game, onNewPractice }: { game: GameState; onNewPractic
   const countdown = useCountdown();
 
   useEffect(() => {
-    if (game.mode !== "practice" && game.puzzle) api.stats(game.puzzle, game.mode).then(setGlobal).catch(() => {});
+    if (game.mode !== "streak" && game.puzzle) api.stats(game.puzzle, game.mode).then(setGlobal).catch(() => {});
   }, [game.mode, game.puzzle]);
 
   const share = async () => {
-    const text = shareText({
-      puzzle: game.mode === "practice" ? undefined : game.puzzle,
+    const text = run
+      ? streakShareText(run.current, run.best, window.location.origin)
+      : shareText({
+      puzzle: game.puzzle,
       photo: game.mode === "photo",
       guesses: game.guesses,
       won,
@@ -60,6 +63,18 @@ export function EndCard({ game, onNewPractice }: { game: GameState; onNewPractic
 
   return (
     <section className="flip-in rounded-2xl bg-purple-western p-5 text-white shadow-lg">
+      {run && (
+        <div className="mb-3 flex items-center justify-between rounded-xl bg-white/10 px-4 py-3">
+          <div>
+            <p className="text-xs font-semibold uppercase tracking-widest text-purple-200">{run.over ? "Run over" : "Streak"}</p>
+            <p className="font-display text-3xl font-extrabold">🔥 {run.current}</p>
+          </div>
+          <div className="text-right">
+            <p className="text-xs font-semibold uppercase tracking-widest text-purple-200">Best</p>
+            <p className="font-display text-3xl font-extrabold">{run.best}</p>
+          </div>
+        </div>
+      )}
       <p className="text-sm font-semibold uppercase tracking-widest text-purple-200">
         {won ? `Solved in ${game.guesses.length}/${game.maxGuesses}` : "Out of guesses"}
       </p>
@@ -101,11 +116,11 @@ export function EndCard({ game, onNewPractice }: { game: GameState; onNewPractic
 
       <div className="mt-4 flex flex-wrap items-center gap-3">
         <button onClick={share} className="rounded-full bg-white px-5 py-2 font-bold text-purple-western hover:bg-purple-mist">
-          {copied ? "Copied!" : "Share result"}
+          {copied ? "Copied!" : run ? "Share streak" : "Share result"}
         </button>
-        {game.mode === "practice" ? (
-          <button onClick={onNewPractice} className="rounded-full border-2 border-white px-5 py-1.5 font-bold hover:bg-white/10">
-            Next building
+        {game.mode === "streak" ? (
+          <button onClick={onNext} className="rounded-full border-2 border-white px-5 py-1.5 font-bold hover:bg-white/10">
+            {run?.over ? "Start a new run" : "Next building →"}
           </button>
         ) : (
           <span className="text-sm text-purple-200">

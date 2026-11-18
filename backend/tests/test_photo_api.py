@@ -96,3 +96,17 @@ def test_stats_are_kept_per_mode(photo_client):
     assert photo_client.get(f"/api/stats/{p}?mode=photo").json()["distribution"][1] == 1
     assert photo_client.get(f"/api/stats/{p}").json()["distribution"][3] == 1
     assert photo_client.get(f"/api/stats/{p}").json()["plays"] == 1
+
+
+def test_showcase_never_shows_todays_answers(photo_client):
+    today_photo = photo_answer(photo_client)
+    for _ in range(10):
+        picks = photo_client.get("/api/showcase").json()
+        ids = {p["id"] for p in picks}
+        assert today_photo not in ids
+        assert ids <= WITH_PHOTOS | {TOO_SMALL}
+        assert all(p["photo"] == f"/api/photos/{p['id']}" and p["name"] for p in picks)
+
+
+def test_showcase_empty_without_photos(client):
+    assert client.get("/api/showcase").json() == []

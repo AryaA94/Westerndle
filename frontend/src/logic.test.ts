@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
-import { applyResult, emptyStats, formatDistance, searchBuildings, shareText } from "./logic";
-import type { Feedback } from "./types";
+import { applyResult, emptyStats, finishStreakRound, formatDistance, searchBuildings, shareText, streakShareText } from "./logic";
+import type { Feedback, StreakRun } from "./types";
 
 const fb = (over: Partial<Feedback>): Feedback => ({
   buildingId: "x", name: "X", correct: false,
@@ -26,7 +26,7 @@ describe("shareText", () => {
     expect(shareText({ puzzle: 9, photo: true, guesses: [fb({})], won: false, maxGuesses: 8, url: "u" })).toMatch(/^Westerndle 📷 #9 X\/8/);
   });
   it("marks a loss with X", () => {
-    expect(shareText({ guesses: [fb({})], won: false, maxGuesses: 8, url: "u" })).toMatch(/^Westerndle \(practice\) X\/8/);
+    expect(shareText({ puzzle: 3, guesses: [fb({})], won: false, maxGuesses: 8, url: "u" })).toMatch(/^Westerndle #3 X\/8/);
   });
 });
 
@@ -68,5 +68,23 @@ describe("applyResult", () => {
   it("ignores a puzzle counted twice", () => {
     const s = applyResult(emptyStats(8), 10, true, 3);
     expect(applyResult(s, 10, true, 3)).toBe(s);
+  });
+});
+
+describe("endless runs", () => {
+  const fresh: StreakRun = { current: 0, best: 4, seen: [], over: false };
+  it("counts wins and remembers buildings", () => {
+    const r = finishStreakRound(finishStreakRound(fresh, "uc", true), "mc", true);
+    expect(r).toMatchObject({ current: 2, best: 4, seen: ["uc", "mc"], over: false });
+  });
+  it("ends on a miss and updates the best", () => {
+    let r = fresh;
+    for (const id of ["a", "b", "c", "d", "e"]) r = finishStreakRound(r, id, true);
+    r = finishStreakRound(r, "f", false);
+    expect(r).toMatchObject({ current: 5, best: 5, over: true });
+  });
+  it("shares the streak", () => {
+    expect(streakShareText(3, 7, "u")).toBe("Westerndle Endless: 3 in a row\n🔥🔥🔥\nBest: 7\nu");
+    expect(streakShareText(0, 7, "u")).toContain("🧊");
   });
 });

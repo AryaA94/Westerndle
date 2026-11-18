@@ -1,4 +1,4 @@
-import type { Answer, BuildingName, Clue, DailyMeta, DailyMode, Feedback, GlobalStats, Mode } from "./types";
+import type { Answer, BuildingName, Clue, DailyMeta, DailyMode, Feedback, GlobalStats, Mode, ShowcasePhoto } from "./types";
 
 async function call<T>(path: string, init?: RequestInit): Promise<T> {
   const res = await fetch(`/api${path}`, {
@@ -24,7 +24,9 @@ export interface GameRef {
 export const api = {
   buildings: () => call<BuildingName[]>("/buildings"),
   daily: () => call<DailyMeta>("/daily"),
-  newPractice: () => post<{ token: string; maxGuesses: number; hintAfter: number }>("/practice"),
+  newStreakRound: (exclude: string[]) =>
+    post<{ token: string; maxGuesses: number; hintAfter: number }>("/practice", { mode: "streak", exclude }),
+  showcase: () => call<ShowcasePhoto[]>("/showcase"),
   guess: (ref: GameRef, buildingId: string) => post<Feedback>("/guess", { ...ref, buildingId }),
   clues: (ref: GameRef, guesses: number) => post<Clue[]>("/clues", { ...ref, guesses }),
   hint: (ref: GameRef, guesses: number) => post<{ firstLetter: string }>("/hint", { ...ref, guesses }),

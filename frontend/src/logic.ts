@@ -1,4 +1,4 @@
-import type { BuildingName, Feedback, Match } from "./types";
+import type { BuildingName, Feedback, Match, StreakRun } from "./types";
 
 const EMOJI: Record<Match, string> = { correct: "🟪", close: "🟨", wrong: "⬜" };
 
@@ -20,7 +20,7 @@ export function shareText(opts: {
   url: string;
 }): string {
   const { puzzle, guesses, won, maxGuesses, url, photo } = opts;
-  const title = puzzle === undefined ? "Westerndle (practice)" : `Westerndle ${photo ? "📷 " : ""}#${puzzle}`;
+  const title = `Westerndle ${photo ? "📷 " : ""}#${puzzle}`;
   const score = won ? `${guesses.length}/${maxGuesses}` : `X/${maxGuesses}`;
   const rows = guesses.map((g) => {
     const tiles = [g.zone.match, g.category.match, g.yearBuilt.match, g.floors.match].map((m) => EMOJI[m]).join("");
@@ -28,6 +28,18 @@ export function shareText(opts: {
     return `${tiles} ${where}`;
   });
   return [`${title} ${score}`, ...rows, url].join("\n");
+}
+
+/** Share text for an endless run. */
+export function streakShareText(streak: number, best: number, url: string): string {
+  const flames = "🔥".repeat(Math.min(streak, 10)) || "🧊";
+  return [`Westerndle Endless: ${streak} in a row`, flames, `Best: ${best}`, url].join("\n");
+}
+
+/** Record a finished round in an endless run. */
+export function finishStreakRound(run: StreakRun, answerId: string, won: boolean): StreakRun {
+  const current = won ? run.current + 1 : run.current;
+  return { ...run, current, best: Math.max(run.best, current), seen: [...run.seen, answerId], over: !won };
 }
 
 export function formatDistance(m: number): string {

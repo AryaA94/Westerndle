@@ -8,21 +8,24 @@ import { Header } from "./components/Header";
 import { MysteryCard } from "./components/MysteryCard";
 import { PhotoCard } from "./components/PhotoCard";
 import { HelpModal } from "./components/HelpModal";
+import { Landing } from "./components/Landing";
 import { StatsModal } from "./components/StatsModal";
-import { applyResult } from "./logic";
+import { applyResult, finishStreakRound } from "./logic";
 import { celebrate } from "./confetti";
 import { storage } from "./storage";
-import type { BuildingName, Clue, DailyMeta, DailyMode, GameState, Mode } from "./types";
+import type { BuildingName, Clue, DailyMeta, DailyMode, GameState, Mode, StreakRun } from "./types";
 
 export default function App() {
   const [buildings, setBuildings] = useState<BuildingName[]>([]);
   const [daily, setDaily] = useState<DailyMeta>();
+  const [screen, setScreen] = useState<"menu" | "play">("menu");
   const [mode, setMode] = useState<Mode>("daily");
+  const [run, setRun] = useState<StreakRun>(() => storage.streak());
   const [game, setGame] = useState<GameState>();
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState<string>();
   const [clues, setClues] = useState<Clue[]>([]);
-  const [modal, setModal] = useState<"help" | "stats" | null>(storage.seenHelp() ? null : "help");
+  const [modal, setModal] = useState<"help" | "stats" | null>(null);
 
   useEffect(() => {
     Promise.all([api.buildings(), api.daily()])
@@ -33,28 +36,46 @@ export default function App() {
       .catch(() => setError("Couldn't reach the server. Try refreshing."));
   }, []);
 
-  const newPractice = useCallback(async () => {
-    const { token, maxGuesses, hintAfter } = await api.newPractice();
-    const g: GameState = { mode: "practice", token, maxGuesses, hintAfter, guesses: [], status: "playing" };
-    storage.savePracticeGame(g);
+  const updateRun = (r: StreakRun) => {
+    storage.saveStreak(r);
+    setRun(r);
+  };
+
+  /** Next round of an endless run, or a fresh run if the last one ended. */
+  const nextStreakRound = useCallback(async () => {
+    const prev = storage.streak();
+    const base = prev.over ? { current: 0, best: prev.best, seen: [], over: false } : prev;
+    const { token, maxGuesses, hintAfter } = await api.newStreakRound(base.seen);
+    const g: GameState = { mode: "streak", token, maxGuesses, hintAfter, guesses: [], status: "playing" };
+    const r = { ...base, game: g };
+    storage.saveStreak(r);
+    setRun(r);
     setGame(g);
   }, []);
 
+  const play = (m: Mode) => {
+    setMode(m);
+    setScreen("play");
+    setError(undefined);
+    if (!storage.seenHelp()) setModal("help");
+  };
+
   // Load (or start) the game for the selected mode.
   useEffect(() => {
-    if (!daily) return;
-    if (mode !== "practice") {
+    if (!daily || screen !== "play") return;
+    if (mode !== "streak") {
       setGame(
         storage.dailyGame(mode, daily.puzzle) ?? {
           mode, puzzle: daily.puzzle, maxGuesses: daily.maxGuesses, hintAfter: daily.hintAfter, guesses: [], status: "playing",
         },
       );
     } else {
-      const saved = storage.practiceGame();
-      if (saved && saved.status === "playing") setGame(saved);
-      else newPractice().catch(() => setError("Couldn't start a practice game."));
+      // Pick up where the run left off, including a finished round's result screen.
+      const saved = storage.streak().game;
+      if (saved) setGame(saved);
+      else nextStreakRound().catch(() => setError("Couldn't start a round."));
     }
-  }, [mode, daily, newPractice]);
+  }, [mode, daily, screen, nextStreakRound]);
 
   // Refresh the free clues whenever the guess count changes (classic modes only).
   const made = game?.guesses.length ?? 0;
@@ -74,8 +95,8 @@ export default function App() {
 
   const save = (g: GameState) => {
     setGame(g);
-    if (g.mode !== "practice") storage.saveDailyGame(g);
-    else storage.savePracticeGame(g);
+    if (g.mode !== "streak") storage.saveDailyGame(g);
+    else storage.saveStreak({ ...storage.streak(), game: g });
   };
 
   const onGuess = async (buildingId: string) => {
@@ -96,7 +117,11 @@ export default function App() {
       if (next.status === "won") next.answer = await api.reveal(ref, game.maxGuesses).catch(() => undefined);
       save(next);
       if (next.status === "won") celebrate();
-      if (next.status !== "playing" && next.mode !== "practice" && next.puzzle) {
+      if (next.status !== "playing" && next.mode === "streak") {
+        const answerId = next.status === "won" ? fb.buildingId : next.answer?.id;
+        if (answerId) updateRun({ ...finishStreakRound(storage.streak(), answerId, next.status === "won"), game: next });
+      }
+      if (next.status !== "playing" && next.mode !== "streak" && next.puzzle) {
         const won = next.status === "won";
         api.recordResult(next.mode, next.puzzle, won, guesses.length).catch(() => {});
         storage.saveStats(next.mode, applyResult(storage.stats(next.mode, game.maxGuesses), next.puzzle, won, guesses.length));
@@ -127,16 +152,41 @@ export default function App() {
   };
 
   const left = game ? game.maxGuesses - game.guesses.length : 0;
-  // Practice has no stats of its own; show the classic ones there.
+  // Endless keeps its own best streak; the stats button shows the classic stats there.
   const statsMode: DailyMode = mode === "photo" ? "photo" : "daily";
+
+  const modals = (
+    <>
+      {modal === "help" && <HelpModal maxGuesses={daily?.maxGuesses ?? 8} onClose={closeModal} />}
+      {modal === "stats" && (
+        <StatsModal title={statsMode === "photo" ? "Photo stats" : "Your stats"} stats={storage.stats(statsMode, daily?.maxGuesses ?? 8)} onClose={closeModal} />
+      )}
+    </>
+  );
+
+  if (screen === "menu") {
+    return (
+      <>
+        <Landing
+          daily={daily}
+          dailyGame={daily && storage.dailyGame("daily", daily.puzzle)}
+          photoGame={daily && storage.dailyGame("photo", daily.puzzle)}
+          run={run}
+          onPlay={play}
+          onHelp={() => setModal("help")}
+        />
+        {modals}
+      </>
+    );
+  }
 
   return (
     <div className="min-h-screen">
-      <Header onHelp={() => setModal("help")} onStats={() => setModal("stats")} />
+      <Header onHome={() => setScreen("menu")} onHelp={() => setModal("help")} onStats={() => setModal("stats")} />
 
       <main className="mx-auto max-w-2xl space-y-4 px-4 py-6">
         <div className="flex rounded-full bg-white p-1 shadow-sm ring-1 ring-purple-western/10 dark:bg-white/10 dark:ring-white/10" role="tablist">
-          {(daily?.photoMode ? (["daily", "photo", "practice"] as const) : (["daily", "practice"] as const)).map((m) => (
+          {(daily?.photoMode ? (["daily", "photo", "streak"] as const) : (["daily", "streak"] as const)).map((m) => (
             <button
               key={m}
               role="tab"
@@ -146,7 +196,7 @@ export default function App() {
                 mode === m ? "bg-purple-western text-white shadow-md" : "text-purple-western hover:bg-purple-mist dark:text-purple-200 dark:hover:bg-white/10"
               }`}
             >
-              {m === "daily" ? `Daily${daily ? ` #${daily.puzzle}` : ""}` : m === "photo" ? "📷 Photo" : "Practice"}
+              {m === "daily" ? `Daily${daily ? ` #${daily.puzzle}` : ""}` : m === "photo" ? "📷 Photo" : "🔥 Endless"}
             </button>
           ))}
         </div>
@@ -156,7 +206,8 @@ export default function App() {
             {game.mode === "photo" && game.puzzle && game.status === "playing" && (
               <PhotoCard puzzle={game.puzzle} level={game.guesses.length} levels={game.maxGuesses} />
             )}
-            {game.mode !== "photo" && game.status === "playing" && game.guesses.length === 0 && (
+            {game.mode === "streak" && game.status === "playing" && <StreakBanner run={run} />}
+            {game.mode === "daily" && game.status === "playing" && game.guesses.length === 0 && (
               <MysteryCard mode={game.mode} puzzle={game.puzzle} />
             )}
             {game.status === "playing" ? (
@@ -171,7 +222,11 @@ export default function App() {
                 </div>
               </>
             ) : (
-              <EndCard game={game} onNewPractice={() => newPractice().catch(() => setError("Couldn't start a practice game."))} />
+              <EndCard
+                game={game}
+                run={game.mode === "streak" ? run : undefined}
+                onNext={() => nextStreakRound().catch(() => setError("Couldn't start the next round."))}
+              />
             )}
 
             {error && <p role="alert" className="rounded-lg bg-red-100 px-4 py-2 text-sm text-red-800">{error}</p>}
@@ -189,10 +244,7 @@ export default function App() {
 
       <footer className="pb-8 text-center text-xs text-silver">Fan-made · not affiliated with Western University</footer>
 
-      {modal === "help" && <HelpModal maxGuesses={daily?.maxGuesses ?? 8} onClose={closeModal} />}
-      {modal === "stats" && (
-        <StatsModal title={statsMode === "photo" ? "Photo stats" : "Your stats"} stats={storage.stats(statsMode, daily?.maxGuesses ?? 8)} onClose={closeModal} />
-      )}
+      {modals}
     </div>
   );
 }
@@ -213,5 +265,21 @@ function HintBadge({ game, busy, onHint }: { game: GameState; busy: boolean; onH
     <button onClick={onHint} disabled={busy} className={`${base} bg-purple-western text-white hover:bg-purple-deep disabled:opacity-60`}>
       💡 Show first letter
     </button>
+  );
+}
+
+/** Shown above the clues during an endless run. */
+function StreakBanner({ run }: { run: StreakRun }) {
+  return (
+    <div className="flex items-center justify-between rounded-2xl bg-gradient-to-r from-purple-deep to-purple-western px-5 py-3 text-white shadow-md">
+      <div>
+        <p className="text-[11px] font-bold uppercase tracking-widest text-purple-200">Endless · building {run.current + 1}</p>
+        <p className="font-display text-2xl font-extrabold">🔥 {run.current} in a row</p>
+      </div>
+      <div className="text-right">
+        <p className="text-[11px] font-bold uppercase tracking-widest text-purple-200">Best</p>
+        <p className="font-display text-2xl font-extrabold">{run.best}</p>
+      </div>
+    </div>
   );
 }

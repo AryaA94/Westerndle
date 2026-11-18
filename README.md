@@ -9,7 +9,8 @@ and the distance and compass direction to the answer.
   your streaks and win %, and shows how everyone else did.
 - **📷 Photo mode**: a second daily puzzle that starts on a blurry close-up of
   a building and zooms out with every wrong guess.
-- **Practice mode**: unlimited random buildings.
+- **🔥 Endless mode**: buildings back to back with 6 guesses each, no repeats
+  within a run. One miss ends the run; your best streak is saved.
 - **Clues**: the building's type is shown from the start; its zone unlocks
   after 2 misses, the decade it was built after 4, and its first letter after 5.
 - **Map**: the end screen maps the answer and all your guesses.
@@ -36,7 +37,7 @@ and the distance and compass direction to the answer.
   repeats inside a cycle: every building comes up exactly once per cycle, and
   without `WESTERNDLE_SECRET` the order can't be predicted from the source
   (`backend/app/puzzle.py`).
-- **Stateless practice games.** The answer travels with the client in an
+- **Stateless endless rounds.** The answer travels with the client in an
   HMAC-signed, obfuscated token. The server stores nothing per game, and a
   token that has been tampered with is rejected.
 - **Geometry.** Distance uses the haversine great-circle formula. Direction is
@@ -127,7 +128,8 @@ takes.
 |---|---|---|
 | GET | `/api/buildings` | Names and aliases for the autocomplete |
 | GET | `/api/daily` | Today's puzzle number and the guess limit |
-| POST | `/api/practice` | Start a practice game (returns a token) |
+| POST | `/api/practice` | Start an endless or practice round (returns a token) |
+| GET | `/api/showcase` | Photos for the menu (never today's answers) |
 | POST | `/api/guess` | Score a guess |
 | POST | `/api/clues` | Free clues unlocked so far |
 | POST | `/api/hint` | First letter of the answer, after 5 guesses |

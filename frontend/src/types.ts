@@ -1,8 +1,24 @@
 export type Match = "correct" | "close" | "wrong";
 export type Hint = "higher" | "lower" | null;
-/** "daily" is the classic daily puzzle, "photo" the daily photo puzzle. */
-export type Mode = "daily" | "photo" | "practice";
-export type DailyMode = Exclude<Mode, "practice">;
+/** "daily" is the classic daily puzzle, "photo" the daily photo puzzle, "streak" endless mode. */
+export type Mode = "daily" | "photo" | "streak";
+export type DailyMode = Exclude<Mode, "streak">;
+
+/** An endless run: buildings back to back until one is missed. */
+export interface StreakRun {
+  current: number;
+  best: number;
+  /** Buildings already used this run, so they don't repeat. */
+  seen: string[];
+  over: boolean;
+  game?: GameState;
+}
+
+export interface ShowcasePhoto {
+  id: string;
+  name: string;
+  photo: string;
+}
 
 export interface BuildingName {
   id: string;

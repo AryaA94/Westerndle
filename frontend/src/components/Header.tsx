@@ -1,7 +1,7 @@
 const WORD = "WESTERNDLE";
 
 /** Purple hero bar with the name spelled out in game tiles: WESTERN in white, DLE in gold. */
-export function Header({ onHelp, onStats }: { onHelp: () => void; onStats: () => void }) {
+export function Header({ onHome, onHelp, onStats }: { onHome: () => void; onHelp: () => void; onStats: () => void }) {
   return (
     <header className="hero-pattern relative overflow-hidden bg-gradient-to-br from-[#6a35ad] via-purple-western to-purple-deep text-white shadow-lg">
       <div className="relative mx-auto flex max-w-2xl items-center justify-between gap-2 px-4 py-4 sm:py-5">
@@ -9,7 +9,8 @@ export function Header({ onHelp, onStats }: { onHelp: () => void; onStats: () =>
           <span className="text-lg font-bold">?</span>
         </IconButton>
 
-        <h1 aria-label="Westerndle" className="flex gap-[2px] sm:gap-1">
+        <button onClick={onHome} aria-label="Westerndle: back to the menu" className="rounded-lg transition hover:scale-105">
+        <h1 className="flex gap-[2px] sm:gap-1">
           {WORD.split("").map((ch, i) => (
             <span
               key={i}
@@ -23,6 +24,7 @@ export function Header({ onHelp, onStats }: { onHelp: () => void; onStats: () =>
             </span>
           ))}
         </h1>
+        </button>
 
         <IconButton label="Statistics" onClick={onStats}>
           <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">

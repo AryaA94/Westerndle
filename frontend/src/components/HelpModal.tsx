@@ -27,7 +27,10 @@ export function HelpModal({ maxGuesses, onClose }: { maxGuesses: number; onClose
         <p>
           <b>📷 Photo</b> mode starts on a blurry close-up of a building. Every miss zooms out a little more.
         </p>
-        <p>New Daily and Photo buildings every day at midnight (London, ON time). Practice gives unlimited random buildings.</p>
+        <p>
+          <b>🔥 Endless</b>: buildings back to back with {6} guesses each. See how many you can get in a row; one miss ends the run.
+        </p>
+        <p>New Daily and Photo buildings every day at midnight (London, ON time).</p>
         <p className="text-xs text-silver">Fan-made. Not affiliated with or endorsed by Western University.</p>
       </div>
     </Modal>

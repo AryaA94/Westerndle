@@ -15,7 +15,7 @@ export function MysteryCard({ mode, puzzle }: { mode: Mode; puzzle?: number }) {
         <MysteryBuilding />
         <div>
           <p className="text-xs font-bold uppercase tracking-widest text-purple-western/70 dark:text-purple-200/70">
-            {mode === "daily" ? `Daily #${puzzle}` : "Practice round"}
+            {mode === "daily" ? `Daily #${puzzle}` : "Endless"}
           </p>
           <h2 className="font-display text-xl font-extrabold leading-tight text-purple-deep dark:text-white sm:text-2xl">
             {mode === "daily" ? "Which building is today's mystery?" : "Guess a random building"}
