@@ -27,7 +27,8 @@ UA = {"User-Agent": "westerndle-photo-script/1.0"}
 
 
 def download(file_name: str) -> bytes:
-    url = f"https://commons.wikimedia.org/wiki/Special:FilePath/{urllib.parse.quote(file_name)}?width={WIDTH}"
+    # Commons titles use underscores for spaces; asking with them skips a redirect.
+    url = f"https://commons.wikimedia.org/wiki/Special:FilePath/{urllib.parse.quote(file_name.replace(' ', '_'))}?width={WIDTH}"
     for attempt in range(3):
         try:
             with urllib.request.urlopen(urllib.request.Request(url, headers=UA), timeout=60) as r:
@@ -69,6 +70,8 @@ def main() -> None:
         b["photo_source"] = p["source"]
         if "focus" in p:
             b["photo_focus"] = p["focus"]
+        if p.get("photo_mode") is False:
+            b["photo_mode"] = False
 
     DATA.write_text(json.dumps(doc, indent=2, ensure_ascii=False) + "\n")
     print(f"{len(photos) - len(missing)} of {len(photos)} photos ready")

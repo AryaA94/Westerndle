@@ -13,6 +13,7 @@ from app.main import MAX_GUESSES, create_app
 
 WITH_PHOTOS = {"uc", "mc", "wl"}
 TOO_SMALL = "ssc"  # has a photo, but too narrow for photo mode
+OPTED_OUT = "pab"  # has a big enough photo, but is marked photo_mode: false
 
 
 def today():
@@ -27,6 +28,9 @@ def photo_client(tmp_path):
         if b["id"] in WITH_PHOTOS:
             b["photo"] = f"{b['id']}.jpg"
             Image.new("RGB", (1200, 900), "purple").save(tmp_path / b["photo"])
+        if b["id"] == OPTED_OUT:
+            b["photo"], b["photo_mode"] = "optout.jpg", False
+            Image.new("RGB", (1200, 900), "grey").save(tmp_path / "optout.jpg")
         if b["id"] == TOO_SMALL:
             b["photo"] = "small.jpg"
             Image.new("RGB", (400, 300), "grey").save(tmp_path / "small.jpg")
@@ -59,6 +63,11 @@ def test_photo_answer_only_uses_buildings_with_a_photo_file(photo_client):
 def test_small_photo_shows_on_end_screen_but_not_in_photo_mode(photo_client):
     assert photo_client.get(f"/api/photos/{TOO_SMALL}").status_code == 200
     assert TOO_SMALL not in photo_client.app.state.photo_mode_ids
+
+
+def test_photo_marked_off_stays_out_of_photo_mode(photo_client):
+    assert photo_client.get(f"/api/photos/{OPTED_OUT}").status_code == 200
+    assert OPTED_OUT not in photo_client.app.state.photo_mode_ids
 
 
 def test_photo_views_are_jpegs_for_every_level(photo_client):

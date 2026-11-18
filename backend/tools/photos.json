@@ -1,5 +1,5 @@
 {
-  "_note": "Freely licensed photos from Wikimedia Commons. Run tools/fetch_photos.py to download them. 'focus' (optional) is where photo mode's first close-up is centred, as fractions of the photo's width and height; use it to keep a name sign out of the opening views.",
+  "_note": "Freely licensed photos from Wikimedia Commons. Run tools/fetch_photos.py to download them. 'focus' (optional) is where photo mode's first close-up is centred, as fractions of the photo's width and height; use it to keep a name sign out of the opening views. 'photo_mode': false keeps a photo out of photo mode (end screen only), e.g. when it's mostly a name sign.",
   "photos": [
     {
       "building": "uc",
@@ -107,7 +107,11 @@
       "file": "Ivey Business School .jpg",
       "author": "Chad0119",
       "licence": "CC BY-SA 4.0",
-      "source": "https://commons.wikimedia.org/wiki/File:Ivey_Business_School_.jpg"
+      "source": "https://commons.wikimedia.org/wiki/File:Ivey_Business_School_.jpg",
+      "focus": [
+        0.6,
+        0.62
+      ]
     },
     {
       "building": "robarts",
@@ -150,6 +154,47 @@
       "focus": [
         0.55,
         0.45
+      ]
+    },
+    {
+      "building": "arts",
+      "file": "Arts and Humanities Building.jpg",
+      "author": "Emmaclarke85",
+      "licence": "CC BY-SA 4.0",
+      "source": "https://commons.wikimedia.org/wiki/File:Arts_and_Humanities_Building.jpg",
+      "focus": [
+        0.3,
+        0.38
+      ]
+    },
+    {
+      "building": "mcintosh",
+      "file": "McIntosh Gallery UWO.jpg",
+      "author": "Adam Bishop",
+      "licence": "CC BY-SA 4.0",
+      "source": "https://commons.wikimedia.org/wiki/File:McIntosh_Gallery_UWO.jpg",
+      "focus": [
+        0.55,
+        0.5
+      ]
+    },
+    {
+      "building": "taylor",
+      "file": "Tayloruwo.jpg",
+      "author": "Tarekmech",
+      "licence": "CC BY-SA 3.0",
+      "source": "https://commons.wikimedia.org/wiki/File:Tayloruwo.jpg",
+      "photo_mode": false
+    },
+    {
+      "building": "law",
+      "file": "WesternLawBldg.jpg",
+      "author": "Mikerussell",
+      "licence": "CC BY-SA 3.0",
+      "source": "https://commons.wikimedia.org/wiki/File:WesternLawBldg.jpg",
+      "focus": [
+        0.85,
+        0.42
       ]
     }
   ]

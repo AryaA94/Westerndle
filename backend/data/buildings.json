@@ -552,7 +552,14 @@
       "verified": [
         "coordinates"
       ],
-      "zone": "South"
+      "zone": "South",
+      "photo": "ivey.jpg",
+      "photo_credit": "Chad0119, CC BY-SA 4.0, via Wikimedia Commons",
+      "photo_source": "https://commons.wikimedia.org/wiki/File:Ivey_Business_School_.jpg",
+      "photo_focus": [
+        0.6,
+        0.62
+      ]
     },
     {
       "id": "robarts",
@@ -846,7 +853,14 @@
       "verified": [
         "coordinates"
       ],
-      "zone": "Core"
+      "zone": "Core",
+      "photo": "arts.jpg",
+      "photo_credit": "Emmaclarke85, CC BY-SA 4.0, via Wikimedia Commons",
+      "photo_source": "https://commons.wikimedia.org/wiki/File:Arts_and_Humanities_Building.jpg",
+      "photo_focus": [
+        0.3,
+        0.38
+      ]
     },
     {
       "id": "law",
@@ -865,7 +879,14 @@
       "verified": [
         "coordinates"
       ],
-      "zone": "Core"
+      "zone": "Core",
+      "photo": "law.jpg",
+      "photo_credit": "Mikerussell, CC BY-SA 3.0, via Wikimedia Commons",
+      "photo_source": "https://commons.wikimedia.org/wiki/File:WesternLawBldg.jpg",
+      "photo_focus": [
+        0.85,
+        0.42
+      ]
     },
     {
       "id": "mcintosh",
@@ -883,7 +904,14 @@
       "verified": [
         "coordinates"
       ],
-      "zone": "Core"
+      "zone": "Core",
+      "photo": "mcintosh.jpg",
+      "photo_credit": "Adam Bishop, CC BY-SA 4.0, via Wikimedia Commons",
+      "photo_source": "https://commons.wikimedia.org/wiki/File:McIntosh_Gallery_UWO.jpg",
+      "photo_focus": [
+        0.55,
+        0.5
+      ]
     },
     {
       "id": "taylor",
@@ -901,7 +929,11 @@
       "verified": [
         "coordinates"
       ],
-      "zone": "North"
+      "zone": "North",
+      "photo": "taylor.jpg",
+      "photo_credit": "Tarekmech, CC BY-SA 3.0, via Wikimedia Commons",
+      "photo_source": "https://commons.wikimedia.org/wiki/File:Tayloruwo.jpg",
+      "photo_mode": false
     },
     {
       "id": "wsc",

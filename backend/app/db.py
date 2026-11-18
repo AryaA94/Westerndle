@@ -36,6 +36,8 @@ class BuildingRow(Base):
     photo_source: Mapped[str | None] = mapped_column(String(255), nullable=True)
     # Where photo mode's first close-up is centred, as [x, y] fractions of the photo.
     photo_focus: Mapped[list[float] | None] = mapped_column(JSON, nullable=True)
+    # False keeps the photo out of photo mode (it still shows on the end screen).
+    photo_mode: Mapped[bool] = mapped_column(Boolean, default=True)
 
 
 class DailyAnswerRow(Base):
@@ -106,6 +108,7 @@ def init_db(engine, data_file: Path = DATA_FILE) -> None:
                 photo_credit=b.get("photo_credit"),
                 photo_source=b.get("photo_source"),
                 photo_focus=b.get("photo_focus"),
+                photo_mode=b.get("photo_mode", True),
             )
             for b in buildings
         )

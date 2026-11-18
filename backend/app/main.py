@@ -110,7 +110,11 @@ def create_app(
             r.id for r in app.state.buildings.values() if r.photo and (photo_dir / r.photo).is_file()
         )
         # Photo mode needs enough pixels for its 5x close-ups to stay sharp.
-        app.state.photo_mode_ids = [i for i in app.state.photo_ids if ph.width(photo_dir / app.state.buildings[i].photo) >= ph.MIN_WIDTH]
+        app.state.photo_mode_ids = [
+            i
+            for i in app.state.photo_ids
+            if app.state.buildings[i].photo_mode and ph.width(photo_dir / app.state.buildings[i].photo) >= ph.MIN_WIDTH
+        ]
         app.state.answers = {}  # (mode, puzzle) -> building id, mirrors daily_answers
         yield
         engine.dispose()
