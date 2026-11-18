@@ -7,8 +7,9 @@ import type { Clue, GameState } from "../types";
 export function ClueBar(props: { game: GameState; clues: Clue[]; busy: boolean; onHint: () => void }) {
   const { game, clues, busy, onHint } = props;
   const made = game.guesses.length;
+  // null means the mode has no hint (endless); undefined is a game saved before hints existed.
   const hasHint = game.hintAfter !== null;
-  const hintIn = (game.hintAfter ?? 0) - made;
+  const hintIn = (game.hintAfter ?? 5) - made;
 
   return (
     <section aria-label="Clues" className="rounded-2xl bg-white p-3 shadow-sm ring-1 ring-purple-western/10 dark:bg-white/5 dark:ring-white/10">

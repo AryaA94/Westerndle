@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { api } from "./api";
 import { ClueBar } from "./components/ClueBar";
 import { EndCard } from "./components/EndCard";
@@ -10,7 +10,7 @@ import { PhotoCard } from "./components/PhotoCard";
 import { HelpModal } from "./components/HelpModal";
 import { Landing } from "./components/Landing";
 import { StatsModal } from "./components/StatsModal";
-import { applyResult, finishStreakRound } from "./logic";
+import { applyResult, finishStreakRound, streakExclude } from "./logic";
 import { celebrate } from "./confetti";
 import { storage } from "./storage";
 import type { BuildingName, Clue, DailyMeta, DailyMode, GameState, Mode, StreakRun } from "./types";
@@ -36,6 +36,29 @@ export default function App() {
       .catch(() => setError("Couldn't reach the server. Try refreshing."));
   }, []);
 
+  // A tab left open overnight should move on to the new puzzle when the player comes back.
+  useEffect(() => {
+    const refresh = () => {
+      if (document.visibilityState !== "visible") return;
+      api
+        .daily()
+        .then((d) => setDaily((old) => (old && old.puzzle === d.puzzle ? old : d)))
+        .catch(() => {});
+    };
+    document.addEventListener("visibilitychange", refresh);
+    window.addEventListener("focus", refresh);
+    const timer = setInterval(refresh, 60_000);
+    return () => {
+      document.removeEventListener("visibilitychange", refresh);
+      window.removeEventListener("focus", refresh);
+      clearInterval(timer);
+    };
+  }, []);
+
+  // The current mode, readable from async code that might finish after the player switches tabs.
+  const modeRef = useRef(mode);
+  modeRef.current = mode;
+
   const updateRun = (r: StreakRun) => {
     storage.saveStreak(r);
     setRun(r);
@@ -45,13 +68,14 @@ export default function App() {
   const nextStreakRound = useCallback(async () => {
     const prev = storage.streak();
     const base = prev.over ? { current: 0, best: prev.best, seen: [], over: false } : prev;
-    const { token, maxGuesses, hintAfter } = await api.newStreakRound(base.seen);
+    const { token, maxGuesses, hintAfter } = await api.newStreakRound(streakExclude(base.seen, buildings.length));
     const g: GameState = { mode: "streak", token, maxGuesses, hintAfter, guesses: [], status: "playing" };
     const r = { ...base, game: g };
     storage.saveStreak(r);
     setRun(r);
-    setGame(g);
-  }, []);
+    // The player may have switched to another tab while this loaded; the round is saved either way.
+    if (modeRef.current === "streak") setGame(g);
+  }, [buildings.length]);
 
   const play = (m: Mode) => {
     setMode(m);
@@ -115,6 +139,10 @@ export default function App() {
       }
       // A win needs the answer's coordinates for the map link too.
       if (next.status === "won") next.answer = await api.reveal(ref, game.maxGuesses).catch(() => undefined);
+      // Record the result before showing the end screen, so its "how everyone did" stats include this game.
+      if (next.status !== "playing" && next.mode !== "streak" && next.puzzle) {
+        await api.recordResult(next.mode, next.puzzle, next.status === "won", guesses.length).catch(() => {});
+      }
       save(next);
       if (next.status === "won") celebrate();
       if (next.status !== "playing" && next.mode === "streak") {
@@ -123,7 +151,6 @@ export default function App() {
       }
       if (next.status !== "playing" && next.mode !== "streak" && next.puzzle) {
         const won = next.status === "won";
-        api.recordResult(next.mode, next.puzzle, won, guesses.length).catch(() => {});
         storage.saveStats(next.mode, applyResult(storage.stats(next.mode, game.maxGuesses), next.puzzle, won, guesses.length));
       }
     } catch (e) {

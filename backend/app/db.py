@@ -38,6 +38,20 @@ class BuildingRow(Base):
     photo_focus: Mapped[list[float] | None] = mapped_column(JSON, nullable=True)
 
 
+class DailyAnswerRow(Base):
+    """The answer a daily puzzle was given, fixed the first time it was needed.
+
+    The schedule is worked out from the building list, so editing that list
+    would otherwise change today's answer for players already partway through.
+    """
+
+    __tablename__ = "daily_answers"
+
+    puzzle: Mapped[int] = mapped_column(Integer, primary_key=True)
+    mode: Mapped[str] = mapped_column(String(16), primary_key=True)
+    building_id: Mapped[str] = mapped_column(String(32))
+
+
 class PlayRow(Base):
     """One finished daily game (classic or photo). Powers the 'how did everyone else do' stats."""
 

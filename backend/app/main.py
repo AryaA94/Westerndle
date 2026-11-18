@@ -21,7 +21,9 @@ from sqlalchemy import select
 
 from . import puzzle as pz
 from . import photo as ph
-from .db import DATA_FILE, PHOTO_DIR, BuildingRow, PlayRow, init_db, make_engine, play_stats, session_factory
+from sqlalchemy.exc import IntegrityError
+
+from .db import DATA_FILE, PHOTO_DIR, BuildingRow, DailyAnswerRow, PlayRow, init_db, make_engine, play_stats, session_factory
 from .game import Building, score_guess
 
 MAX_GUESSES = 8
@@ -109,6 +111,7 @@ def create_app(
         )
         # Photo mode needs enough pixels for its 5x close-ups to stay sharp.
         app.state.photo_mode_ids = [i for i in app.state.photo_ids if ph.width(photo_dir / app.state.buildings[i].photo) >= ph.MIN_WIDTH]
+        app.state.answers = {}  # (mode, puzzle) -> building id, mirrors daily_answers
         yield
         engine.dispose()
 
@@ -133,12 +136,40 @@ def create_app(
             raise HTTPException(409, "that puzzle is not active")
         return puzzle
 
+    def pinned_answer(mode: str, puzzle: int, pool: list[str], seed: str) -> str:
+        """A daily puzzle's answer: the one already recorded, or a freshly scheduled one, recorded now.
+
+        Recording it means later edits to the building list or photos can't
+        change the answer of a puzzle people have started.
+        """
+        cache = app.state.answers
+        if (mode, puzzle) in cache:
+            return cache[(mode, puzzle)]
+        with Session() as s:
+            row = s.get(DailyAnswerRow, (puzzle, mode))
+            recorded = row.building_id if row else None
+        if recorded in pool:  # a removed building can't stay the answer
+            answer = recorded
+        else:
+            answer = pz.daily_answer_id(pz.date_for_puzzle(puzzle), pool, seed)
+            try:
+                with Session() as s, s.begin():
+                    s.merge(DailyAnswerRow(puzzle=puzzle, mode=mode, building_id=answer))
+            except IntegrityError:  # another request recorded it first; use theirs
+                with Session() as s:
+                    answer = s.get(DailyAnswerRow, (puzzle, mode)).building_id
+        cache[(mode, puzzle)] = answer
+        return answer
+
+    def daily_answer_id(request: Request, puzzle: int) -> str:
+        return pinned_answer("daily", puzzle, sorted(buildings(request)), _secret())
+
     def photo_answer_id(request: Request, puzzle: int) -> str:
         ids = request.app.state.photo_mode_ids
         if not ids:
             raise HTTPException(404, "photo mode isn't available: no building photos are installed")
         # Its own schedule (a different seed), so it doesn't follow the classic puzzle's order.
-        return pz.daily_answer_id(pz.date_for_puzzle(puzzle), ids, _secret() + ":photo")
+        return pinned_answer("photo", puzzle, ids, _secret() + ":photo")
 
     def photo_url(b: BuildingRow) -> str | None:
         return f"/api/photos/{b.id}" if b.photo and b.id in app.state.photo_ids else None
@@ -146,7 +177,7 @@ def create_app(
     def answer_for(request: Request, mode: str, puzzle: int | None, token: str | None) -> BuildingRow:
         if mode == "daily":
             puzzle = check_active(puzzle)
-            answer_id = pz.daily_answer_id(pz.date_for_puzzle(puzzle), list(buildings(request)), _secret())
+            answer_id = daily_answer_id(request, puzzle)
         elif mode == "photo":
             answer_id = photo_answer_id(request, check_active(puzzle))
         else:
@@ -198,7 +229,7 @@ def create_app(
         n = pz.puzzle_number(pz.today_on_campus()) - 1
         if n < 1:
             return None
-        b = buildings(request)[pz.daily_answer_id(pz.date_for_puzzle(n), list(buildings(request)), _secret())]
+        b = buildings(request)[daily_answer_id(request, n)]
         return {"puzzle": n, "id": b.id, "name": b.name, "photo": photo_url(b)}
 
     @app.post("/api/guess")
@@ -277,6 +308,9 @@ def create_app(
 
         @app.get("/{path:path}", include_in_schema=False)
         def spa(path: str):
+            # A wrong API address should be a 404, not the web page with a 200.
+            if path == "api" or path.startswith("api/"):
+                raise HTTPException(404, "no such API endpoint")
             f = (static_dir / path).resolve()
             if path and f.is_file() and static_dir.resolve() in f.parents:
                 return FileResponse(f)

@@ -33,7 +33,8 @@ export default function CampusMap({ answer, guesses }: { answer: Answer; guesses
     const target: L.LatLngTuple = [answer.lat, answer.lon];
     const points: L.LatLngTuple[] = [target];
     guesses.forEach((g, i) => {
-      if (g.correct) return;
+      // Games saved before the map existed have no coordinates for their guesses.
+      if (g.correct || typeof g.lat !== "number" || typeof g.lon !== "number") return;
       const p: L.LatLngTuple = [g.lat, g.lon];
       points.push(p);
       L.polyline([p, target], { color: PURPLE, weight: 2, opacity: 0.5, dashArray: "4 6" }).addTo(map);

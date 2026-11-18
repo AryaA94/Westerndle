@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { applyResult, emptyStats, finishStreakRound, formatDistance, searchBuildings, shareText, streakShareText } from "./logic";
+import { applyResult, emptyStats, finishStreakRound, streakExclude, formatDistance, searchBuildings, shareText, streakShareText } from "./logic";
 import type { Feedback, StreakRun } from "./types";
 
 const fb = (over: Partial<Feedback>): Feedback => ({
@@ -87,4 +87,26 @@ describe("endless runs", () => {
     expect(streakShareText(3, 7, "u")).toBe("Westerndle Endless: 3 in a row\n🔥🔥🔥\nBest: 7\nu");
     expect(streakShareText(0, 7, "u")).toContain("🧊");
   });
+});
+
+describe("streakExclude", () => {
+  it("avoids everything seen when there's room", () => {
+    expect(streakExclude(["a", "b"], 42)).toEqual(["a", "b"]);
+  });
+  it("leaves one building free once all have been used, never the latest", () => {
+    const seen = Array.from({ length: 45 }, (_, i) => `b${i % 42}`);
+    const ex = streakExclude(seen, 42);
+    expect(ex).toHaveLength(41);
+    expect(ex).toContain(seen[seen.length - 1]);
+  });
+  it("copes before the building list has loaded", () => {
+    expect(streakExclude(["a"], 0)).toEqual([]);
+  });
+});
+
+it("caps the seen list on very long runs", () => {
+  let r: StreakRun = { current: 0, best: 0, seen: [], over: false };
+  for (let i = 0; i < 250; i++) r = finishStreakRound(r, `b${i}`, true);
+  expect(r.seen).toHaveLength(200);
+  expect(r.current).toBe(250);
 });

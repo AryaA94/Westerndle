@@ -36,10 +36,22 @@ export function streakShareText(streak: number, best: number, url: string): stri
   return [`Westerndle Endless: ${streak} in a row`, flames, `Best: ${best}`, url].join("\n");
 }
 
+/**
+ * Which buildings the next endless round should avoid: the most recent ones, one short of
+ * the whole list. Keeps the request small on long runs and means that once every building
+ * has been used, the one just played still can't come straight back.
+ */
+export function streakExclude(seen: string[], total: number): string[] {
+  const keep = Math.max(total - 1, 0);
+  return keep === 0 ? [] : seen.slice(-keep);
+}
+
 /** Record a finished round in an endless run. */
 export function finishStreakRound(run: StreakRun, answerId: string, won: boolean): StreakRun {
   const current = won ? run.current + 1 : run.current;
-  return { ...run, current, best: Math.max(run.best, current), seen: [...run.seen, answerId], over: !won };
+  // Only the recent past matters for avoiding repeats, so don't let the list grow forever.
+  const seen = [...run.seen, answerId].slice(-200);
+  return { ...run, current, best: Math.max(run.best, current), seen, over: !won };
 }
 
 export function formatDistance(m: number): string {

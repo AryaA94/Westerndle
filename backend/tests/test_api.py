@@ -178,3 +178,50 @@ def test_endless_has_no_first_letter_hint(client):
     assert r["hintAfter"] is None
     body = {"mode": "streak", "token": r["token"], "guesses": 10}
     assert client.post("/api/hint", json=body).status_code == 403
+
+
+def _answer(c):
+    return c.post("/api/reveal", json={"mode": "daily", "puzzle": today(), "guesses": 8}).json()["id"]
+
+
+def test_todays_answer_survives_a_change_to_the_building_list(tmp_path):
+    """Adding a building used to reshuffle the schedule, changing today's answer mid-game."""
+    import json
+
+    from fastapi.testclient import TestClient
+
+    from app.db import DATA_FILE
+    from app.main import create_app
+
+    db = f"sqlite:///{tmp_path}/t.db"
+    kw = dict(static_dir=tmp_path / "none", photo_dir=tmp_path / "none")
+    with TestClient(create_app(db, **kw)) as c:
+        before = _answer(c)
+
+    doc = json.loads(DATA_FILE.read_text())
+    doc["buildings"].append({**doc["buildings"][0], "id": "zzz", "name": "A New Building"})
+    bigger = tmp_path / "bigger.json"
+    bigger.write_text(json.dumps(doc))
+    with TestClient(create_app(db, data_file=bigger, **kw)) as c:
+        assert _answer(c) == before
+
+    # If today's answer is removed from the list, a new one is picked rather than crashing.
+    doc["buildings"] = [b for b in doc["buildings"] if b["id"] != before]
+    smaller = tmp_path / "smaller.json"
+    smaller.write_text(json.dumps(doc))
+    with TestClient(create_app(db, data_file=smaller, **kw)) as c:
+        assert _answer(c) != before
+
+
+def test_unknown_api_path_is_404_not_the_web_page(tmp_path):
+    from fastapi.testclient import TestClient
+
+    from app.main import create_app
+
+    dist = tmp_path / "dist"
+    (dist / "assets").mkdir(parents=True)
+    (dist / "index.html").write_text("<html>app</html>")
+    with TestClient(create_app(f"sqlite:///{tmp_path}/t.db", static_dir=dist, photo_dir=tmp_path)) as c:
+        assert c.get("/api/showcase").status_code == 404
+        assert c.get("/").text == "<html>app</html>"
+        assert c.get("/some/page").text == "<html>app</html>"  # the app's own routes still load
