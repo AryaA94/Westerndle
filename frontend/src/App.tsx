@@ -174,6 +174,7 @@ export default function App() {
           run={run}
           onPlay={play}
           onHelp={() => setModal("help")}
+          onStats={() => setModal("stats")}
         />
         {modals}
       </>

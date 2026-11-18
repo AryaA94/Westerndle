@@ -14,10 +14,12 @@ export interface StreakRun {
   game?: GameState;
 }
 
-export interface ShowcasePhoto {
+/** Yesterday's classic answer, shown on the menu. */
+export interface Yesterday {
+  puzzle: number;
   id: string;
   name: string;
-  photo: string;
+  photo: string | null;
 }
 
 export interface BuildingName {

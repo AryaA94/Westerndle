@@ -154,3 +154,13 @@ def test_streak_starts_over_when_everything_is_excluded(client):
 
 def test_practice_still_works_without_a_body(client):
     assert client.post("/api/practice").json()["maxGuesses"] == 8
+
+
+def test_yesterday_reveals_the_previous_answer(client):
+    from app.main import _secret
+
+    y = client.get("/api/yesterday").json()
+    assert y["puzzle"] == today() - 1
+    ids = [b["id"] for b in client.get("/api/buildings").json()]
+    assert y["id"] == pz.daily_answer_id(pz.date_for_puzzle(today() - 1), ids, _secret())
+    assert y["name"]

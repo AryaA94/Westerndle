@@ -189,16 +189,14 @@ def create_app(
             "hintAfter": HINT_AFTER,
         }
 
-    @app.get("/api/showcase")
-    def showcase(request: Request, count: int = 6):
-        """Random building photos for the menu, never today's daily or photo answer."""
-        day = pz.today_on_campus()
-        today_answers = {pz.daily_answer_id(day, list(buildings(request)), _secret())}
-        if request.app.state.photo_mode_ids:
-            today_answers.add(photo_answer_id(request, pz.puzzle_number(day)))
-        pool = [i for i in request.app.state.photo_ids if i not in today_answers]
-        picks = random.sample(pool, min(count, len(pool), 12))
-        return [{"id": i, "name": buildings(request)[i].name, "photo": f"/api/photos/{i}"} for i in picks]
+    @app.get("/api/yesterday")
+    def yesterday(request: Request):
+        """Yesterday's classic answer, for the menu. Safe to show: that puzzle is over."""
+        n = pz.puzzle_number(pz.today_on_campus()) - 1
+        if n < 1:
+            return None
+        b = buildings(request)[pz.daily_answer_id(pz.date_for_puzzle(n), list(buildings(request)), _secret())]
+        return {"puzzle": n, "id": b.id, "name": b.name, "photo": photo_url(b)}
 
     @app.post("/api/guess")
     def guess(body: GuessIn, request: Request):

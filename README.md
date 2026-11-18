@@ -129,7 +129,7 @@ takes.
 | GET | `/api/buildings` | Names and aliases for the autocomplete |
 | GET | `/api/daily` | Today's puzzle number and the guess limit |
 | POST | `/api/practice` | Start an endless or practice round (returns a token) |
-| GET | `/api/showcase` | Photos for the menu (never today's answers) |
+| GET | `/api/yesterday` | Yesterday's daily answer, for the menu |
 | POST | `/api/guess` | Score a guess |
 | POST | `/api/clues` | Free clues unlocked so far |
 | POST | `/api/hint` | First letter of the answer, after 5 guesses |
